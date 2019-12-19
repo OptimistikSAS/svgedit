@@ -2,10 +2,9 @@ var svgEditorExtensionLocale_oimotion_en = (function () {
   'use strict';
 
   var en = {
-    name: 'Hello World',
-    text: 'Hello World!\n\nYou clicked here: {x}, {y}',
+    name: 'Oimotion',
     buttons: [{
-      title: "Say 'Hello World'"
+      title: "Oimotion"
     }]
   };
 

@@ -1,4 +1,4 @@
-var svgEditorExtensionLocale_helloworld_zh_CN = (function () {
+var svgEditorExtensionLocale_oimotion_zh_CN = (function () {
   'use strict';
 
   var zhCN = {

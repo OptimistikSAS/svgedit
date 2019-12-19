@@ -15,42 +15,6 @@ var SvgCanvas = (function () {
     return _typeof(obj);
   }
 
-  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-    try {
-      var info = gen[key](arg);
-      var value = info.value;
-    } catch (error) {
-      reject(error);
-      return;
-    }
-
-    if (info.done) {
-      resolve(value);
-    } else {
-      Promise.resolve(value).then(_next, _throw);
-    }
-  }
-
-  function _asyncToGenerator(fn) {
-    return function () {
-      var self = this,
-          args = arguments;
-      return new Promise(function (resolve, reject) {
-        var gen = fn.apply(self, args);
-
-        function _next(value) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-        }
-
-        function _throw(err) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-        }
-
-        _next(undefined);
-      });
-    };
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -8042,7 +8006,7 @@ var SvgCanvas = (function () {
    */
 
   var dropXMLInteralSubset = function dropXMLInteralSubset(str) {
-    return str.replace(/(<!DOCTYPE\s+\w*\s*\[).*(\?]>)/, '$1$2'); // return str.replace(/(?<doctypeOpen><!DOCTYPE\s+\w*\s*\[).*(?<doctypeClose>\?\]>)/, '$<doctypeOpen>$<doctypeClose>');
+    return str.replace(/(<!DOCTYPE\s+\w*\s*\[).*(\?\]>)/, '$1$2'); // return str.replace(/(?<doctypeOpen><!DOCTYPE\s+\w*\s*\[).*(?<doctypeClose>\?\]>)/, '$<doctypeOpen>$<doctypeClose>');
   };
   /**
   * Converts characters in a string to XML-friendly entities.
@@ -8122,7 +8086,7 @@ var SvgCanvas = (function () {
     } // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
 
 
-    input = input.replace(/[^A-Za-z\d+/=]/g, '');
+    input = input.replace(/[^A-Za-z0-9+/=]/g, '');
     var output = '';
     var i = 0;
 
@@ -11310,8 +11274,38 @@ var SvgCanvas = (function () {
   *   any other value depends on the export of the targeted module.
   */
 
-  function importSetGlobal(_x, _x2) {
-    return _importSetGlobal.apply(this, arguments);
+  function importSetGlobal(url, _ref) {
+    var glob, returnDefault, modularVersion;
+    return regeneratorRuntime.async(function importSetGlobal$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            glob = _ref.global, returnDefault = _ref.returnDefault;
+            // Todo: Replace calls to this function with `import()` when supported
+            modularVersion = !('svgEditor' in window) || !window.svgEditor || window.svgEditor.modules !== false;
+
+            if (!modularVersion) {
+              _context.next = 4;
+              break;
+            }
+
+            return _context.abrupt("return", importModule(url, undefined, {
+              returnDefault: returnDefault
+            }));
+
+          case 4:
+            _context.next = 6;
+            return regeneratorRuntime.awrap(importScript(url));
+
+          case 6:
+            return _context.abrupt("return", window[glob]);
+
+          case 7:
+          case "end":
+            return _context.stop();
+        }
+      }
+    });
   }
   /**
    *
@@ -11321,45 +11315,6 @@ var SvgCanvas = (function () {
    * @returns {Promise<void|Error>} Resolves to `undefined` or rejects with an `Error` upon a
    *   script loading error
    */
-
-  function _importSetGlobal() {
-    _importSetGlobal = _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee(url, _ref) {
-      var glob, returnDefault, modularVersion;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              glob = _ref.global, returnDefault = _ref.returnDefault;
-              // Todo: Replace calls to this function with `import()` when supported
-              modularVersion = !('svgEditor' in window) || !window.svgEditor || window.svgEditor.modules !== false;
-
-              if (!modularVersion) {
-                _context.next = 4;
-                break;
-              }
-
-              return _context.abrupt("return", importModule(url, undefined, {
-                returnDefault: returnDefault
-              }));
-
-            case 4:
-              _context.next = 6;
-              return importScript(url);
-
-            case 6:
-              return _context.abrupt("return", window[glob]);
-
-            case 7:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-    return _importSetGlobal.apply(this, arguments);
-  }
 
   function importScript(url) {
     var atts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -14489,84 +14444,74 @@ var SvgCanvas = (function () {
     */
 
 
-    this.addExtension =
-    /*#__PURE__*/
-    function () {
-      var _ref4 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(name, extInitFunc, _ref3) {
-        var jq, importLocale, argObj, extObj;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                jq = _ref3.$, importLocale = _ref3.importLocale;
+    this.addExtension = function _callee(name, extInitFunc, _ref3) {
+      var jq, importLocale, argObj, extObj;
+      return regeneratorRuntime.async(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              jq = _ref3.$, importLocale = _ref3.importLocale;
 
-                if (!(typeof extInitFunc !== 'function')) {
-                  _context.next = 3;
-                  break;
-                }
+              if (!(typeof extInitFunc !== 'function')) {
+                _context.next = 3;
+                break;
+              }
 
-                throw new TypeError('Function argument expected for `svgcanvas.addExtension`');
+              throw new TypeError('Function argument expected for `svgcanvas.addExtension`');
 
-              case 3:
-                if (!(name in extensions)) {
-                  _context.next = 5;
-                  break;
-                }
+            case 3:
+              if (!(name in extensions)) {
+                _context.next = 5;
+                break;
+              }
 
-                throw new Error('Cannot add extension "' + name + '", an extension by that name already exists.');
+              throw new Error('Cannot add extension "' + name + '", an extension by that name already exists.');
 
-              case 5:
-                // Provide private vars/funcs here. Is there a better way to do this?
+            case 5:
+              // Provide private vars/funcs here. Is there a better way to do this?
 
-                /**
-                 * @typedef {module:svgcanvas.PrivateMethods} module:svgcanvas.ExtensionArgumentObject
-                 * @property {SVGSVGElement} svgroot See {@link module:svgcanvas~svgroot}
-                 * @property {SVGSVGElement} svgcontent See {@link module:svgcanvas~svgcontent}
-                 * @property {!(string|Integer)} nonce See {@link module:draw.Drawing#getNonce}
-                 * @property {module:select.SelectorManager} selectorManager
-                 * @property {module:SVGEditor~ImportLocale} importLocale
-                 */
+              /**
+               * @typedef {module:svgcanvas.PrivateMethods} module:svgcanvas.ExtensionArgumentObject
+               * @property {SVGSVGElement} svgroot See {@link module:svgcanvas~svgroot}
+               * @property {SVGSVGElement} svgcontent See {@link module:svgcanvas~svgcontent}
+               * @property {!(string|Integer)} nonce See {@link module:draw.Drawing#getNonce}
+               * @property {module:select.SelectorManager} selectorManager
+               * @property {module:SVGEditor~ImportLocale} importLocale
+               */
 
-                /**
-                 * @type {module:svgcanvas.ExtensionArgumentObject}
-                 * @see {@link module:svgcanvas.PrivateMethods} source for the other methods/properties
-                 */
-                argObj = $$8.extend(canvas.getPrivateMethods(), {
-                  $: jq,
-                  importLocale: importLocale,
-                  svgroot: svgroot,
-                  svgcontent: svgcontent,
-                  nonce: getCurrentDrawing().getNonce(),
-                  selectorManager: selectorManager
-                });
-                _context.next = 8;
-                return extInitFunc(argObj);
+              /**
+               * @type {module:svgcanvas.ExtensionArgumentObject}
+               * @see {@link module:svgcanvas.PrivateMethods} source for the other methods/properties
+               */
+              argObj = $$8.extend(canvas.getPrivateMethods(), {
+                $: jq,
+                importLocale: importLocale,
+                svgroot: svgroot,
+                svgcontent: svgcontent,
+                nonce: getCurrentDrawing().getNonce(),
+                selectorManager: selectorManager
+              });
+              _context.next = 8;
+              return regeneratorRuntime.awrap(extInitFunc(argObj));
 
-              case 8:
-                extObj = _context.sent;
+            case 8:
+              extObj = _context.sent;
 
-                if (extObj) {
-                  extObj.name = name;
-                } // eslint-disable-next-line require-atomic-updates
+              if (extObj) {
+                extObj.name = name;
+              } // eslint-disable-next-line require-atomic-updates
 
 
-                extensions[name] = extObj;
-                return _context.abrupt("return", call('extension_added', extObj));
+              extensions[name] = extObj;
+              return _context.abrupt("return", call('extension_added', extObj));
 
-              case 12:
-              case "end":
-                return _context.stop();
-            }
+            case 12:
+            case "end":
+              return _context.stop();
           }
-        }, _callee);
-      }));
-
-      return function (_x, _x2, _x3) {
-        return _ref4.apply(this, arguments);
-      };
-    }();
+        }
+      });
+    };
     /**
     * This method sends back an array or a NodeList full of elements that
     * intersect the multi-select rubber-band-box on the currentLayer only.
@@ -16934,8 +16879,8 @@ var SvgCanvas = (function () {
         var pt = screenToPt(mouseX, mouseY);
         var index = getIndexFromPoint(pt.x, pt.y);
         var str = curtext.textContent;
-        var first = str.substr(0, index).replace(/[a-z\d]+$/i, '').length;
-        var m = str.substr(index).match(/^[a-z\d]+/i);
+        var first = str.substr(0, index).replace(/[a-z0-9]+$/i, '').length;
+        var m = str.substr(index).match(/^[a-z0-9]+/i);
         var last = (m ? m[0].length : 0) + index;
         setSelection(first, last); // Set tripleclick
 
@@ -17687,115 +17632,105 @@ var SvgCanvas = (function () {
     * @returns {Promise<module:svgcanvas.ImageExportedResults>} Resolves to {@link module:svgcanvas.ImageExportedResults}
     */
 
-    this.rasterExport =
-    /*#__PURE__*/
-    function () {
-      var _ref5 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(imgType, quality, exportWindowName) {
-        var opts,
-            type,
-            mimeType,
-            _getIssues,
-            issues,
-            issueCodes,
-            svg,
-            _ref6,
-            c,
-            _args2 = arguments;
+    this.rasterExport = function _callee2(imgType, quality, exportWindowName) {
+      var opts,
+          type,
+          mimeType,
+          _getIssues,
+          issues,
+          issueCodes,
+          svg,
+          _ref4,
+          c,
+          _args2 = arguments;
 
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                opts = _args2.length > 3 && _args2[3] !== undefined ? _args2[3] : {};
-                type = imgType === 'ICO' ? 'BMP' : imgType || 'PNG';
-                mimeType = 'image/' + type.toLowerCase();
-                _getIssues = getIssues(), issues = _getIssues.issues, issueCodes = _getIssues.issueCodes;
-                svg = this.svgCanvasToString();
+      return regeneratorRuntime.async(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              opts = _args2.length > 3 && _args2[3] !== undefined ? _args2[3] : {};
+              type = imgType === 'ICO' ? 'BMP' : imgType || 'PNG';
+              mimeType = 'image/' + type.toLowerCase();
+              _getIssues = getIssues(), issues = _getIssues.issues, issueCodes = _getIssues.issueCodes;
+              svg = this.svgCanvasToString();
 
-                if (canvg) {
-                  _context2.next = 10;
-                  break;
-                }
+              if (canvg) {
+                _context2.next = 10;
+                break;
+              }
 
-                _context2.next = 8;
-                return importSetGlobal(curConfig.canvgPath + 'canvg.js', {
-                  global: 'canvg'
-                });
+              _context2.next = 8;
+              return regeneratorRuntime.awrap(importSetGlobal(curConfig.canvgPath + 'canvg.js', {
+                global: 'canvg'
+              }));
 
-              case 8:
-                _ref6 = _context2.sent;
-                canvg = _ref6.canvg;
+            case 8:
+              _ref4 = _context2.sent;
+              canvg = _ref4.canvg;
 
-              case 10:
-                if (!$$8('#export_canvas').length) {
-                  $$8('<canvas>', {
-                    id: 'export_canvas'
-                  }).hide().appendTo('body');
-                }
+            case 10:
+              if (!$$8('#export_canvas').length) {
+                $$8('<canvas>', {
+                  id: 'export_canvas'
+                }).hide().appendTo('body');
+              }
 
-                c = $$8('#export_canvas')[0];
-                c.width = canvas.contentW;
-                c.height = canvas.contentH;
-                _context2.next = 16;
-                return canvg(c, svg);
+              c = $$8('#export_canvas')[0];
+              c.width = canvas.contentW;
+              c.height = canvas.contentH;
+              _context2.next = 16;
+              return regeneratorRuntime.awrap(canvg(c, svg));
 
-              case 16:
-                return _context2.abrupt("return", new Promise(function (resolve, reject) {
-                  // eslint-disable-line promise/avoid-new
-                  var dataURLType = type.toLowerCase();
-                  var datauri = quality ? c.toDataURL('image/' + dataURLType, quality) : c.toDataURL('image/' + dataURLType);
-                  var bloburl;
-                  /**
-                   * Called when `bloburl` is available for export.
-                   * @returns {void}
-                   */
+            case 16:
+              return _context2.abrupt("return", new Promise(function (resolve, reject) {
+                // eslint-disable-line promise/avoid-new
+                var dataURLType = type.toLowerCase();
+                var datauri = quality ? c.toDataURL('image/' + dataURLType, quality) : c.toDataURL('image/' + dataURLType);
+                var bloburl;
+                /**
+                 * Called when `bloburl` is available for export.
+                 * @returns {void}
+                 */
 
-                  function done() {
-                    var obj = {
-                      datauri: datauri,
-                      bloburl: bloburl,
-                      svg: svg,
-                      issues: issues,
-                      issueCodes: issueCodes,
-                      type: imgType,
-                      mimeType: mimeType,
-                      quality: quality,
-                      exportWindowName: exportWindowName
-                    };
+                function done() {
+                  var obj = {
+                    datauri: datauri,
+                    bloburl: bloburl,
+                    svg: svg,
+                    issues: issues,
+                    issueCodes: issueCodes,
+                    type: imgType,
+                    mimeType: mimeType,
+                    quality: quality,
+                    exportWindowName: exportWindowName
+                  };
 
-                    if (!opts.avoidEvent) {
-                      call('exported', obj);
-                    }
-
-                    resolve(obj);
+                  if (!opts.avoidEvent) {
+                    call('exported', obj);
                   }
 
-                  if (c.toBlob) {
-                    c.toBlob(function (blob) {
-                      bloburl = createObjectURL(blob);
-                      done();
-                    }, mimeType, quality);
-                    return;
-                  }
+                  resolve(obj);
+                }
 
-                  bloburl = dataURLToObjectURL(datauri);
-                  done();
-                }));
+                if (c.toBlob) {
+                  c.toBlob(function (blob) {
+                    bloburl = createObjectURL(blob);
+                    done();
+                  }, mimeType, quality);
+                  return;
+                }
 
-              case 17:
-              case "end":
-                return _context2.stop();
-            }
+                bloburl = dataURLToObjectURL(datauri);
+                done();
+              }));
+
+            case 17:
+            case "end":
+              return _context2.stop();
           }
-        }, _callee2, this);
-      }));
-
-      return function (_x4, _x5, _x6) {
-        return _ref5.apply(this, arguments);
-      };
-    }();
+        }
+      }, null, this);
+    };
     /**
      * @external jsPDF
      */
@@ -17835,103 +17770,93 @@ var SvgCanvas = (function () {
     */
 
 
-    this.exportPDF =
-    /*#__PURE__*/
-    function () {
-      var _ref7 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(exportWindowName) {
-        var outputType,
-            modularVersion,
-            res,
-            orientation,
-            unit,
-            doc,
-            docTitle,
-            _getIssues2,
-            issues,
-            issueCodes,
-            svg,
-            obj,
-            _args3 = arguments;
+    this.exportPDF = function _callee3(exportWindowName) {
+      var outputType,
+          modularVersion,
+          res,
+          orientation,
+          unit,
+          doc,
+          docTitle,
+          _getIssues2,
+          issues,
+          issueCodes,
+          svg,
+          obj,
+          _args3 = arguments;
 
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                outputType = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : isChrome() ? 'save' : undefined;
+      return regeneratorRuntime.async(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              outputType = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : isChrome() ? 'save' : undefined;
 
-                if (window.jsPDF) {
-                  _context3.next = 7;
-                  break;
-                }
-
-                _context3.next = 4;
-                return importScript([// We do not currently have these paths configurable as they are
-                //   currently global-only, so not Rolled-up
-                'jspdf/underscore-min.js', 'jspdf/jspdf.min.js']);
-
-              case 4:
-                modularVersion = !('svgEditor' in window) || !window.svgEditor || window.svgEditor.modules !== false; // Todo: Switch to `import()` when widely supported and available (also allow customization of path)
-
+              if (window.jsPDF) {
                 _context3.next = 7;
-                return importScript(curConfig.jspdfPath + 'jspdf.plugin.svgToPdf.js', {
-                  type: modularVersion ? 'module' : 'text/javascript'
-                });
+                break;
+              }
 
-              case 7:
-                res = getResolution();
-                orientation = res.w > res.h ? 'landscape' : 'portrait';
-                unit = 'pt'; // curConfig.baseUnit; // We could use baseUnit, but that is presumably not intended for export purposes
-                // Todo: Give options to use predefined jsPDF formats like "a4", etc. from pull-down (with option to keep customizable)
+              _context3.next = 4;
+              return regeneratorRuntime.awrap(importScript([// We do not currently have these paths configurable as they are
+              //   currently global-only, so not Rolled-up
+              'jspdf/underscore-min.js', 'jspdf/jspdf.min.js']));
 
-                doc = jsPDF({
-                  orientation: orientation,
-                  unit: unit,
-                  format: [res.w, res.h] // , compressPdf: true
+            case 4:
+              modularVersion = !('svgEditor' in window) || !window.svgEditor || window.svgEditor.modules !== false; // Todo: Switch to `import()` when widely supported and available (also allow customization of path)
 
-                });
-                docTitle = getDocumentTitle();
-                doc.setProperties({
-                  title: docTitle
-                  /* ,
-                  subject: '',
-                  author: '',
-                  keywords: '',
-                  creator: '' */
+              _context3.next = 7;
+              return regeneratorRuntime.awrap(importScript(curConfig.jspdfPath + 'jspdf.plugin.svgToPdf.js', {
+                type: modularVersion ? 'module' : 'text/javascript'
+              }));
 
-                });
-                _getIssues2 = getIssues(), issues = _getIssues2.issues, issueCodes = _getIssues2.issueCodes;
-                svg = this.svgCanvasToString();
-                doc.addSVG(svg, 0, 0); // doc.output('save'); // Works to open in a new
-                //  window; todo: configure this and other export
-                //  options to optionally work in this manner as
-                //  opposed to opening a new tab
+            case 7:
+              res = getResolution();
+              orientation = res.w > res.h ? 'landscape' : 'portrait';
+              unit = 'pt'; // curConfig.baseUnit; // We could use baseUnit, but that is presumably not intended for export purposes
+              // Todo: Give options to use predefined jsPDF formats like "a4", etc. from pull-down (with option to keep customizable)
 
-                outputType = outputType || 'dataurlstring';
-                obj = {
-                  svg: svg,
-                  issues: issues,
-                  issueCodes: issueCodes,
-                  exportWindowName: exportWindowName,
-                  outputType: outputType
-                };
-                obj.output = doc.output(outputType, outputType === 'save' ? exportWindowName || 'svg.pdf' : undefined);
-                call('exportedPDF', obj);
-                return _context3.abrupt("return", obj);
+              doc = jsPDF({
+                orientation: orientation,
+                unit: unit,
+                format: [res.w, res.h] // , compressPdf: true
 
-              case 21:
-              case "end":
-                return _context3.stop();
-            }
+              });
+              docTitle = getDocumentTitle();
+              doc.setProperties({
+                title: docTitle
+                /* ,
+                subject: '',
+                author: '',
+                keywords: '',
+                creator: '' */
+
+              });
+              _getIssues2 = getIssues(), issues = _getIssues2.issues, issueCodes = _getIssues2.issueCodes;
+              svg = this.svgCanvasToString();
+              doc.addSVG(svg, 0, 0); // doc.output('save'); // Works to open in a new
+              //  window; todo: configure this and other export
+              //  options to optionally work in this manner as
+              //  opposed to opening a new tab
+
+              outputType = outputType || 'dataurlstring';
+              obj = {
+                svg: svg,
+                issues: issues,
+                issueCodes: issueCodes,
+                exportWindowName: exportWindowName,
+                outputType: outputType
+              };
+              obj.output = doc.output(outputType, outputType === 'save' ? exportWindowName || 'svg.pdf' : undefined);
+              call('exportedPDF', obj);
+              return _context3.abrupt("return", obj);
+
+            case 21:
+            case "end":
+              return _context3.stop();
           }
-        }, _callee3, this);
-      }));
-
-      return function (_x7) {
-        return _ref7.apply(this, arguments);
-      };
-    }();
+        }
+      }, null, this);
+    };
     /**
     * Returns the current drawing as raw SVG XML text.
     * @function module:svgcanvas.SvgCanvas#getSvgString
@@ -18658,10 +18583,10 @@ var SvgCanvas = (function () {
       leaveContext: leaveContext,
       setContext: setContext
     };
-    Object.entries(dr).forEach(function (_ref8) {
-      var _ref9 = _slicedToArray(_ref8, 2),
-          prop = _ref9[0],
-          propVal = _ref9[1];
+    Object.entries(dr).forEach(function (_ref5) {
+      var _ref6 = _slicedToArray(_ref5, 2),
+          prop = _ref6[0],
+          propVal = _ref6[1];
 
       canvas[prop] = propVal;
     });

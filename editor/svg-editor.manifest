@@ -140,6 +140,7 @@ extensions/ext-eyedropper.js
 extensions/ext-foreignobject.js
 extensions/ext-grid.js
 extensions/ext-helloworld.js
+extensions/ext-test.js
 extensions/ext-imagelib.js
 extensions/ext-markers.js
 extensions/ext-mathjax.js

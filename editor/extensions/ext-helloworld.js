@@ -82,6 +82,8 @@ export default {
             text = text.replace('{' + prop + '}', val);
           });
 
+          
+
           // Show the text using the custom alert function
           $.alert(text);
         }

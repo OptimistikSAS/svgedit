@@ -1,5 +1,5 @@
 /* eslint-disable */
-var svgEditorExtension_helloworld = (function () {
+var svgEditorExtension_oimotion = (function () {
   'use strict';
 
   function _slicedToArray(arr, i) {
@@ -44,22 +44,8 @@ var svgEditorExtension_helloworld = (function () {
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  /**
-   * ext-helloworld.js
-   *
-   * @license MIT
-   *
-   * @copyright 2010 Alexis Deveria
-   *
-   */
-
-  /**
-  * This is a very basic SVG-Edit extension. It adds a "Hello World" button in
-  *  the left ("mode") panel. Clicking on the button, and then the canvas
-  *  will show the user the point on the canvas that was clicked on.
-  */
-  var extHelloworld = {
-    name: 'helloworld',
+  var extOimotion = {
+    name: 'oimotion',
     init: function init(_ref) {
       var $, importLocale, strings, svgEditor, svgCanvas;
 
@@ -105,6 +91,6 @@ var svgEditorExtension_helloworld = (function () {
     }
   };
 
-  return extHelloworld;
+  return extOimotion;
 
 }());

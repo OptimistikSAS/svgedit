@@ -15,42 +15,6 @@ var canvg = (function (exports) {
     return _typeof(obj);
   }
 
-  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-    try {
-      var info = gen[key](arg);
-      var value = info.value;
-    } catch (error) {
-      reject(error);
-      return;
-    }
-
-    if (info.done) {
-      resolve(value);
-    } else {
-      Promise.resolve(value).then(_next, _throw);
-    }
-  }
-
-  function _asyncToGenerator(fn) {
-    return function () {
-      var self = this,
-          args = arguments;
-      return new Promise(function (resolve, reject) {
-        var gen = fn.apply(self, args);
-
-        function _next(value) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-        }
-
-        function _throw(err) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-        }
-
-        _next(undefined);
-      });
-    };
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -422,7 +386,7 @@ var canvg = (function (exports) {
       });
     }
   }, {
-    re: /^(\w)(\w)(\w)$/,
+    re: /^(\w{1})(\w{1})(\w{1})$/,
     // re: /^(?<r>\w{1})(?<g>\w{1})(?<b>\w{1})$/,
     example: ['#fb0', 'f0f'],
     process: function process(_) {
@@ -1066,7 +1030,7 @@ var canvg = (function (exports) {
 
 
     svg.compressSpaces = function (s) {
-      return s.replace(/\s+/gm, ' ');
+      return s.replace(/[\s\r\t\n]+/gm, ' ');
     }; // ajax
     // Todo: Replace with `fetch` and polyfill
 
@@ -1247,7 +1211,7 @@ var canvg = (function (exports) {
       }, {
         key: "getUnits",
         value: function getUnits() {
-          return String(this.value).replace(/[\d.-]/g, '');
+          return String(this.value).replace(/[0-9.-]/g, '');
         } // get the length as pixels
 
       }, {
@@ -2564,8 +2528,8 @@ var canvg = (function (exports) {
         .replace(/,/gm, ' ') // get rid of all commas
         .replace(/([MmZzLlHhVvCcSsQqTtAa])([MmZzLlHhVvCcSsQqTtAa])/gm, '$1 $2') // separate commands from commands
         .replace(/([MmZzLlHhVvCcSsQqTtAa])([MmZzLlHhVvCcSsQqTtAa])/gm, '$1 $2') // separate commands from commands
-        .replace(/([MmZzLlHhVvCcSsQqTtAa])(\S)/gm, '$1 $2') // separate commands from points
-        .replace(/(\S)([MmZzLlHhVvCcSsQqTtAa])/gm, '$1 $2') // separate commands from points
+        .replace(/([MmZzLlHhVvCcSsQqTtAa])([^\s])/gm, '$1 $2') // separate commands from points
+        .replace(/([^\s])([MmZzLlHhVvCcSsQqTtAa])/gm, '$1 $2') // separate commands from points
         .replace(/(\d)([+-])/gm, '$1 $2') // separate digits when no comma
         .replace(/(\.\d*)(\.)/gm, '$1 $2') // separate digits when no comma
         .replace(/([Aa](\s+\d+)(\s+\d+)(\s+\d+))\s+([01])\s*([01])/gm, '$1 $5 $6 '); // shorthand elliptical arc path syntax
@@ -4038,7 +4002,7 @@ var canvg = (function (exports) {
         }); // remove comments
 
 
-        css = css.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(^\s*\/\/.*)/gm, ''); // eslint-disable-line unicorn/no-unsafe-regex
+        css = css.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(^[\s]*\/\/.*)/gm, ''); // eslint-disable-line unicorn/no-unsafe-regex
         // replace whitespace
 
         css = svg.compressSpaces(css);
@@ -4572,36 +4536,26 @@ var canvg = (function (exports) {
     }; // load from url
 
 
-    svg.load =
-    /*#__PURE__*/
-    function () {
-      var _ref12 = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(ctx, url) {
-        var dom;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return svg.ajax(url, true);
+    svg.load = function _callee(ctx, url) {
+      var dom;
+      return regeneratorRuntime.async(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return regeneratorRuntime.awrap(svg.ajax(url, true));
 
-              case 2:
-                dom = _context.sent;
-                return _context.abrupt("return", svg.loadXml(ctx, dom));
+            case 2:
+              dom = _context.sent;
+              return _context.abrupt("return", svg.loadXml(ctx, dom));
 
-              case 4:
-              case "end":
-                return _context.stop();
-            }
+            case 4:
+            case "end":
+              return _context.stop();
           }
-        }, _callee);
-      }));
-
-      return function (_x2, _x3) {
-        return _ref12.apply(this, arguments);
-      };
-    }(); // load from xml
+        }
+      });
+    }; // load from xml
 
 
     svg.loadXml = function (ctx, xml) {
@@ -4822,9 +4776,9 @@ var canvg = (function (exports) {
       checkPath: function checkPath(element, ctx) {
         var _this26 = this;
 
-        this.events.forEach(function (_ref13, i) {
-          var x = _ref13.x,
-              y = _ref13.y;
+        this.events.forEach(function (_ref12, i) {
+          var x = _ref12.x,
+              y = _ref12.y;
 
           if (ctx.isPointInPath && ctx.isPointInPath(x, y)) {
             _this26.eventElements[i] = element;
@@ -4834,9 +4788,9 @@ var canvg = (function (exports) {
       checkBoundingBox: function checkBoundingBox(element, bb) {
         var _this27 = this;
 
-        this.events.forEach(function (_ref14, i) {
-          var x = _ref14.x,
-              y = _ref14.y;
+        this.events.forEach(function (_ref13, i) {
+          var x = _ref13.x,
+              y = _ref13.y;
 
           if (bb.isPointInBox(x, y)) {
             _this27.eventElements[i] = element;
