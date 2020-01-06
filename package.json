@@ -1,6 +1,6 @@
 {
   "name": "@optimistiksas/svgedit",
-  "version": "5.1.0-OI.0.1",
+  "version": "5.1.0-OI.0.2",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
