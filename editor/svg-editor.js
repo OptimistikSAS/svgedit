@@ -770,7 +770,9 @@ editor.init = function () {
           return;
         }
         if (urldata.url) {
-          editor.loadFromURL(urldata.url);
+          // added timestampt value reading from urldata, to be able to
+          // prevent timestamp adding to the end of url (blob url doesn't support extra parameteres)
+          editor.loadFromURL(urldata.url, { cache: !urldata.timestamp });
           return;
         }
       }
