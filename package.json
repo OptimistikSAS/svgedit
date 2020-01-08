@@ -1,6 +1,6 @@
 {
   "name": "@optimistiksas/svgedit",
-  "version": "5.1.0-OI.0.3",
+  "version": "5.1.0-OI.0.5",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -26,7 +26,7 @@
     "copy": "cp node_modules/load-stylesheets/dist/index-es.js editor/external/load-stylesheets/index-es.js && cp node_modules/jamilih/dist/jml-es.js editor/external/jamilih/jml-es.js && cp node_modules/query-result/esm/index.js editor/external/query-result/esm/index.js && cp node_modules/qr-manipulation/dist/index-es.js editor/external/qr-manipulation/dist/index-es.js && cp node_modules/stackblur-canvas/dist/stackblur-es.js editor/external/stackblur-canvas/dist/stackblur-es.js && cp node_modules/regenerator-runtime/runtime.js editor/external/regenerator-runtime/runtime.js && cp node_modules/core-js-bundle/minified.js editor/external/core-js-bundle/minified.js && cp node_modules/core-js-bundle/minified.js.map editor/external/core-js-bundle/minified.js.map",
     "remark": "remark -q -f .",
     "eslint-fix": "eslint --fix --ext js,md,html .",
-    "eslint": "eslint --ext js,md,html .",
+    "eslint": "eslint --ext html .",
     "rollup": "rollup -c",
     "start-embedded": "echo \"Open file to http://localhost:8000/editor/embedapi.html\" && static -p 8000 | static -p 8001 -H '{\"Access-Control-Allow-Origin\": \"*\"}'",
     "start": "echo \"Open file, e.g., to http://localhost:8000/editor/svg-editor-es.html\" && static -p 8000",
@@ -46,8 +46,8 @@
     "report-summary": "npx nyc report --reporter=text-summary",
     "test-cov": "npm-run-all instrument --parallel --race start cypress:run ; npm run report-summary",
     "test-cov-open": "npm-run-all instrument --parallel --race start cypress:run",
-    "test-no-build": "npm run eslint && npm run build-html && npm run build-by-config && npm test",
-    "test-prep": "npm run eslint && npm run build-html && npm run rollup && npm run build-by-config",
+    "test-no-build": "npm run eslint && npm run build-html && npm test",
+    "test-prep": "npm run eslint",
     "test": "run-p start cypress:run"
   },
   "nyc": {
