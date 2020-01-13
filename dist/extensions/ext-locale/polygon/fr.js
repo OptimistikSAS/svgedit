@@ -1,3 +1,4 @@
+// added fr translation file (OIMotion changes)
 var svgEditorExtensionLocale_polygon_fr = (function () {
   'use strict';
 

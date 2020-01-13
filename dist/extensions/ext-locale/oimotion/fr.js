@@ -1,3 +1,4 @@
+// added fr translation file to OIMotion extension (OIMotion changes)
 var svgEditorExtensionLocale_oimotion_fr = (function () {
   'use strict';
 
