@@ -14432,10 +14432,8 @@
 
       call('selected', selectedElements);
 
-      if (showGrips || selectedElements.length === 1) {
-        selectorManager.requestSelector(selectedElements[0]).showGrips(true);
-      } else {
-        selectorManager.requestSelector(selectedElements[0]).showGrips(false);
+      if (selectedElements.length === 1) {
+        selectorManager.requestSelector(selectedElements[0]).showGrips(showGrips);
       } // make sure the elements are in the correct order
       // See: https://www.w3.org/TR/DOM-Level-3-Core/core.html#Node3-compareDocumentPosition
 
@@ -16949,12 +16947,7 @@
 
       var dblClick = function dblClick(evt) {
         var evtTarget = evt.target;
-        var parent = evtTarget.parentNode; // Do nothing if already in current group
-
-        if (parent === currentGroup) {
-          return;
-        }
-
+        var parent = evtTarget.parentNode;
         var mouseTarget = getMouseTarget(evt);
         var _mouseTarget = mouseTarget,
             tagName = _mouseTarget.tagName;
@@ -16962,6 +16955,11 @@
         if (tagName === 'text' && currentMode !== 'textedit') {
           var pt = transformPoint(evt.pageX, evt.pageY, rootSctm);
           textActions.select(mouseTarget, pt.x, pt.y);
+        } // Do nothing if already in current group
+
+
+        if (parent === currentGroup) {
+          return;
         }
 
         if ((tagName === 'g' || tagName === 'a') && getRotationAngle(mouseTarget)) {
