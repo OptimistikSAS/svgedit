@@ -1,6 +1,9 @@
 {
-  "name": "svgedit",
-  "version": "6.0.0",
+  "name": "@optimistiksas/svgedit",
+  "version": "6.0.0-OI.0.1",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "description": "Powerful SVG-Editor for your browser ",
   "main": "dist/index-umd.js",
   "module": "dist/index-es.js",
@@ -97,7 +100,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SVG-Edit/svgedit.git"
+    "url": "git+https://github.com/OptimistikSAS/svgedit.git"
   },
   "keywords": [
     "svg-editor",
