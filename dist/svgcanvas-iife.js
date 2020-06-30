@@ -4189,7 +4189,7 @@ var SvgCanvas = (function () {
         }
 
         this.parent = this.elem.parentNode;
-        this.elem = this.elem.remove();
+        this.elem.remove();
 
         if (handler) {
           handler.handleHistoryEvent(HistoryEventTypes.AFTER_UNAPPLY, this);
@@ -4266,7 +4266,7 @@ var SvgCanvas = (function () {
 
         removeElementFromListMap(this.elem);
         this.parent = this.elem.parentNode;
-        this.elem = this.elem.remove();
+        this.elem.remove();
 
         if (handler) {
           handler.handleHistoryEvent(HistoryEventTypes.AFTER_APPLY, this);
@@ -13913,7 +13913,7 @@ var SvgCanvas = (function () {
               restoreRefElems(cmd.elem);
             }
 
-            if (cmd.elem.tagName === 'use') {
+            if (cmd.elem && cmd.elem.tagName === 'use') {
               setUseData(cmd.elem);
             }
           } else if (cmdType === ChangeElementCommand$1.type()) {

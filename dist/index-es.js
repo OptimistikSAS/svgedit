@@ -4117,7 +4117,7 @@ var InsertElementCommand = /*#__PURE__*/function (_Command2) {
       }
 
       this.parent = this.elem.parentNode;
-      this.elem = this.elem.remove();
+      this.elem.remove();
 
       if (handler) {
         handler.handleHistoryEvent(HistoryEventTypes.AFTER_UNAPPLY, this);
@@ -4194,7 +4194,7 @@ var RemoveElementCommand = /*#__PURE__*/function (_Command3) {
 
       removeElementFromListMap(this.elem);
       this.parent = this.elem.parentNode;
-      this.elem = this.elem.remove();
+      this.elem.remove();
 
       if (handler) {
         handler.handleHistoryEvent(HistoryEventTypes.AFTER_APPLY, this);
@@ -14223,7 +14223,7 @@ function SvgCanvas(container, config) {
             restoreRefElems(cmd.elem);
           }
 
-          if (cmd.elem.tagName === 'use') {
+          if (cmd.elem && cmd.elem.tagName === 'use') {
             setUseData(cmd.elem);
           }
         } else if (cmdType === ChangeElementCommand$1.type()) {

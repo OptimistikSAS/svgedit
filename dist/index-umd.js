@@ -4123,7 +4123,7 @@
         }
 
         this.parent = this.elem.parentNode;
-        this.elem = this.elem.remove();
+        this.elem.remove();
 
         if (handler) {
           handler.handleHistoryEvent(HistoryEventTypes.AFTER_UNAPPLY, this);
@@ -4200,7 +4200,7 @@
 
         removeElementFromListMap(this.elem);
         this.parent = this.elem.parentNode;
-        this.elem = this.elem.remove();
+        this.elem.remove();
 
         if (handler) {
           handler.handleHistoryEvent(HistoryEventTypes.AFTER_APPLY, this);
@@ -14229,7 +14229,7 @@
               restoreRefElems(cmd.elem);
             }
 
-            if (cmd.elem.tagName === 'use') {
+            if (cmd.elem && cmd.elem.tagName === 'use') {
               setUseData(cmd.elem);
             }
           } else if (cmdType === ChangeElementCommand$1.type()) {
