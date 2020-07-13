@@ -1,4 +1,22 @@
-language: ruby
-rvm:
-  - 2.3
-script: "bundle exec jekyll build"
+os: linux
+dist: xenial
+language: node_js
+node_js:
+  - 14
+  # Reenable later if doing more than linting (i.e., testing)
+  # - 12
+  # - 10
+
+notifications:
+  email: false
+
+script:
+  - npm run eslint
+
+jobs:
+  include:
+    - language: ruby
+      rvm:
+        - 2.3
+      script:
+        - bundle exec jekyll build

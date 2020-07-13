@@ -63,6 +63,8 @@ module.exports = {
           'history',
           'history.pushState',
           'history.replaceState',
+          'location.hash',
+          'navigator',
           'Number.parseFloat',
           'Number.parseInt',
           'Number.isNaN'
@@ -135,6 +137,7 @@ module.exports = {
           'document.evaluate',
           'document.head',
           'document.importNode',
+          'document.querySelector',
           'document.querySelectorAll',
           'DOMParser',
           'Error',
@@ -142,8 +145,10 @@ module.exports = {
           'JSON',
           'KeyboardEvent',
           'location.href',
+          'location.origin',
           'MouseEvent',
           'MutationObserver',
+          'navigator',
           'Number.isNaN',
           'Number.parseFloat',
           'Number.parseInt',
@@ -169,6 +174,9 @@ module.exports = {
         ]
       },
       rules: {
+        // Should probably add this rule to ash-nazg as facilitates tree-shaking
+        'import/no-namespace': ['error'],
+
         'node/no-unsupported-features/node-builtins': 'off'
       }
     },
