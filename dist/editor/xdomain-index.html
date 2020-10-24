@@ -407,7 +407,7 @@
             <span id="zoomLabel" class="zoom_tool icon_label"></span>
             <input id="zoom" size="3" value="100" type="text" />
           </label>
-          <div id="zoom_dropdown" class="dropdown">
+          <!-- <div id="zoom_dropdown" class="dropdown">
             <button></button>
             <ul>
               <li>1000%</li>
@@ -422,7 +422,20 @@
               <li id="fit_to_all" data-val="content">Fit to all content</li>
               <li>100%</li>
             </ul>
-          </div>
+          </div> -->
+          <tool-dropdown id="zoom_dropdown" class="dropdown">
+            <button slot="title" class="tool-dropdown-title"></button>
+            <tool-dropdown-item slot="item">1000%</tool-dropdown-item>
+            <tool-dropdown-item slot="item">400%</tool-dropdown-item>
+            <tool-dropdown-item slot="item">200%</tool-dropdown-item>
+            <tool-dropdown-item slot="item">100%</tool-dropdown-item>
+            <tool-dropdown-item slot="item">50%</tool-dropdown-item>
+            <tool-dropdown-item slot="item">25%</tool-dropdown-item>
+            <tool-dropdown-item slot="item" id="fit_to_canvas" data-val="canvas">Fit to canvas</tool-dropdown-item>
+            <tool-dropdown-item slot="item" id="fit_to_sel" data-val="selection">Fit to selection</tool-dropdown-item>
+            <tool-dropdown-item slot="item" id="fit_to_layer_content" data-val="layer">Fit to layer content</tool-dropdown-item>
+            <tool-dropdown-item slot="item" id="fit_to_all" data-val="content">Fit to all content</tool-dropdown-item>
+          </tool-dropdown>
           <div class="tool_sep"></div>
         </div>
         <div id="tools_bottom_2">
