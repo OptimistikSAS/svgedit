@@ -139,6 +139,7 @@ try { // try clause to avoid js to complain if XDOMAIN undefined
       canvasName: 'xdomain', // Namespace this
       allowedOrigins: ['*']
     });
+    window.editor = svgEditor;
     // eslint-disable-next-line no-console
     console.info('xdomain config activated');
   }

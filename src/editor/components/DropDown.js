@@ -63,7 +63,7 @@ export class ToolDropDown extends HTMLElement {
       console.log('onclcik event item');
       console.log(event.target);
       console.log(event.target.getAttribute('data-val'));
-      //console.log(editor);
+      console.log(window);
       //editor.zoomChanged(window, event.target.getAttribute('data-val'));
     });
   }
