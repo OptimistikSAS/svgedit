@@ -60,14 +60,28 @@ export class ToolDropDown extends HTMLElement {
         : this.$menu.classList.add('closed');
     });
     this.$item.addEventListener('click', (event) => {
-      console.log('onclcik event item');
-      console.log(event.target);
-      console.log(event.target.getAttribute('data-val'));
-      console.log(window);
-      //editor.zoomChanged(window, event.target.getAttribute('data-val'));
+      if (event.target.getAttribute('data-val')) {
+        window.editor.canvas.zoomChanged(window, event.target.getAttribute('data-val'));
+      } else {
+        const ctl = {value: Number.parseFloat(event.target.getAttribute('data-per'))};
+        const zoomlevel = ctl.value / 100;
+        if (zoomlevel < 0.001) {
+          ctl.value = 0.1;
+          return;
+        }
+        const zoom = window.editor.canvas.getZoom();
+        const wArea = document.getElementById('workarea');
+        window.editor.canvas.zoomChanged(window, {
+          width: 0,
+          height: 0,
+          // center pt of scroll position
+          x: (wArea.scrollLeft + wArea.clientWidth / 2) / zoom,
+          y: (wArea.scrollTop + wArea.clientHeight / 2) / zoom,
+          zoom: zoomlevel
+        }, true);
+      }
     });
   }
-
 }
 
 // Register

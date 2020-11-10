@@ -6323,6 +6323,7 @@ try {
   // We wait a micro-task to let the svgEditor variable be defined for module checks
   await Promise.resolve();
   editor.init();
+  window.editor = editor;
 } catch (err) {
   console.error(err); // eslint-disable-line no-console
 }
