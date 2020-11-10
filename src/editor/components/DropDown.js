@@ -1,7 +1,7 @@
 const template = document.createElement('template');
 template.innerHTML = `
 <style>
-    ::slotted(tool-dropdown-item) {
+    ::slotted(se-dropdown-item) {
       display: block;
       width: 120px;
       padding: 4px;
@@ -39,9 +39,9 @@ template.innerHTML = `
   </div>
 `;
 /**
- * @class ToolDropDown
+ * @class SEDropDown
  */
-export class ToolDropDown extends HTMLElement {
+export class SEDropDown extends HTMLElement {
   /**
     * @function constructor
     */
@@ -85,4 +85,4 @@ export class ToolDropDown extends HTMLElement {
 }
 
 // Register
-customElements.define('tool-dropdown', ToolDropDown);
+customElements.define('se-dropdown', SEDropDown);

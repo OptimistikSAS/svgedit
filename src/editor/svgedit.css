@@ -617,12 +617,36 @@ span.zoom_tool {
 #zoom_panel {
   margin-top: 5px;
 }
+se-button{
+  appearance: button;
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  color: -internal-light-dark(black, white);
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: center;
+  align-items: flex-start;
+  cursor: default;
+  background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
+  box-sizing: border-box;
+  margin: 0em;
+  font: 400 13.3333px Arial;
+  padding: 1px 6px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+}
 
 .dropdown {
   position: relative;
 }
 
-.dropdown button {
+.dropdown button, .dropdown se-button {
   width: 15px;
   height: 21px;
   margin: 6px 0 0 1px;
@@ -634,7 +658,11 @@ span.zoom_tool {
   background-color: #E8E8E8;
 }
 
-.dropdown button.down {
+.dropdown se-button {
+  margin-top: 2px!important;
+}
+
+.dropdown button.down, .dropdown se-button.down {
   border-left: 1px solid #808080;
   border-top: 1px solid #808080;
   border-right: 1px solid #FFFFFF;

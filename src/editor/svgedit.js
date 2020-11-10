@@ -1209,7 +1209,7 @@ editor.init = function () {
         '#font_sizeLabel': 'fontsize',
 
         '.flyout_arrow_horiz': 'arrow_right',
-        '.dropdown button, #main_button .dropdown': 'arrow_down',
+        '.dropdown button, .dropdown se-button, #main_button .dropdown': 'arrow_down',
         '#palette .palette_item:first, #fill_bg, #stroke_bg': 'no_color'
       },
       resize: {
@@ -1217,6 +1217,7 @@ editor.init = function () {
         '.flyout_arrow_horiz .svg_icon': 5,
         '.layer_button .svg_icon, #layerlist td.layervis .svg_icon': 14,
         '.dropdown button .svg_icon': 7,
+        '.dropdown se-button .svg_icon': 7,
         '#main_button .dropdown .svg_icon': 9,
         '.palette_item:first .svg_icon': 15,
         '#fill_bg .svg_icon, #stroke_bg .svg_icon': 16,

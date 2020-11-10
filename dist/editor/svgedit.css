@@ -622,7 +622,7 @@ span.zoom_tool {
   position: relative;
 }
 
-.dropdown button {
+.dropdown button, .dropdown se-button {
   width: 15px;
   height: 21px;
   margin: 6px 0 0 1px;
@@ -634,7 +634,7 @@ span.zoom_tool {
   background-color: #E8E8E8;
 }
 
-.dropdown button.down {
+.dropdown button.down, .dropdown se-button.down {
   border-left: 1px solid #808080;
   border-top: 1px solid #808080;
   border-right: 1px solid #FFFFFF;
