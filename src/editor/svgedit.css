@@ -696,7 +696,7 @@ se-button{
   line-height: 16px;
 }
 
-.dropdown li:hover {
+.dropdown li:hover, .dropdown se-dropdown-item:hover {
   background-color: #FFC;
 }
 
