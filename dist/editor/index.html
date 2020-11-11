@@ -407,34 +407,18 @@
             <span id="zoomLabel" class="zoom_tool icon_label"></span>
             <input id="zoom" size="3" value="100" type="text" />
           </label>
-          <!-- <div id="zoom_dropdown" class="dropdown">
-            <button></button>
-            <ul>
-              <li>1000%</li>
-              <li>400%</li>
-              <li>200%</li>
-              <li>100%</li>
-              <li>50%</li>
-              <li>25%</li>
-              <li id="fit_to_canvas" data-val="canvas">Fit to canvas</li>
-              <li id="fit_to_sel" data-val="selection">Fit to selection</li>
-              <li id="fit_to_layer_content" data-val="layer">Fit to layer content</li>
-              <li id="fit_to_all" data-val="content">Fit to all content</li>
-              <li>100%</li>
-            </ul>
-          </div> -->
           <se-dropdown id="zoom_dropdown" class="dropdown">
             <se-button slot="title" class="se-dropdown-title"></se-button>
-            <se-dropdown-item slot="item" data-per="1000%">1000%</se-dropdown-item>
-            <se-dropdown-item slot="item" data-per="400%">400%</se-dropdown-item>
-            <se-dropdown-item slot="item" data-per="100%">200%</se-dropdown-item>
-            <se-dropdown-item slot="item" data-per="100%">100%</se-dropdown-item>
-            <se-dropdown-item slot="item" data-per="50%">50%</se-dropdown-item>
-            <se-dropdown-item slot="item" data-per="25%">25%</se-dropdown-item>
-            <se-dropdown-item slot="item" id="fit_to_canvas" data-val="canvas">Fit to canvas</se-dropdown-item>
-            <se-dropdown-item slot="item" id="fit_to_sel" data-val="selection">Fit to selection</se-dropdown-item>
-            <se-dropdown-item slot="item" id="fit_to_layer_content" data-val="layer">Fit to layer content</se-dropdown-item>
-            <se-dropdown-item slot="item" id="fit_to_all" data-val="content">Fit to all content</se-dropdown-item>
+            <se-dropdown-item data-per="1000%">1000%</se-dropdown-item>
+            <se-dropdown-item data-per="400%">400%</se-dropdown-item>
+            <se-dropdown-item data-per="100%">200%</se-dropdown-item>
+            <se-dropdown-item data-per="100%">100%</se-dropdown-item>
+            <se-dropdown-item data-per="50%">50%</se-dropdown-item>
+            <se-dropdown-item data-per="25%">25%</se-dropdown-item>
+            <se-dropdown-item id="fit_to_canvas" data-val="canvas">Fit to canvas</se-dropdown-item>
+            <se-dropdown-item id="fit_to_sel" data-val="selection">Fit to selection</se-dropdown-item>
+            <se-dropdown-item id="fit_to_layer_content" data-val="layer">Fit to layer content</se-dropdown-item>
+            <se-dropdown-item id="fit_to_all" data-val="content">Fit to all content</se-dropdown-item>
           </se-dropdown>
           <div class="tool_sep"></div>
         </div>

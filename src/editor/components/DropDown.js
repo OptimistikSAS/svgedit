@@ -35,7 +35,7 @@ template.innerHTML = `
     </style>
   <div class="menu dropup closed">
     <slot name="title"></slot>
-    <ul><slot name="item"></slot></ul>
+    <ul class="se-dropdown-items"><slot></slot></ul>
   </div>
 `;
 /**
@@ -48,39 +48,57 @@ export class SEDropDown extends HTMLElement {
   constructor () {
     super();
     this.open = false;
-    this._shadowRoot = this.attachShadow({mode: 'closed'});
+    this._shadowRoot = this.attachShadow({mode: 'open'});
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this.$menu = this._shadowRoot.querySelector('.menu');
     this.$title = this._shadowRoot.querySelector('slot[name="title"]');
-    this.$item = this._shadowRoot.querySelector('slot[name="item"]');
-    this.$title.addEventListener('click', () => {
-      this.open = !this.open;
-      this.open
-        ? this.$menu.classList.remove('closed')
-        : this.$menu.classList.add('closed');
-    });
-    this.$item.addEventListener('click', (event) => {
-      if (event.target.getAttribute('data-val')) {
-        window.editor.canvas.zoomChanged(window, event.target.getAttribute('data-val'));
-      } else {
-        const ctl = {value: Number.parseFloat(event.target.getAttribute('data-per'))};
-        const zoomlevel = ctl.value / 100;
-        if (zoomlevel < 0.001) {
-          ctl.value = 0.1;
-          return;
+    this.$items = this._shadowRoot.querySelector('.se-dropdown-items');
+    // the last element of the div is the slot
+    // we retrieve all elements added in the slot (i.e. se-dropdown-item)
+    this.$elements = this.$items.lastElementChild.assignedElements();
+  }
+  /**
+   * @function connectedCallback
+   * @returns {void}
+   */
+  connectedCallback () {
+    const onClickHandler = (ev) => {
+      ev.stopPropagation();
+      console.log(ev.target.nodeName);
+      switch (ev.target.nodeName) {
+      case 'SE-DROPDOWN-ITEM':
+        if (ev.target.getAttribute('data-val')) {
+          window.editor.canvas.zoomChanged(window, ev.target.getAttribute('data-val'));
+        } else {
+          const ctl = {value: Number.parseFloat(ev.target.getAttribute('data-per'))};
+          const zoomlevel = ctl.value / 100;
+          if (zoomlevel < 0.001) {
+            ctl.value = 0.1;
+            return;
+          }
+          const zoom = window.editor.canvas.getZoom();
+          const wArea = document.getElementById('workarea');
+          window.editor.canvas.zoomChanged(window, {
+            width: 0,
+            height: 0,
+            // center pt of scroll position
+            x: (wArea.scrollLeft + wArea.clientWidth / 2) / zoom,
+            y: (wArea.scrollTop + wArea.clientHeight / 2) / zoom,
+            zoom: zoomlevel
+          }, true);
         }
-        const zoom = window.editor.canvas.getZoom();
-        const wArea = document.getElementById('workarea');
-        window.editor.canvas.zoomChanged(window, {
-          width: 0,
-          height: 0,
-          // center pt of scroll position
-          x: (wArea.scrollLeft + wArea.clientWidth / 2) / zoom,
-          y: (wArea.scrollTop + wArea.clientHeight / 2) / zoom,
-          zoom: zoomlevel
-        }, true);
+        break;
+      case 'BUTTON':
+      case 'IMG':
+        this.open = !this.open;
+        this.open
+          ? this.$menu.classList.remove('closed')
+          : this.$menu.classList.add('closed');
+        break;
       }
-    });
+    };
+    this.addEventListener('click', onClickHandler);
+    this.$title.addEventListener('click', onClickHandler);
   }
 }
 
