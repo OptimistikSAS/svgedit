@@ -10,10 +10,12 @@ template.innerHTML = `
       margin: 0 0 -1px 0;
       line-height: 16px;
     }
-    ::slotted([slot="title"]) {
-        font-size: 18px;
+    button {
+        font-size: 15px;
         font-weight: bold;
         cursor: pointer;
+        padding: 1px 3px;
+        margin-left: 3px;
     }
     .menu ul{
       list-style: none;
@@ -34,7 +36,9 @@ template.innerHTML = `
     }
     </style>
   <div class="menu dropup closed">
-    <slot name="title"></slot>
+    <button>
+      <img class="svg_icon" src="./images/arrow-down.svg" alt="icon" width="7" height="7" />
+    </button>
     <ul class="se-dropdown-items"><slot></slot></ul>
   </div>
 `;
@@ -51,7 +55,7 @@ export class SEDropDown extends HTMLElement {
     this._shadowRoot = this.attachShadow({mode: 'open'});
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this.$menu = this._shadowRoot.querySelector('.menu');
-    this.$title = this._shadowRoot.querySelector('slot[name="title"]');
+    this.$button = this._shadowRoot.querySelector('button');
     this.$items = this._shadowRoot.querySelector('.se-dropdown-items');
     // the last element of the div is the slot
     // we retrieve all elements added in the slot (i.e. se-dropdown-item)
@@ -64,7 +68,6 @@ export class SEDropDown extends HTMLElement {
   connectedCallback () {
     const onClickHandler = (ev) => {
       ev.stopPropagation();
-      console.log(ev.target.nodeName);
       switch (ev.target.nodeName) {
       case 'SE-DROPDOWN-ITEM':
         if (ev.target.getAttribute('data-val')) {
@@ -98,7 +101,7 @@ export class SEDropDown extends HTMLElement {
       }
     };
     this.addEventListener('click', onClickHandler);
-    this.$title.addEventListener('click', onClickHandler);
+    this.$button.addEventListener('click', onClickHandler);
   }
 }
 
