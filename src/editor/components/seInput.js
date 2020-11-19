@@ -1,10 +1,7 @@
 /* eslint-disable node/no-unpublished-import */
-// import DelegateInputLabelMixin from 'elix/src/base/DelegateInputLabelMixin.js';
-// import html from 'elix/src/core/html.js';
 import Input from 'elix/src/base/Input.js';
 import {defaultState} from 'elix/src/base/internal.js';
 import {templateFrom, fragmentFrom} from 'elix/src/core/htmlLiterals.js';
-// import ReactiveElement from 'elix/src/core/ReactiveElement.js';
 import {internal} from 'elix';
 
 /**
@@ -74,7 +71,6 @@ class SeInput extends Input {
    */
   attributeChangedCallback (name, oldValue, newValue) {
     if (oldValue === newValue) return;
-    console.log({this: this, name, oldValue, newValue});
     switch (name) {
     case 'label':
       this.label = newValue;
@@ -97,9 +93,7 @@ class SeInput extends Input {
     */
   [internal.render] (changed) {
     super[internal.render](changed);
-    // console.log(this, changed);
     if (this[internal.firstRender]) {
-      // this.$img = this.shadowRoot.querySelector('img');
       this.$input = this.shadowRoot.getElementById('inner');
       this.$img = this.shadowRoot.querySelector('img');
       this.$span = this.shadowRoot.querySelector('span');

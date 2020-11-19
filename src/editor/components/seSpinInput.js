@@ -65,7 +65,6 @@ class SeSpinInput extends NumberSpinBox {
    */
   attributeChangedCallback (name, oldValue, newValue) {
     if (oldValue === newValue) return;
-    console.log({this: this, name, oldValue, newValue});
     switch (name) {
     case 'label':
       this.label = newValue;
