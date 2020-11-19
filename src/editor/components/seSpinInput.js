@@ -43,6 +43,28 @@ class SeSpinInput extends NumberSpinBox {
           line-height: normal;
           margin-top: 5px;
           height: 23px;
+          background: none;
+          border: none;
+          box-sizing: none;
+        }
+        label {
+          grid-column-start: 1;
+          grid-column-end: 1;
+          grid-row-start: 1;
+          grid-row-end: 3;          
+        }
+        [part~="input"]{
+          grid-column-start: 2;
+          grid-column-end: 3;
+          background-color: white;
+          border: 1px solid gray;
+          border-right: none;
+        }
+        [part~="spin-button"]{
+          grid-column-start: 3;
+          grid-column-end: auto;
+          background-color: white;
+          border: 1px solid gray;
         }
         </style>
       `.content
