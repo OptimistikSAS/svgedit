@@ -328,13 +328,13 @@ class TopPanel {
         });
 
         if (tagName === "text") {
-          $("#text_panel").css("display", "inline-block");
-          $("#tool_font_size").css("display", "inline");
+          $id("text_panel").style.display = "inline-block";
+          $id("tool_font_size").style.display = "inline";
           $id("tool_italic").pressed = this.editor.svgCanvas.getItalic();
           $id("tool_bold").pressed = this.editor.svgCanvas.getBold();
-          $("#tool_font_family").val(elem.getAttribute("font-family"));
-          $("#font_size").val(elem.getAttribute("font-size"));
-          $("#text").val(elem.textContent);
+          $id("tool_font_family").value = elem.getAttribute("font-family");
+          $id("font_size").value = elem.getAttribute("font-size");
+          $id("text").value = elem.textContent;
           const textAnchorStart = $id("tool_text_anchor_start");
           const textAnchorMiddle = $id("tool_text_anchor_middle");
           const textAnchorEnd = $id("tool_text_anchor_end");
