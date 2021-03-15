@@ -181,14 +181,14 @@ export default {
             // Add functionality and picture to cancel button.
             $('#tool_mathjax_cancel').prepend($.getSvgIcon('cancel', true))
               .on('click touched', function () {
-                $('#mathjax').hide();
+                $id("mathjax").style.display = 'none';
               });
 
             // Add functionality and picture to the save button.
             $('#tool_mathjax_save').prepend($.getSvgIcon('ok', true))
               .on('click touched', function () {
                 saveMath();
-                $('#mathjax').hide();
+                $id("mathjax").style.display = 'none';
               });
 
             // MathJax preprocessing has to ignore most of the page.

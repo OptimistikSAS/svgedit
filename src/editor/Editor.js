@@ -413,7 +413,7 @@ class Editor extends EditorStartup {
 
     if (url.startsWith('data:')) {
       // data URI found
-      $('#image_url').hide();
+      $id("image_url").style.display = 'none';
       $id("change_image_url").style.display = 'block';
     } else {
       // regular URL
@@ -423,7 +423,7 @@ class Editor extends EditorStartup {
         this.defaultImageURL = url;
       });
       $id("image_url").style.display = 'block';
-      $('#change_image_url').hide();
+      $id("change_image_url").style.display = 'none';
     }
   }
 
@@ -518,7 +518,7 @@ class Editor extends EditorStartup {
     }
 
     if (this.configObj.urldata.storagePrompt !== true && this.storagePromptState === 'ignore') {
-      $('#dialog_box').hide();
+      $id("dialog_box").style.display = 'none';
     }
   }
 
@@ -959,7 +959,7 @@ class Editor extends EditorStartup {
   * @returns {void} Resolves to `undefined`
   */
   cancelOverlays (e) {
-    $('#dialog_box').hide();
+    $id("dialog_box").style.display = 'none';
     const $editorDialog = document.getElementById('se-svg-editor-dialog');
     const editingsource = $editorDialog.getAttribute('dialog') === 'open';
     if (!editingsource && !this.docprops && !this.configObj.preferences) {
@@ -999,7 +999,6 @@ class Editor extends EditorStartup {
    *  and `false` after the user confirms.
    */
   async openPrep () {
-    // $('#main_menu').hide();
     if (this.svgCanvas.undoMgr.getUndoStackSize() === 0) {
       return true;
     }
@@ -1202,7 +1201,7 @@ class Editor extends EditorStartup {
             resolve();
           },
           complete () {
-            $('#dialog_box').hide();
+            $id("dialog_box").style.display = 'none';
           }
         });
       });

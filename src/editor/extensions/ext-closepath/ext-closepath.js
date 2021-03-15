@@ -92,7 +92,7 @@ export default {
         return Object.assign(buttons[i], button);
       }),
       callback () {
-        $('#closepath_panel').hide();
+        $id("closepath_panel").style.display = 'none';
       },
       selectedChanged (opts) {
         selElems = opts.elems;

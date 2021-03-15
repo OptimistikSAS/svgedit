@@ -6,6 +6,9 @@
  * @copyright 2010 Alexis Deveria
  *
  */
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -285,7 +288,8 @@ export default {
         return Object.assign(contextTools[i], contextTool);
       }),
       callback () {
-        $('#arrow_panel').hide();
+        $id("arrow_panel").style.display = 'none';
+        
         // Set ID so it can be translated in locale file
         $('#arrow_list option')[0].id = 'connector_no_arrow';
       },

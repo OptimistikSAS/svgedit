@@ -7,6 +7,9 @@
  * @copyright 2010 Jacques Distler, 2010 Alexis Deveria
  *
  */
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -183,10 +186,10 @@ export default {
         return Object.assign(contextTools[i], contextTool);
       }),
       callback () {
-        $('#foreignObject_panel').hide();
+        $id("foreignObject_panel").style.display = 'none';
 
         const endChanges = function () {
-          $('#svg_source_editor').hide();
+          $id("svg_source_editor").style.display = 'none';
           editingforeign = false;
           $('#svg_source_textarea').blur();
           toggleSourceButtons(false);

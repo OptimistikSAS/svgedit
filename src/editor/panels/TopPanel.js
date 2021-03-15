@@ -172,11 +172,18 @@ class TopPanel {
 
     const isNode = currentMode === "pathedit"; // elem ? (elem.id && elem.id.startsWith('pathpointgrip')) : false;
     const menuItems = document.getElementById("se-cmenu_canvas");
-    $(
-      "#selected_panel, #multiselected_panel, #g_panel, #rect_panel, #circle_panel," +
-      "#ellipse_panel, #line_panel, #text_panel, #image_panel, #container_panel," +
-      " #use_panel, #a_panel"
-    ).hide();
+    $id("selected_panel").style.display = 'none';
+    $id("multiselected_panel").style.display = 'none';
+    $id("g_panel").style.display = 'none';
+    $id("rect_panel").style.display = 'none';
+    $id("circle_panel").style.display = 'none';
+    $id("ellipse_panel").style.display = 'none';
+    $id("line_panel").style.display = 'none';
+    $id("text_panel").style.display = 'none';
+    $id("image_panel").style.display = 'none';
+    $id("container_panel").style.display = 'none';
+    $id("use_panel").style.display = 'none';
+    $id("a_panel").style.display = 'none';
     if (!isNullish(elem)) {
       const elname = elem.nodeName;
       // If this is a link with no transform and one child, pretend
@@ -204,7 +211,7 @@ class TopPanel {
         $id("selected_panel").style.display = 'block';
         // Elements in this array already have coord fields
         if (["line", "circle", "ellipse"].includes(elname)) {
-          $("#xy_panel").hide();
+          $id("xy_panel").style.display = 'none';
         } else {
           let x, y;
 

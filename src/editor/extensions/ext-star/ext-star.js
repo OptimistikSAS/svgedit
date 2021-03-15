@@ -6,6 +6,10 @@
  *
  */
 
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
+
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
   try {
@@ -121,7 +125,7 @@ export default {
         return Object.assign(contextTools[i], contextTool);
       }),
       callback () {
-        $('#star_panel').hide();
+        $id("star_panel").style.display = 'none';
         // const endChanges = function(){};
       },
       mouseDown (opts) {

@@ -44,7 +44,7 @@ export default {
     * @returns {void}
     */
     function closeBrowser () {
-      $('#imgbrowse_holder').hide();
+      $id("imgbrowse_holder").style.display = 'none';
       document.activeElement.blur(); // make sure focus is the body to correct issue #417
     }
 
@@ -355,7 +355,7 @@ export default {
             });
             preview.empty();
             multiArr = [];
-            $('#imgbrowse_holder').hide();
+            $id("imgbrowse_holder").style.display = 'none';
           }).css({
             position: 'absolute',
             bottom: 10,
@@ -393,7 +393,7 @@ export default {
         $('<button><img class="svg_icon" src="./images/cancel.svg" alt="icon" width="16" height="16" />' + uiStrings.common.cancel + '</button>')
           .appendTo(browser)
           .on('click touchend', function () {
-            $('#imgbrowse_holder').hide();
+            $id("imgbrowse_holder").style.display = 'none';
           }).css({
             position: 'absolute',
             top: 5,

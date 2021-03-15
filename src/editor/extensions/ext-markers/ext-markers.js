@@ -29,6 +29,10 @@
  *
 */
 
+import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
+
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
   try {
@@ -567,7 +571,8 @@ export default {
       name: strings.name,
       svgicons: '',
       callback () {
-        $('#marker_panel').addClass('toolset').hide();
+        $id("marker_panel").classList.add('toolset');
+        $id("marker_panel").style.display = 'none';
       },
       /* async */ addLangData ({importLocale, lang}) {
         return {data: strings.langList};

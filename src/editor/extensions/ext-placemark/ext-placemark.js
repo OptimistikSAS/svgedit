@@ -6,6 +6,10 @@
  *
  */
 
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
+
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
   try {
@@ -356,7 +360,7 @@ export default {
         return Object.assign(contextTools[i], contextTool);
       }),
       callback () {
-        $('#placemark_panel').hide();
+        $id("placemark_panel").style.display = 'none';
         // const endChanges = function(){};
       },
       mouseDown (opts) {

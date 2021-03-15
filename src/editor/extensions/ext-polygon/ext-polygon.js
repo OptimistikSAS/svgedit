@@ -6,6 +6,10 @@
  *
  */
 
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
+
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
   try {
@@ -113,7 +117,7 @@ export default {
       }),
 
       callback () {
-        $('#polygon_panel').hide();
+        $id("polygon_panel").style.display = 'none';
 
         const endChanges = function () {
           // Todo: Missing?
