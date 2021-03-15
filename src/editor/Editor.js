@@ -518,7 +518,9 @@ class Editor extends EditorStartup {
     }
 
     if (this.configObj.urldata.storagePrompt !== true && this.storagePromptState === 'ignore') {
-      $id("dialog_box").style.display = 'none';
+      if($id("dialog_box") != null){
+        $id("dialog_box").style.display = 'none';
+      }
     }
   }
 
@@ -959,7 +961,9 @@ class Editor extends EditorStartup {
   * @returns {void} Resolves to `undefined`
   */
   cancelOverlays (e) {
-    $id("dialog_box").style.display = 'none';
+    if($id("dialog_box") != null){
+      $id("dialog_box").style.display = 'none';
+    }
     const $editorDialog = document.getElementById('se-svg-editor-dialog');
     const editingsource = $editorDialog.getAttribute('dialog') === 'open';
     if (!editingsource && !this.docprops && !this.configObj.preferences) {
@@ -1201,7 +1205,9 @@ class Editor extends EditorStartup {
             resolve();
           },
           complete () {
-            $id("dialog_box").style.display = 'none';
+            if($id("dialog_box") != null){
+              $id("dialog_box").style.display = 'none';
+            }
           }
         });
       });

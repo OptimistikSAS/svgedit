@@ -571,8 +571,10 @@ export default {
       name: strings.name,
       svgicons: '',
       callback () {
-        $id("marker_panel").classList.add('toolset');
-        $id("marker_panel").style.display = 'none';
+        if($id("marker_panel") !== null) {
+          $id("marker_panel").classList.add('toolset');
+          $id("marker_panel").style.display = 'none';
+        }
       },
       /* async */ addLangData ({importLocale, lang}) {
         return {data: strings.langList};

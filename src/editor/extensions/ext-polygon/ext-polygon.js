@@ -117,7 +117,9 @@ export default {
       }),
 
       callback () {
-        $id("polygon_panel").style.display = 'none';
+        if($id("polygon_panel") !== null){
+          $id("polygon_panel").style.display = 'none';
+        }
 
         const endChanges = function () {
           // Todo: Missing?

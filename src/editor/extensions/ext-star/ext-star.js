@@ -125,7 +125,9 @@ export default {
         return Object.assign(contextTools[i], contextTool);
       }),
       callback () {
-        $id("star_panel").style.display = 'none';
+        if($id("star_panel") !== null) {
+          $id("star_panel").style.display = 'none';
+        }
         // const endChanges = function(){};
       },
       mouseDown (opts) {
