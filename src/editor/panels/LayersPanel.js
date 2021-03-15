@@ -176,7 +176,7 @@ class LayersPanel {
       this.lmenuFunc.bind(this)
     );
     $id("se-cmenu-layers-list").addEventListener("change", e => {
-      this.lmenuFunc.bind(this)(e?.detail?.trigger, e?.detail?.source);
+      this.lmenuFunc(e);
     });
     $id("sidepanel_handle").addEventListener(
       "click",
