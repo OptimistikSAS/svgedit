@@ -7,6 +7,9 @@
  * @copyright 2013 Jo Segaert
  *
  */
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -231,7 +234,7 @@ export default {
           locationX = opts.mouse_x / zoom;
           locationY = opts.mouse_y / zoom;
 
-          $('#mathjax').show();
+          $id("mathjax").style.display = 'block';
           return {started: false}; // Otherwise the last selected object dissapears.
         }
         return undefined;

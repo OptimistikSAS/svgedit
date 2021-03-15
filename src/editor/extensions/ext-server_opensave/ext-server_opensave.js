@@ -7,6 +7,9 @@
  *
  */
 import {Canvg as canvg} from 'canvg';
+import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -274,8 +277,10 @@ export default {
     rebuildInput(importImgForm);
 
     // Add forms to buttons
-    $('#tool_open').show().prepend(openSvgForm);
-    $('#tool_import').show().prepend(importSvgForm);
+    $id("tool_open").style.display = 'block';
+    $id("tool_import").style.display = 'block';
+    $('#tool_open').prepend(openSvgForm);
+    $('#tool_import').prepend(importSvgForm);
     $('#tool_image').prepend(importImgForm);
   }
 };

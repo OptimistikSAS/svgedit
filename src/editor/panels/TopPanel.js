@@ -201,7 +201,7 @@ class TopPanel {
       }
 
       if (!isNode && currentMode !== "pathedit") {
-        $("#selected_panel").show();
+        $id("selected_panel").style.display = 'block';
         // Elements in this array already have coord fields
         if (["line", "circle", "ellipse"].includes(elname)) {
           $("#xy_panel").hide();
@@ -226,7 +226,7 @@ class TopPanel {
 
           $("#selected_x").val(x || 0);
           $("#selected_y").val(y || 0);
-          $("#xy_panel").show();
+          $id("xy_panel").style.display = 'block';
         }
 
         // Elements in this array cannot be converted to a path
@@ -292,11 +292,11 @@ class TopPanel {
       let linkHref = null;
       if (tagName === "a") {
         linkHref = this.editor.svgCanvas.getHref(elem);
-        $("#g_panel").show();
+        $id("g_panel").style.display = 'block';
       }
 
       if (elem.parentNode.tagName === "a" && !$(elem).siblings().length) {
-        $("#a_panel").show();
+        $id("a_panel").style.display = 'block';
         linkHref = this.editor.svgCanvas.getHref(elem.parentNode);
       }
 
@@ -309,8 +309,7 @@ class TopPanel {
 
       if (panels[tagName]) {
         const curPanel = panels[tagName];
-
-        $("#" + tagName + "_panel").show();
+        $id(tagName + "_panel").style.display = 'block';
 
         curPanel.forEach(item => {
           let attrVal = elem.getAttribute(item);
@@ -367,7 +366,7 @@ class TopPanel {
           );
           // image
         } else if (tagName === "g" || tagName === "use") {
-          $("#container_panel").show();
+          $id("container_panel").style.display = 'block';
           const title = this.editor.svgCanvas.getTitle();
           const label = $("#g_title")[0];
           label.value = title;
@@ -387,7 +386,7 @@ class TopPanel {
 
       // if (!isNullish(elem))
     } else if (this.multiselected) {
-      $("#multiselected_panel").show();
+      $id("multiselected_panel").style.display = 'block';
       menuItems.setAttribute("enablemenuitems", "#group");
       menuItems.setAttribute("disablemenuitems", "#ungroup");
     } else {

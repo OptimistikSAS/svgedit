@@ -7,6 +7,9 @@
  * @copyright 2010 Alexis Deveria
  *
  */
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -445,7 +448,7 @@ export default {
             }).append(`<span>${description}</span>`);
         });
       } else {
-        $('#imgbrowse_holder').show();
+        $id("imgbrowse_holder").style.display = 'block';
       }
     }
 

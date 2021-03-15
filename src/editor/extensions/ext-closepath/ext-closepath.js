@@ -6,6 +6,9 @@
  * @copyright 2010 Jeff Schiller
  *
  */
+ import {
+  $id, $qa, $qq
+} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -30,10 +33,10 @@ export default {
     const updateButton = function (path) {
       const seglist = path.pathSegList,
         closed = seglist.getItem(seglist.numberOfItems - 1).pathSegType === 1,
-        showbutton = closed ? '#tool_openpath' : '#tool_closepath',
-        hidebutton = closed ? '#tool_closepath' : '#tool_openpath';
-      $(hidebutton).hide();
-      $(showbutton).show();
+        showbutton = closed ? 'tool_openpath' : 'tool_closepath',
+        hidebutton = closed ? 'tool_closepath' : 'tool_openpath';
+      $id("hidebutton").style.display = 'none';
+      $id("showbutton").style.display = 'block';
     };
     const showPanel = function (on) {
       $('#closepath_panel').toggle(on);

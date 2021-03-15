@@ -414,7 +414,7 @@ class Editor extends EditorStartup {
     if (url.startsWith('data:')) {
       // data URI found
       $('#image_url').hide();
-      $('#change_image_url').show();
+      $id("change_image_url").style.display = 'block';
     } else {
       // regular URL
       this.svgCanvas.embedImage(url, function (dataURI) {
@@ -422,7 +422,7 @@ class Editor extends EditorStartup {
         $('#url_notice').toggle(!dataURI);
         this.defaultImageURL = url;
       });
-      $('#image_url').show();
+      $id("image_url").style.display = 'block';
       $('#change_image_url').hide();
     }
   }
