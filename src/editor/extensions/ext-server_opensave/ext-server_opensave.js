@@ -188,9 +188,7 @@ export default {
         cancelled = false;
         return;
       }
-      if($id("dialog_box") != null){
-        $id("dialog_box").style.display = 'none';
-      }
+      if($id("dialog_box") != null) $id("dialog_box").style.display = 'none';
 
       if (type !== 'import_img') {
         xmlstr = decode64(str64);
@@ -251,9 +249,7 @@ export default {
         rebuildInput(form);
         await $.process_cancel(strings.uploading);
         cancelled = true;
-        if($id("dialog_box") != null){
-          $id("dialog_box").style.display = 'none';
-        }
+        if($id("dialog_box") != null) $id("dialog_box").style.display = 'none';
       }
 
       if (form[0] === openSvgForm[0]) {

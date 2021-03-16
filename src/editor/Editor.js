@@ -451,7 +451,7 @@ class Editor extends EditorStartup {
   updateCanvas (center, newCtr) {
     const zoom = this.svgCanvas.getZoom();
     const wArea = this.workarea;
-    const cnvs = $('#svgcanvas');
+    const cnvs = $id("svgcanvas");
 
     let w = parseFloat(getComputedStyle(this.workarea, null).width.replace("px", "")), h = parseFloat(getComputedStyle(this.workarea, null).height.replace("px", ""));
     const wOrig = w, hOrig = h;
@@ -469,8 +469,9 @@ class Editor extends EditorStartup {
       this.workarea.style.overflow = 'scroll';
     }
 
-    const oldCanY = cnvs.height() / 2;
-    const oldCanX = cnvs.width() / 2;
+    const oldCanY = parseFloat(getComputedStyle(cnvs, null).height.replace("px", "")) / 2;
+    const oldCanX = parseFloat(getComputedStyle(cnvs, null).width.replace("px", "")) / 2;
+    
     cnvs.width(w).height(h);
     const newCanY = h / 2;
     const newCanX = w / 2;
@@ -518,9 +519,7 @@ class Editor extends EditorStartup {
     }
 
     if (this.configObj.urldata.storagePrompt !== true && this.storagePromptState === 'ignore') {
-      if($id("dialog_box") != null){
-        $id("dialog_box").style.display = 'none';
-      }
+      if($id("dialog_box") != null) $id("dialog_box").style.display = 'none';      
     }
   }
 
@@ -961,9 +960,7 @@ class Editor extends EditorStartup {
   * @returns {void} Resolves to `undefined`
   */
   cancelOverlays (e) {
-    if($id("dialog_box") != null){
-      $id("dialog_box").style.display = 'none';
-    }
+    if($id("dialog_box") != null) $id("dialog_box").style.display = 'none';
     const $editorDialog = document.getElementById('se-svg-editor-dialog');
     const editingsource = $editorDialog.getAttribute('dialog') === 'open';
     if (!editingsource && !this.docprops && !this.configObj.preferences) {
@@ -1205,9 +1202,7 @@ class Editor extends EditorStartup {
             resolve();
           },
           complete () {
-            if($id("dialog_box") != null){
-              $id("dialog_box").style.display = 'none';
-            }
+            if($id("dialog_box") != null) $id("dialog_box").style.display = 'none';
           }
         });
       });
