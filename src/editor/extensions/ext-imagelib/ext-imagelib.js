@@ -7,9 +7,6 @@
  * @copyright 2010 Alexis Deveria
  *
  */
- import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -27,6 +24,7 @@ export default {
   name: 'imagelib',
   async init ({$, decode64, dropXMLInternalSubset}) {
     const svgEditor = this;
+    const {$id} = svgEditor.svgCanvas;
     const imagelibStrings = await loadExtensionTranslation(svgEditor.configObj.pref('lang'));
 
     const {uiStrings, canvas: svgCanvas} = svgEditor;

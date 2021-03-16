@@ -472,7 +472,8 @@ class Editor extends EditorStartup {
     const oldCanY = parseFloat(getComputedStyle(cnvs, null).height.replace("px", "")) / 2;
     const oldCanX = parseFloat(getComputedStyle(cnvs, null).width.replace("px", "")) / 2;
     
-    cnvs.width(w).height(h);
+    cnvs.style.width = w + "px";
+    cnvs.style.height = h + "px";
     const newCanY = h / 2;
     const newCanX = w / 2;
     const offset = this.svgCanvas.updateCanvas(w, h);

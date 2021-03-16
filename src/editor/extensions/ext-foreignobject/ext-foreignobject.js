@@ -7,10 +7,6 @@
  * @copyright 2010 Jacques Distler, 2010 Alexis Deveria
  *
  */
- import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
-
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
   try {
@@ -29,6 +25,7 @@ export default {
     const svgEditor = this;
     const {$, text2xml, NS} = S;
     const {svgCanvas} = svgEditor;
+    const {$id} = svgCanvas;
     const
       // {svgcontent} = S,
       // addElem = svgCanvas.addSVGElementFromJson,

@@ -6,10 +6,6 @@
  *
  */
 
- import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
-
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
   try {
@@ -27,7 +23,7 @@ export default {
   async init (S) {
     const svgEditor = this;
     const {svgCanvas} = svgEditor;
-
+    const {$id} = svgCanvas;
     const {$} = S; // {svgcontent},
     let
       selElems,
@@ -125,9 +121,7 @@ export default {
         return Object.assign(contextTools[i], contextTool);
       }),
       callback () {
-        if($id("star_panel") !== null) {
-          $id("star_panel").style.display = 'none';
-        }
+        if($id("star_panel") !== null) $id("star_panel").style.display = 'none';
         // const endChanges = function(){};
       },
       mouseDown (opts) {

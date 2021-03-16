@@ -8,13 +8,12 @@
  *
  */
 import { dragmove } from '../../../editor/dragmove/dragmove.js';
-import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
 
 export default {
   name: 'overview_window',
   init ({$, isChrome}) {
+    const svgEditor = this;
+    const {$id} = svgEditor.svgCanvas;
     const overviewWindowGlobals = {};
     // Disabled in Chrome 48-, see https://github.com/SVG-Edit/svgedit/issues/26 and
     // https://code.google.com/p/chromium/issues/detail?id=565120.

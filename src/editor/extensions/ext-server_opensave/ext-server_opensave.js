@@ -7,9 +7,6 @@
  *
  */
 import {Canvg as canvg} from 'canvg';
-import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -35,6 +32,7 @@ export default {
       },
       canvas: svgCanvas
     } = svgEditor;
+    const {$id} = svgCanvas;
 
     /**
      *

@@ -7,9 +7,6 @@
  * @copyright 2013 Jo Segaert
  *
  */
- import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -29,6 +26,7 @@ export default {
     const svgEditor = this;
     const strings = await loadExtensionTranslation(svgEditor.configObj.pref('lang'));
     const {svgCanvas} = svgEditor;
+    const {$id} = svgCanvas;
 
     // Configuration of the MathJax extention.
 

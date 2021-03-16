@@ -6,9 +6,6 @@
  * @copyright 2010 Jeff Schiller
  *
  */
- import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
 
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
@@ -28,6 +25,8 @@ export default {
   name: 'closepath',
   async init ({importLocale, $}) {
     const svgEditor = this;
+    const {svgCanvas} = svgEditor;
+    const {$id} = svgCanvas;
     const strings = await loadExtensionTranslation(svgEditor.configObj.pref('lang'));
     let selElems;
     const updateButton = function (path) {

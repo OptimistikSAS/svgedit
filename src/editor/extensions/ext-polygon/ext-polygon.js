@@ -6,10 +6,6 @@
  *
  */
 
- import {
-  $id, $qa, $qq
-} from '../../../svgcanvas/utilities.js';
-
 const loadExtensionTranslation = async function (lang) {
   let translationModule;
   try {
@@ -27,6 +23,7 @@ export default {
   async init (S) {
     const svgEditor = this;
     const {svgCanvas} = svgEditor;
+    const {$id} = svgCanvas;
     const {$} = S, // {svgcontent}
       // addElem = svgCanvas.addSVGElementFromJson,
       editingitex = false;
