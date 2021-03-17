@@ -329,7 +329,6 @@ class TopPanel {
 
         if (tagName === "text") {
           $id("text_panel").style.display = "inline-block";
-          $id("tool_font_size").style.display = "inline";
           $id("tool_italic").pressed = this.editor.svgCanvas.getItalic();
           $id("tool_bold").pressed = this.editor.svgCanvas.getBold();
           $id("tool_font_family").value = elem.getAttribute("font-family");

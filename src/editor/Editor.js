@@ -281,14 +281,18 @@ class Editor extends EditorStartup {
     // Misc additional actions
 
     // Make 'return' keypress trigger the change event
-    $('.attr_changer, #image_url').bind(
-      'keydown',
-      'return',
-      function (evt) {
-        $(this).change();
+    var elements = document.getElementsByClassName("attr_changer");
+    Array.from(elements).forEach(function(element) {
+      element.addEventListener('keydown', function(evt) {
+        evt.currentTarget.dispatchEvent(new Event('change'));
         evt.preventDefault();
-      }
-    );
+      });
+    });
+    $id('image_url').addEventListener('keydown', function(evt) {
+      console.log("came");
+      evt.currentTarget.dispatchEvent(new Event('change'));
+      evt.preventDefault();
+    });
   }
   /**
      * @returns {void}
@@ -409,7 +413,7 @@ class Editor extends EditorStartup {
       url = this.defaultImageURL;
     }
     this.svgCanvas.setImageURL(url);
-    $('#image_url').val(url);
+    $id("image_url").value = url;
 
     if (url.startsWith('data:')) {
       // data URI found
