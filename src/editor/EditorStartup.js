@@ -382,15 +382,22 @@ class EditorStartup {
 
     $id('stroke_width').value = this.configObj.curConfig.initStroke.width;
     $id('opacity').value = this.configObj.curConfig.initOpacity * 100;
-
-    $('.push_button').mousedown(() => {
-      if (!$(this).hasClass('disabled')) {
-        $(this).addClass('push_button_pressed').removeClass('push_button');
-      }
-    }).mouseout(() => {
-      $(this).removeClass('push_button_pressed').addClass('push_button');
-    }).mouseup(() => {
-      $(this).removeClass('push_button_pressed').addClass('push_button');
+    var elements = document.getElementsByClassName("push_button");
+    Array.from(elements).forEach(function(element) {
+      element.addEventListener('mousedown', function(event) {
+        if (!event.currentTarget.classList.contains('disabled')) {
+          event.currentTarget.classList.add('push_button_pressed')
+          event.currentTarget.classList.remove('push_button');
+        }
+      });
+      element.addEventListener('mouseout', function(event) {
+        event.currentTarget.classList.add('push_button')
+        event.currentTarget.classList.remove('push_button_pressed');
+      });
+      element.addEventListener('mouseup', function(event) {
+        event.currentTarget.classList.add('push_button')
+        event.currentTarget.classList.remove('push_button_pressed');
+      });
     });
 
     this.layersPanel.populateLayers();
