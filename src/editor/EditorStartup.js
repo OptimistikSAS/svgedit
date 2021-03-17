@@ -58,6 +58,7 @@ class EditorStartup {
   * @returns {void}
   */
   async init () {
+    const self = this;
     // allow to prepare the dom without display
     this.$svgEditor.style.visibility = 'hidden';
     try {
@@ -198,7 +199,7 @@ class EditorStartup {
 
     // fired when user wants to move elements to another layer
     let promptMoveLayerOnce = false;
-    $('#selLayerNames').change((evt) => {
+    $id('selLayerNames').addEventListener('change', function(evt) {
       const destLayer = evt.currentTarget.options[evt.currentTarget.selectedIndex].value;
       const confirmStr = this.uiStrings.notification.Qmovethis.elemsToLayer.replace('%s', destLayer);
       /**
@@ -224,33 +225,31 @@ class EditorStartup {
         }
       }
     });
-
-    $('#tool_font_family').change((evt) => {
-      this.svgCanvas.setFontFamily(evt.originalEvent.detail.value);
+    $id('tool_font_family').addEventListener('change', function(evt) {
+      self.svgCanvas.setFontFamily(evt.detail.value);
     });
 
-    $('#seg_type').change((evt) => {
-      this.svgCanvas.setSegType($(evt.currentTarget).val());
+    $id('seg_type').addEventListener('change', function(evt) {
+      self.svgCanvas.setSegType(evt.currentTarget.value);
     });
 
     $('#text').bind('keyup input', (evt) => {
       this.svgCanvas.setTextContent(evt.currentTarget.value);
     });
-
-    $('#image_url').change((evt) => {
-      this.setImageURL(evt.currentTarget.value);
+    $id('image_url').addEventListener('change', function(evt) {
+      self.setImageURL(evt.currentTarget.value);
     });
 
-    $('#link_url').change((evt) => {
+    $id('link_url').addEventListener('change', function(evt) {
       if (evt.currentTarget.value.length) {
-        this.svgCanvas.setLinkURL(evt.currentTarget.value);
+        self.svgCanvas.setLinkURL(evt.currentTarget.value);
       } else {
-        this.svgCanvas.removeHyperlink();
+        self.svgCanvas.removeHyperlink();
       }
     });
 
-    $('#g_title').change((evt) => {
-      this.svgCanvas.setGroupTitle(evt.currentTarget.value);
+    $id('g_title').addEventListener('change', function(evt) {
+      self.svgCanvas.setGroupTitle(evt.currentTarget.value);
     });
 
     const wArea = this.workarea;
