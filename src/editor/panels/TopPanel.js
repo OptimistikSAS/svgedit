@@ -83,31 +83,27 @@ class TopPanel {
             }
           }
 
-          $("#stroke_width").val(gWidth === null ? "" : gWidth);
+          $id("stroke_width").value = (gWidth === null ? "" : gWidth);
           this.editor.bottomPanel.updateColorpickers(true);
           break;
         }
         default: {
           this.editor.bottomPanel.updateColorpickers(true);
 
-          $("#stroke_width").val(
-            this.selectedElement.getAttribute("stroke-width") || 1
-          );
-          $("#stroke_style").val(
-            this.selectedElement.getAttribute("stroke-dasharray") || "none"
-          );
+          $id("stroke_width").value = this.selectedElement.getAttribute("stroke-width") || 1;
+          $id("stroke_style").value = this.selectedElement.getAttribute("stroke-dasharray") || "none";
 
           let attr =
             this.selectedElement.getAttribute("stroke-linejoin") || "miter";
 
-          if ($("#linejoin_" + attr).length) {
-            this.setStrokeOpt($("#linejoin_" + attr)[0]);
+          if ($id("linejoin_" + attr).length) {
+            this.setStrokeOpt($id("linejoin_" + attr));
           }
 
           attr = this.selectedElement.getAttribute("stroke-linecap") || "butt";
 
-          if ($("#linecap_" + attr).length) {
-            this.setStrokeOpt($("#linecap_" + attr)[0]);
+          if ($id("linecap_" + attr).length) {
+            this.setStrokeOpt($id("linecap_" + attr));
           }
         }
       }
