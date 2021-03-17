@@ -311,7 +311,7 @@ class TopPanel {
       $("#tool_make_link, #tool_make_link_multi").toggle(!linkHref);
 
       if (linkHref) {
-        $("#link_url").val(linkHref);
+        $id("link_url").value = linkHref;
       }
 
       if (panels[tagName]) {
