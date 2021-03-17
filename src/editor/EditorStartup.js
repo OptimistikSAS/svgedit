@@ -188,11 +188,11 @@ class EditorStartup {
       res.w = convertUnit(res.w) + this.configObj.curConfig.baseUnit;
       res.h = convertUnit(res.h) + this.configObj.curConfig.baseUnit;
     }
-    $('#se-img-prop').attr('dialog', 'close');
-    $('#se-img-prop').attr('title', this.svgCanvas.getDocumentTitle());
-    $('#se-img-prop').attr('width', res.w);
-    $('#se-img-prop').attr('height', res.h);
-    $('#se-img-prop').attr('save', this.configObj.pref('img_save'));
+    $id('se-img-prop').setAttribute('dialog', 'close');
+    $id('se-img-prop').setAttribute('title', this.svgCanvas.getDocumentTitle());
+    $id('se-img-prop').setAttribute('width', res.w);
+    $id('se-img-prop').setAttribute('height', res.h);
+    $id('se-img-prop').setAttribute('save', this.configObj.pref('img_save'));
 
     // Lose focus for select elements when changed (Allows keyboard shortcuts to work better)
     $('select').change((evt) => { $(evt.currentTarget).blur(); });
