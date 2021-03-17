@@ -338,11 +338,29 @@ class EditorStartup {
         $('#text').focus();
       }
     });
-    
-    // eslint-disable-next-line max-len
+    // ref: https://stackoverflow.com/a/1038781
+    function getWidth() {
+      return Math.max(
+        document.body.scrollWidth,
+        document.documentElement.scrollWidth,
+        document.body.offsetWidth,
+        document.documentElement.offsetWidth,
+        document.documentElement.clientWidth
+      );
+    }
+
+    function getHeight() {
+      return Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight,
+        document.documentElement.clientHeight
+      );
+    }
     const winWh = {
-      width: parseFloat(getComputedStyle(window, null).width.replace("px", "")), 
-      height: parseFloat(getComputedStyle(window, null).height.replace("px", ""))
+      width: getWidth(), 
+      height: getHeight()
     };
 
     window.addEventListener('resize', (evt) => {
