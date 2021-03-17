@@ -35,7 +35,7 @@ export default {
 
     const properlySourceSizeTextArea = function () {
       // TODO: remove magic numbers here and get values from CSS
-      const height = $('#svg_source_container').height() - 80;
+      const height = parseFloat(getComputedStyle($id(svg_source_container), null).height.replace("px", "")) - 80;
       $('#svg_source_textarea').css('height', height);
     };
 

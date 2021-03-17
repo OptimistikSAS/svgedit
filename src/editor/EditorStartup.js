@@ -338,7 +338,12 @@ class EditorStartup {
         $('#text').focus();
       }
     });
-    const winWh = {width: $(window).width(), height: $(window).height()};
+    
+    // eslint-disable-next-line max-len
+    const winWh = {
+      width: parseFloat(getComputedStyle(window, null).width.replace("px", "")), 
+      height: parseFloat(getComputedStyle(window, null).height.replace("px", ""))
+    };
 
     window.addEventListener('resize', (evt) => {
       Object.entries(winWh).forEach(([type, val]) => {
