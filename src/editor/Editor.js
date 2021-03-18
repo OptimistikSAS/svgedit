@@ -793,7 +793,8 @@ class Editor extends EditorStartup {
   async extAdded (win, ext) {
    
     const self = this;
-    const btnSelects = [];
+    // eslint-disable-next-line sonarjs/no-unused-collection
+    let btnSelects = [];
     if (!ext) {
       return undefined;
     }
