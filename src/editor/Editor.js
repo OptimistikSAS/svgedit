@@ -359,8 +359,8 @@ class Editor extends EditorStartup {
         element.classList.add('tool_button_current');
         element.classList.remove('tool_button')
       });
-      $id('#tool_select').classList.add('tool_button_current')
-      $id('#tool_select').classList.remove('tool_button');
+      $id('tool_select').classList.add('tool_button_current')
+      $id('tool_select').classList.remove('tool_button');
       this.multiselected = false;
       if (elems.length) {
         this.selectedElement = this.elems[0];
