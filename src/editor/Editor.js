@@ -281,7 +281,7 @@ class Editor extends EditorStartup {
     // Misc additional actions
 
     // Make 'return' keypress trigger the change event
-    var elements = document.getElementsByClassName("attr_changer");
+    const elements = document.getElementsByClassName("attr_changer");
     Array.from(elements).forEach(function(element) {
       element.addEventListener('keydown', function(evt) {
         evt.currentTarget.dispatchEvent(new Event('change'));
@@ -289,7 +289,6 @@ class Editor extends EditorStartup {
       });
     });
     $id('image_url').addEventListener('keydown', function(evt) {
-      console.log("came");
       evt.currentTarget.dispatchEvent(new Event('change'));
       evt.preventDefault();
     });
@@ -355,7 +354,7 @@ class Editor extends EditorStartup {
     $id('path_node_panel').style.display = (editmode) ? 'block' : 'none';
     if (editmode) {
       // Change select icon
-      var elements = document.getElementsByClassName("tool_button_current");
+      const elements = document.getElementsByClassName("tool_button_current");
       Array.from(elements).forEach(function(element) {
         element.classList.add('tool_button_current');
         element.classList.remove('tool_button')

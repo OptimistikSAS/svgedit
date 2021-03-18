@@ -201,7 +201,7 @@ class EditorStartup {
     let promptMoveLayerOnce = false;
     $id('selLayerNames').addEventListener('change', function(evt) {
       const destLayer = evt.currentTarget.options[evt.currentTarget.selectedIndex].value;
-      const confirmStr = this.uiStrings.notification.Qmovethis.elemsToLayer.replace('%s', destLayer);
+      const confirmStr = self.uiStrings.notification.QmoveElemsToLayer.replace('%s', destLayer);
       /**
     * @param {boolean} ok
     * @returns {void}
@@ -209,9 +209,9 @@ class EditorStartup {
       const moveToLayer = (ok) => {
         if (!ok) { return; }
         promptMoveLayerOnce = true;
-        this.svgCanvas.moveSelectedToLayer(destLayer);
-        this.svgCanvas.clearSelection();
-        this.layersPanel.populateLayers();
+        self.svgCanvas.moveSelectedToLayer(destLayer);
+        self.svgCanvas.clearSelection();
+        self.layersPanel.populateLayers();
       };
       if (destLayer) {
         if (promptMoveLayerOnce) {
@@ -382,7 +382,7 @@ class EditorStartup {
 
     $id('stroke_width').value = this.configObj.curConfig.initStroke.width;
     $id('opacity').value = this.configObj.curConfig.initOpacity * 100;
-    var elements = document.getElementsByClassName("push_button");
+    const elements = document.getElementsByClassName("push_button");
     Array.from(elements).forEach(function(element) {
       element.addEventListener('mousedown', function(event) {
         if (!event.currentTarget.classList.contains('disabled')) {
