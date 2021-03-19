@@ -72,8 +72,7 @@ export default {
         a.href = uri;
         a.style.dispaly = 'none';
         document.body.appendChild(a);
-
-        $(a).click();
+        a.click();
         return true;
       }
       return false;
