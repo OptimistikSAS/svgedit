@@ -100,12 +100,14 @@ export default {
     * @returns {void}
     */
     function showPanel (on) {
-      let connRules = $('#connector_rules');
-      if (!connRules.length) {
-        connRules = $('<style id="connector_rules"></style>').appendTo('head');
+      let connRules = $id('connector_rules');
+      if (!connRules) {
+        connRules = document.createElement('style');
+        connRules.setAttribute('id', 'connector_rules');
+        document.getElementsByTagName("head")[0].appendChild(connRules);
       }
-      connRules.text(!on ? '' : '#tool_clone, #tool_topath, #tool_angle, #xy_panel { display: none !important; }');
-      $('#connector_panel').toggle(on);
+      connRules.textContent = (!on ? '' : '#tool_clone, #tool_topath, #tool_angle, #xy_panel { display: none !important; }');
+      $id('connector_panel').style.display = (on) ? 'block' : 'none';
     }
 
     /**

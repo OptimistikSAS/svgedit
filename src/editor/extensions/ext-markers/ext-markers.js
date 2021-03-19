@@ -134,7 +134,7 @@ export default {
      * @returns {void}
     */
     function showPanel (on) {
-      $('#marker_panel').toggle(on);
+      $id('marker_panel').style.display = (on) ? 'block' : 'none';
 
       if (on) {
         const el = selElems[0];
@@ -142,11 +142,11 @@ export default {
         let val, ci;
         $.each(mtypes, function (i, pos) {
           const m = getLinked(el, 'marker-' + pos);
-          const txtbox = $('#' + pos + '_marker');
+          const txtbox = $id(pos + '_marker');
           if (!m) {
             val = '\\nomarker';
             ci = val;
-            txtbox.hide(); // hide text box
+            txtbox.style.display = 'none';
           } else {
             if (!m.attributes.se_type) { return; } // not created by this extension
             val = '\\' + m.attributes.se_type.textContent;
@@ -155,10 +155,10 @@ export default {
               val = m.lastChild.textContent;
               // txtbox.show(); // show text box
             } else {
-              txtbox.hide(); // hide text box
+              txtbox.style.display = 'none';
             }
           }
-          txtbox.val(val);
+          txtbox.value = val;
           setIcon(pos, ci);
         });
       }
@@ -379,7 +379,7 @@ export default {
           const len = el.id.length;
           const linkid = url.substr(-len - 1, len);
           if (el.id !== linkid) {
-            const val = $('#' + pos + '_marker').attr('value');
+            const val = $id(pos + '_marker').getAttribute('value');
             addMarker(id, val);
             svgCanvas.changeSelectedAttribute(markerName, 'url(#' + id + ')');
             if (el.tagName === 'line' && pos === 'mid') { el = convertline(el); }
@@ -396,7 +396,7 @@ export default {
     * @returns {void}
     */
     function triggerTextEntry (pos, val) {
-      $('#' + pos + '_marker').val(val);
+      $id(pos + '_marker').value = val;
       $('#' + pos + '_marker').change();
       // const txtbox = $('#'+pos+'_marker');
       // if (val.substr(0,1)=='\\') {txtbox.hide();}
@@ -408,7 +408,7 @@ export default {
     * @returns {void} Resolves to `undefined`
     */
     function showTextPrompt (pos) {
-      let def = $('#' + pos + '_marker').val();
+      let def = $id(pos + '_marker').value;
       if (def.substr(0, 1) === '\\') { def = ''; }
       // eslint-disable-next-line no-alert
       const txt = prompt('Enter text for ' + pos + ' marker', def);

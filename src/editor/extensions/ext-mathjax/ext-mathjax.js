@@ -82,7 +82,7 @@ export default {
      * @returns {void}
      */
     function saveMath () {
-      const code = $('#mathjax_code_textarea').val();
+      const code = $id('mathjax_code_textarea').value;
       // displaystyle to force MathJax NOT to use the inline style. Because it is
       // less fancy!
       MathJax.Hub.queue.Push(['Text', math, '\\displaystyle{' + code + '}']);
