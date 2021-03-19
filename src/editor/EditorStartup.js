@@ -195,7 +195,7 @@ class EditorStartup {
     $id('se-img-prop').setAttribute('save', this.configObj.pref('img_save'));
 
     // Lose focus for select elements when changed (Allows keyboard shortcuts to work better)
-    $('select').change((evt) => { $(evt.currentTarget).blur(); });
+    $('select').change((evt) => { evt.currentTarget.blur(); });
 
     // fired when user wants to move elements to another layer
     let promptMoveLayerOnce = false;
@@ -323,7 +323,7 @@ class EditorStartup {
       * @returns {void}
       */
     const unfocus = () => {
-      $(inp).blur();
+      inp.blur();
     };
 
     $('#svg_editor').find('button, select, input:not(#text)').focus(() => {

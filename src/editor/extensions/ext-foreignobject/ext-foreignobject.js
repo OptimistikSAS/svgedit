@@ -192,7 +192,7 @@ export default {
         const endChanges = function () {
           $id("svg_source_editor").style.display = 'none';
           editingforeign = false;
-          $('#svg_source_textarea').blur();
+          $id('svg_source_textarea').blur();
           toggleSourceButtons(false);
         };
 

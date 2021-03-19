@@ -434,7 +434,7 @@ export const textActionsMethod = (function () {
         textActionsContext_.getCanvas().deleteSelectedElements();
       }
 
-      $(textinput).blur();
+      textinput.blur();
 
       curtext = false;
 
