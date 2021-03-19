@@ -324,7 +324,6 @@ class LayersPanel {
    * @returns {void}
    */
   layerRename() {
-    // const curIndex = $('#layerlist tr.layersel').prevAll().length; // Currently unused
     const oldName = document.querySelector("#layerlist tr.layersel td.layername").textContent;
     const newName = prompt(this.uiStrings.notification.enterNewLayerName, "");
     if (!newName) {

@@ -762,7 +762,9 @@ class Editor extends EditorStartup {
     } else {
       this.curContext = null;
     }
-    $('#cur_context_panel').toggle(Boolean(context)).html(linkStr);
+    $id('cur_context_panel').style.display = (Boolean(context)) ? 'block' : 'none';
+    // eslint-disable-next-line no-unsanitized/property
+    $id('cur_context_panel').innerHTML = linkStr;
 
     this.updateTitle();
   }
@@ -911,11 +913,6 @@ class Editor extends EditorStartup {
     return runCallback();
   }
 
-  /*
-    this.addDropDown('#font_family_dropdown', () => {
-      $('#font_family').val($(this).text()).change();
-    });
-  */
   /**
   * @param {Float} multiplier
   * @returns {void}

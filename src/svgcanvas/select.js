@@ -372,7 +372,7 @@ export class SelectorManager {
     this.selectorGripsGroup.append(this.rotateGrip);
     $.data(this.rotateGrip, 'type', 'rotate');
 
-    if ($('#canvasBackground').length) { return; }
+    if (document.getElementById('canvasBackground')) { return; }
 
     const [width, height] = config_.dimensions;
     const canvasbg = svgFactory_.createSVGElement({

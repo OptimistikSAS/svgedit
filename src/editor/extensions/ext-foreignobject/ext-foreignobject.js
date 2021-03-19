@@ -59,8 +59,10 @@ export default {
     * @returns {void}
     */
     function toggleSourceButtons (on) {
-      $('#tool_source_save, #tool_source_cancel').toggle(!on);
-      $('#foreign_save, #foreign_cancel').toggle(on);
+      $id('tool_source_save').style.display = (!on) ? 'block' : 'none';
+      $id('tool_source_cancel').style.display = (!on) ? 'block' : 'none';
+      $id('foreign_save').style.display = (on) ? 'block' : 'none';
+      $id('foreign_cancel').style.display = (on) ? 'block' : 'none';
     }
 
     let selElems,
@@ -276,9 +278,9 @@ export default {
           const elem = selElems[i];
           if (elem && elem.tagName === 'foreignObject') {
             if (opts.selectedElement && !opts.multiselected) {
-              $('#foreign_font_size').val(elem.getAttribute('font-size'));
-              $('#foreign_width').val(elem.getAttribute('width'));
-              $('#foreign_height').val(elem.getAttribute('height'));
+              $id('foreign_font_size').value = elem.getAttribute('font-size');
+              $id('foreign_width').value = elem.getAttribute('width');
+              $id('foreign_height').value = elem.getAttribute('height');
               showPanel(true);
             } else {
               showPanel(false);

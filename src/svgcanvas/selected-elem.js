@@ -903,7 +903,7 @@ export const updateCanvas = function (w, h) {
   elementContext_.getSVGRoot().setAttribute('width', w);
   elementContext_.getSVGRoot().setAttribute('height', h);
   const currentZoom = elementContext_.getCurrentZoom();
-  const bg = $('#canvasBackground')[0];
+  const bg = document.getElementById('canvasBackground');
   const oldX = elementContext_.getSVGContent().getAttribute('x');
   const oldY = elementContext_.getSVGContent().getAttribute('y');
   const x = ((w - this.contentW * currentZoom) / 2);
