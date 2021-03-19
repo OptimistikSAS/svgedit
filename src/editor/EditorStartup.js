@@ -335,7 +335,7 @@ class EditorStartup {
       this.workarea.removeEventListener('mousedown', unfocus);
       // Go back to selecting text if in textedit mode
       if (this.svgCanvas.getMode() === 'textedit') {
-        $('#text').focus();
+        $id('text').focus();
       }
     });
     // ref: https://stackoverflow.com/a/1038781

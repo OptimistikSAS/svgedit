@@ -109,7 +109,7 @@ export default {
       $id('svg_source_textarea').value = str;
       $('#svg_source_editor').fadeIn();
       properlySourceSizeTextArea();
-      $('#svg_source_textarea').focus();
+      $id('svg_source_textarea').focus();
     }
 
     /**

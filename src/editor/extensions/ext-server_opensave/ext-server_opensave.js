@@ -63,14 +63,17 @@ export default {
       if (avoidClientSide || avoidClientSideDownload) {
         return false;
       }
-      const support = $('<a>')[0].download === '';
+      const support = document.querySelector('a').download === '';
       let a;
       if (support) {
-        a = $('<a>hidden</a>').attr({
-          download: (filename || 'image') + suffix,
-          href: uri
-        }).css('display', 'none').appendTo('body');
-        a[0].click();
+        a = document.createElement("a");
+        a.text = 'hidden';
+        a.download = (filename || 'image') + suffix;
+        a.href = uri;
+        a.style.dispaly = 'none';
+        document.body.appendChild(a);
+
+        $(a).click();
         return true;
       }
       return false;
@@ -209,19 +212,21 @@ export default {
     };
 
     // Create upload form
-    const openSvgForm = $('<form>');
-    openSvgForm.attr({
-      enctype: 'multipart/form-data',
-      method: 'post',
-      action: openSvgAction,
-      target: 'output_frame'
-    });
+
+    const openSvgForm = document.createElement("FORM");
+    openSvgForm.action = openSvgAction;
+    openSvgForm.enctype = 'multipart/form-data';
+    openSvgForm.method = 'post';
+    openSvgForm.target = 'output_frame';
+    
 
     // Create import form
-    const importSvgForm = openSvgForm.clone().attr('action', importSvgAction);
+    const importSvgForm = openSvgForm.cloneNode(true);
+    importSvgForm.action =  importSvgAction;
 
     // Create image form
-    const importImgForm = openSvgForm.clone().attr('action', importImgAction);
+    const importImgForm = openSvgForm.cloneNode(true);
+    importImgForm.action = importImgAction;
 
     // It appears necessary to rebuild this input every time a file is
     // selected so the same file can be picked and the change event can fire.
@@ -276,8 +281,8 @@ export default {
     // Add forms to buttons
     $id("tool_open").style.display = 'block';
     $id("tool_import").style.display = 'block';
-    $('#tool_open').prepend(openSvgForm);
-    $('#tool_import').prepend(importSvgForm);
-    $('#tool_image').prepend(importImgForm);
+    $id('tool_open').insertBefore(openSvgForm, $id('tool_open').firstChild);
+    $id('tool_import').insertBefore(importSvgForm, $id('tool_import').firstChild);
+    $id('tool_image').insertBefore(importImgForm, $id('tool_image').firstChild);
   }
 };

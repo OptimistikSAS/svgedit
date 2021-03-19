@@ -56,7 +56,7 @@ export const textActionsMethod = (function () {
 */
   function setCursor (index) {
     const empty = (textinput.value === '');
-    $(textinput).focus();
+    textinput.focus();
 
     if (!arguments.length) {
       if (empty) {
