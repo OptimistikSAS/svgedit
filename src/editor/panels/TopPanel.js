@@ -288,10 +288,6 @@ class TopPanel {
 
       const { tagName } = elem;
 
-      // if ($(elem).data('gsvg')) {
-      //   $('#g_panel').show();
-      // }
-
       let linkHref = null;
       if (tagName === "a") {
         linkHref = this.editor.svgCanvas.getHref(elem);

@@ -39,20 +39,15 @@ export default {
     * @returns {void}
     */
     function showPanel (on) {
-      let fcRules = $('#fc_rules');
-      if (!fcRules.length) {
-        fcRules = $('<style id="fc_rules"></style>').appendTo('head');
+      let fcRules = $id('fc_rules');
+      if (!fcRules) {
+        fcRules = document.createElement('style');
+        fcRules.setAttribute('id', 'fc_rules');
+        document.getElementsByTagName("head")[0].appendChild(fcRules);
       }
-      fcRules.text(!on ? '' : ' #tool_topath { display: none !important; }');
-      $('#polygon_panel').toggle(on);
-    }
-
-    /*
-    function toggleSourceButtons(on){
-      $('#tool_source_save, #tool_source_cancel').toggle(!on);
-      $('#polygon_save, #polygon_cancel').toggle(on);
-    }
-    */
+      fcRules.textContent = !on ? '' : ' #tool_topath { display: none !important; }';
+      $id('star_panel').style.display = (on) ? 'block' : 'none';
+    }   
 
     /**
     * @param {string} attr
@@ -242,7 +237,7 @@ export default {
           const elem = selElems[i];
           if (elem && elem.getAttribute('shape') === 'regularPoly') {
             if (opts.selectedElement && !opts.multiselected) {
-              $('#polySides').val(elem.getAttribute('sides'));
+              $id('polySides').value = elem.getAttribute('sides');
 
               showPanel(true);
             } else {

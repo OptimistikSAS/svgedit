@@ -72,7 +72,7 @@ export default {
      * @returns {void}
      */
     function showPanel (on) {
-      $('#placemark_panel').toggle(on);
+      $id('placemark_panel').style.display = (on) ? 'block' : 'none';
     }
 
     /**
@@ -141,7 +141,6 @@ export default {
     function addMarker (id, val) {
       let marker = svgCanvas.getElem(id);
       if (marker) { return undefined; }
-      // console.log(id);
       if (val === '' || val === 'nomarker') { return undefined; }
       const color = svgCanvas.getColor('stroke');
       // NOTE: Safari didn't like a negative value in viewBox
@@ -249,7 +248,7 @@ export default {
         const len = el.id.length;
         const linkid = url.substr(-len - 1, len);
         if (el.id !== linkid) {
-          const val = $('#placemark_marker').attr('value') || 'leftarrow';
+          const val = $id('placemark_marker').getAttribute('value') || 'leftarrow';
           addMarker(id, val);
           svgCanvas.changeSelectedAttribute(markerName, 'url(#' + id + ')');
           svgCanvas.call('changed', selElems);
@@ -264,7 +263,7 @@ export default {
       const parts = this.id.split('_');
       let val = parts[2];
       if (parts[3]) { val += '_' + parts[3]; }
-      $('#placemark_marker').attr('value', val);
+      $id('placemark_marker').setAttribute('value', val);
     }
 
     /**
@@ -368,8 +367,8 @@ export default {
         if (svgCanvas.getMode() === 'placemark') {
           started = true;
           const id = svgCanvas.getNextId();
-          const items = $('#placemarkText').val().split(';');
-          let font = $('#placemarkFont').val().split(' ');
+          const items = $id('placemarkText').value.split(';');
+          let font = $id('placemarkFont').value.split(' ');
           const fontSize = Number.parseInt(font.pop());
           font = font.join(' ');
           const x0 = opts.start_x + 10, y0 = opts.start_y + 10;
@@ -453,7 +452,7 @@ export default {
           });
           setMarker(
             newPM.firstElementChild,
-            $('#placemark_marker').attr('value') || 'leftarrow'
+            $id('placemark_marker').getAttribute('value') || 'leftarrow'
           );
           return {
             started: true
@@ -526,13 +525,13 @@ export default {
             $(elem).children().each((n, i) => {
               const [, , type] = i.id.split('_');
               if (type === 'txt') {
-                $('#placemarkFont').val(
+                $id('placemarkFont').value = (
                   i.getAttribute('font-family') + ' ' + i.getAttribute('font-size')
                 );
                 txt.push($(i).text());
               }
             });
-            $('#placemarkText').val(txt.join(';'));
+            $id('placemarkText').value = txt.join(';');
             showPanel(true);
           } else {
             showPanel(false);

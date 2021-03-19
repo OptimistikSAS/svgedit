@@ -128,7 +128,7 @@ export default {
       async exportImage (win, data) {
         const {issues, mimeType, quality} = data;
 
-        if (!$('#export_canvas').length) {
+        if (!$id('export_canvas')) {
           $('<canvas>', {id: 'export_canvas'}).hide().appendTo('body');
         }
         const c = $('#export_canvas')[0];
