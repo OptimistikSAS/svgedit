@@ -43,19 +43,15 @@ export default {
      * @returns {void}
      */
     function showPanel (on) {
-      let fcRules = $('#fc_rules');
-      if (!fcRules.length) {
-        fcRules = $('<style id="fc_rules"></style>').appendTo('head');
+      let fcRules = $id('fc_rules');
+      if (!fcRules) {
+        fcRules = document.createElement('style');
+        fcRules.setAttribute('id', 'fc_rules');
+        document.getElementsByTagName("head")[0].appendChild(fcRules);
       }
-      fcRules.text(!on ? '' : ' #tool_topath { display: none !important; }');
-      $('#star_panel').toggle(on);
+      fcRules.textContent = !on ? '' : ' #tool_topath { display: none !important; }';
+      $id('star_panel').style.display = (on) ? 'block' : 'none';
     }
-
-    /*
-    function toggleSourceButtons(on){
-      $('#star_save, #star_cancel').toggle(on);
-    }
-    */
 
     /**
      *
@@ -233,9 +229,8 @@ export default {
           const elem = selElems[i];
           if (elem && elem.getAttribute('shape') === 'star') {
             if (opts.selectedElement && !opts.multiselected) {
-              // $('#starRadiusMulitplier').val(elem.getAttribute('r2'));
-              $('#starNumPoints').val(elem.getAttribute('point'));
-              $('#radialShift').val(elem.getAttribute('radialshift'));
+              $id('starNumPoints').value = elem.getAttribute('point');
+              $id('radialShift').value = elem.getAttribute('radialshift');
               showPanel(true);
             } else {
               showPanel(false);

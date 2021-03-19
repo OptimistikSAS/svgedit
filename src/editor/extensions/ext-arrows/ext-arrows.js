@@ -89,7 +89,7 @@ export default {
     * @returns {void}
     */
     function showPanel (on) {
-      $('#arrow_panel').toggle(on);
+      $id('arrow_panel').style.display = (on) ? 'block' : 'none';
       if (on) {
         const el = selElems[0];
         const end = el.getAttribute('marker-end');

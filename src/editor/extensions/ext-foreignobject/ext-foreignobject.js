@@ -102,7 +102,7 @@ export default {
       elt.removeAttribute('fill');
 
       const str = svgCanvas.svgToString(elt, 0);
-      $('#svg_source_textarea').val(str);
+      $id('svg_source_textarea').value = str;
       $('#svg_source_editor').fadeIn();
       properlySourceSizeTextArea();
       $('#svg_source_textarea').focus();
