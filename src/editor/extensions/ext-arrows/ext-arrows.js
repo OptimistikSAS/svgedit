@@ -289,7 +289,7 @@ export default {
         $id("arrow_panel").style.display = 'none';
         
         // Set ID so it can be translated in locale file
-        $('#arrow_list option')[0].id = 'connector_no_arrow';
+        $id('arrow_list option').setAttribute('id', 'connector_no_arrow');
       },
       async addLangData ({lang, importLocale}) {
         const {langList} = await importLocale();

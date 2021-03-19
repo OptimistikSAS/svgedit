@@ -427,7 +427,7 @@ class Editor extends EditorStartup {
       // regular URL
       this.svgCanvas.embedImage(url, function (dataURI) {
         // Couldn't embed, so show warning
-        $('#url_notice').toggle(!dataURI);
+        $id('url_notice').style.display = (!dataURI) ? 'block' : 'none';
         this.defaultImageURL = url;
       });
       $id("image_url").style.display = 'block';

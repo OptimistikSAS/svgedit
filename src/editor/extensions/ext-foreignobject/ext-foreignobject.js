@@ -44,12 +44,14 @@ export default {
     * @returns {void}
     */
     function showPanel (on) {
-      let fcRules = $('#fc_rules');
-      if (!fcRules.length) {
-        fcRules = $('<style id="fc_rules"></style>').appendTo('head');
+      let fcRules = $id('fc_rules');
+      if (!fcRules) {
+        fcRules = document.createElement('style');
+        fcRules.setAttribute('id', 'fc_rules');
+        document.getElementsByTagName("head")[0].appendChild(fcRules);        
       }
-      fcRules.text(!on ? '' : ' #tool_topath { display: none !important; }');
-      $('#foreignObject_panel').toggle(on);
+      fcRules.textContent = !on ? '' : ' #tool_topath { display: none !important; }';
+      $id('foreignObject_panel').style.display = (on) ? 'block' : 'none';
     }
 
     /**
