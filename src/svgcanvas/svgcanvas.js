@@ -1304,7 +1304,13 @@ class SvgCanvas {
 
       // Added mouseup to the container here.
       // TODO(codedread): Figure out why after the Closure compiler, the window mouseup is ignored.
-      $(container).mousedown(mouseDown).mousemove(mouseMove).click(handleLinkInCanvas).dblclick(dblClick).mouseup(mouseUp);
+      container.addEventListener('mousedown', mouseDown);
+      container.addEventListener('mousemove', mouseMove);
+      container.addEventListener('click', handleLinkInCanvas);
+      container.addEventListener('dblclick', dblClick);
+      container.addEventListener('mouseup', mouseUp);
+
+      // $(container).mousedown(mouseDown).mousemove(mouseMove).click(handleLinkInCanvas).dblclick(dblClick).mouseup(mouseUp);
       // $(window).mouseup(mouseUp);
 
       // TODO(rafaelcastrocouto): User preference for shift key and zoom factor

@@ -182,11 +182,6 @@ class TopPanel {
     $id("a_panel").style.display = 'none';
     if (!isNullish(elem)) {
       const elname = elem.nodeName;
-      // If this is a link with no transform and one child, pretend
-      // its child is selected
-      // if (elname === 'a') { // && !$(elem).attr('transform')) {
-      //   elem = elem.firstChild;
-      // }
 
       const angle = this.editor.svgCanvas.getRotationAngle(elem);
       $id("angle").value = angle;
@@ -299,7 +294,8 @@ class TopPanel {
       }
 
       // Hide/show the make_link buttons
-      $("#tool_make_link, #tool_make_link_multi").toggle(!linkHref);
+      $id('tool_make_link').style.display = (!linkHref) ? 'block' : 'none';
+      $id('tool_make_link_multi').style.display = (!linkHref) ? 'block' : 'none';
 
       if (linkHref) {
         $id("link_url").value = linkHref;
