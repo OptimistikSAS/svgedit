@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 /* eslint-disable no-alert */
-/* globals $ */
 import SvgCanvas from "../../svgcanvas/svgcanvas.js";
 
 const SIDEPANEL_MAXWIDTH = 300;
@@ -403,31 +402,36 @@ class LayersPanel {
       selLayerNames.innerHTML += '<option value="' + name + '">' + name + '</option>';
     }
     // handle selection of layer
-    $("#layerlist td.layername")
-      .mouseup(evt => {
-        $("#layerlist tr.layer").removeClass("layersel");
-        $(evt.currentTarget.parentNode).addClass("layersel");
-        this.editor.svgCanvas.setCurrentLayer(evt.currentTarget.textContent);
-        evt.preventDefault();
-      })
-      .mouseover(evt => {
-        this.toggleHighlightLayer(
-          this.editor.svgCanvas,
+    const nelements = $id('layerlist').querySelectorAll("td.layername");
+    Array.from(nelements).forEach(function(element) {
+      element.addEventListener('mouseup', function(evt) {
+        const trElements = $id('layerlist').querySelectorAll("tr.layer");
+        Array.from(trElements).forEach(function(element) {
+          element.classList.remove("layersel");
+        });
+        evt.currentTarget.parentNode.classList.add("layersel");
+        self.editor.svgCanvas.setCurrentLayer(evt.currentTarget.textContent);
+        evt.preventDefault();        
+      });
+      element.addEventListener('mouseup', function(evt) {
+        self.toggleHighlightLayer(
+          self.editor.svgCanvas,
           evt.currentTarget.textContent
         );
-      })
-      .mouseout(() => {
-        this.toggleHighlightLayer(this.editor.svgCanvas);
       });
-      const elements = $id('layerlist').querySelectorAll("td.layervis");
-      Array.from(elements).forEach(function(element) {
-        element.addEventListener('click', function(evt) {
-          const name = evt.currentTarget.parentNode.querySelector("td.layername").textContent;
-          const vis = evt.currentTarget.classList.contains("layerinvis");
-          self.editor.svgCanvas.setLayerVisibility(name, vis);
-          evt.currentTarget.classList.toggle("layerinvis");
-        });
+      element.addEventListener('mouseout', function(evt) {
+        self.toggleHighlightLayer(self.editor.svgCanvas);
       });
+    });
+    const elements = $id('layerlist').querySelectorAll("td.layervis");
+    Array.from(elements).forEach(function(element) {
+      element.addEventListener('click', function(evt) {
+        const name = evt.currentTarget.parentNode.querySelector("td.layername").textContent;
+        const vis = evt.currentTarget.classList.contains("layerinvis");
+        self.editor.svgCanvas.setLayerVisibility(name, vis);
+        evt.currentTarget.classList.toggle("layerinvis");
+      });
+    });
 
     // if there were too few rows, let's add a few to make it not so lonely
     let num = 5 - $id('layerlist').querySelectorAll("tr.layer").length;
