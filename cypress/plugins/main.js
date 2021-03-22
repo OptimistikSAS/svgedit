@@ -15,7 +15,6 @@ export default (on, config) => {
   codeCoverageTask(on, config);
   initPlugin(on, config);
   on("before:browser:launch", (browser, launchOptions) => {
-    console.log(browser.name)
     if (browser.name === "chrome" && browser.isHeadless) {
       // fullPage screenshot size is 1400x1200 on non-retina screens
       // and 2800x2400 on retina screens
