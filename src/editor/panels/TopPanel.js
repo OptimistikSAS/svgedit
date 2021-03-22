@@ -149,7 +149,7 @@ class TopPanel {
   updateContextPanel() {
     const setInputWidth = elem => {
       const w = Math.min(Math.max(12 + elem.value.length * 6, 50), 300);
-      $(elem).width(w);
+      elem.style.width = w + 'px';
     };
 
     let elem = this.editor.selectedElement;
@@ -189,7 +189,7 @@ class TopPanel {
       // }
 
       const angle = this.editor.svgCanvas.getRotationAngle(elem);
-      $("#angle").val(angle);
+      $id("angle").value = angle;
 
       const blurval = this.editor.svgCanvas.getBlur(elem) * 10;
       $id("blur").value = blurval;
@@ -227,8 +227,8 @@ class TopPanel {
             y = convertUnit(y);
           }
 
-          $("#selected_x").val(x || 0);
-          $("#selected_y").val(y || 0);
+          $id("selected_x").value = (x || 0);
+          $id("selected_y").value = (y || 0);
           $id("xy_panel").style.display = 'block';
         }
 
@@ -242,32 +242,31 @@ class TopPanel {
         ].includes(elname)
           ? "none"
           : "block";
-        $id("tool_reorient").style.display =
-          elname === "path" ? "block" : "none";
-        $id("tool_reorient").disabled = angle === 0;
+        $id("tool_reorient").style.display = (elname === "path") ? "block" : "none";
+        $id("tool_reorient").disabled = (angle === 0);
       } else {
         const point = this.path.getNodePoint();
-        $("#tool_add_subpath").pressed = false;
-        $("#tool_node_delete").toggleClass(
-          "disabled",
-          !this.path.canDeleteNodes
-        );
+        $id("tool_add_subpath").pressed = false;
+        // eslint-disable-next-line max-len
+        (!this.path.canDeleteNodes) ? $id("tool_node_delete").classList.add("disabled") : $id("tool_node_delete").classList.remove("disabled");
 
         // Show open/close button based on selected point
         // setIcon('#tool_openclose_path', path.closed_subpath ? 'open_path' : 'close_path');
 
         if (point) {
-          const segType = $("#seg_type");
+          const segType = $id("seg_type");
           if (unit) {
             point.x = convertUnit(point.x);
             point.y = convertUnit(point.y);
           }
-          $("#path_node_x").val(point.x);
-          $("#path_node_y").val(point.y);
+          $id("path_node_x").value = (point.x);
+          $id("path_node_y").value = (point.y);
           if (point.type) {
-            segType.val(point.type).removeAttr("disabled");
+            segType.value = (point.type);
+            segType.removeAttribute("disabled");
           } else {
-            segType.val(4).attr("disabled", "disabled");
+            segType.value = 4;
+            segType.setAttribute("disabled", "disabled");
           }
         }
         return;
@@ -365,10 +364,10 @@ class TopPanel {
         } else if (tagName === "g" || tagName === "use") {
           $id("container_panel").style.display = 'block';
           const title = this.editor.svgCanvas.getTitle();
-          const label = $("#g_title")[0];
+          const label = $id("g_title");
           label.value = title;
           setInputWidth(label);
-          $("#g_title").prop("disabled", tagName === "use");
+          $id("g_title").disabled = (tagName === "use");
         }
       }
       menuItems.setAttribute(
@@ -403,9 +402,8 @@ class TopPanel {
 
     if ((elem && !isNode) || this.multiselected) {
       // update the selected elements' layer
-      $("#selLayerNames")
-        .removeAttr("disabled")
-        .val(currentLayerName);
+      $id("selLayerNames").removeAttribute("disabled")
+      $id("selLayerNames").value = currentLayerName;
 
       // Enable regular menu options
       const canCMenu = document.getElementById("se-cmenu_canvas");
@@ -414,7 +412,7 @@ class TopPanel {
         "#delete,#cut,#copy,#move_front,#move_up,#move_down,#move_back"
       );
     } else {
-      $("#selLayerNames").attr("disabled", "disabled");
+      $id("selLayerNames").disabled = "disabled";
     }
   }
   /**
@@ -439,13 +437,14 @@ class TopPanel {
     $id("tool_wireframe").pressed = !$id("tool_wireframe").pressed;
     this.editor.workarea.classList.toggle("wireframe");
 
-    const wfRules = $("#wireframe_rules");
-    if (!wfRules.length) {
-      /* wfRules = */ $('<style id="wireframe_rules"></style>').appendTo(
-      "head"
-    );
+    const wfRules = $id("wireframe_rules");
+    if (!wfRules) {
+      const fcRules = document.createElement('style');
+      fcRules.setAttribute('id', 'wireframe_rules');
+      document.getElementsByTagName("head")[0].appendChild(fcRules);
     } else {
-      wfRules.empty();
+      while(wfRules.firstChild)
+        wfRules.removeChild(wfRules.firstChild);
     }
     this.editor.updateWireFrame();
   }
@@ -491,10 +490,8 @@ class TopPanel {
    */
   changeRotationAngle(e) {
     this.editor.svgCanvas.setRotationAngle(e.target.value);
-    $("#tool_reorient").toggleClass(
-      "disabled",
-      Number.parseInt(e.target.value) === 0
-    );
+    // eslint-disable-next-line max-len
+    (Number.parseInt(e.target.value) === 0) ? $id("tool_reorient").classList.add("disabled") : $id("tool_reorient").classList.remove("disabled");
   }
 
   /**
@@ -539,7 +536,7 @@ class TopPanel {
    * @returns {void}
    */
   clickAlign(pos) {
-    let value = $("#tool_align_relative").val();
+    let value = $id("tool_align_relative").value;
     if (value === "") {
       value = "selected";
     }
@@ -661,8 +658,8 @@ class TopPanel {
    * @returns {void}
    */
   addSubPath() {
-    const button = $("#tool_add_subpath");
-    const sp = !button.hasClass("pressed");
+    const button = $id("tool_add_subpath");
+    const sp = !button.classList.contains("pressed");
     button.pressed = sp;
     // button.toggleClass('push_button_pressed tool_button');
     this.path.addSubPath(sp);
