@@ -375,27 +375,32 @@ class LayersPanel {
   populateLayers() {
     this.editor.svgCanvas.clearSelection();
     const self = this;
-    const layerlist = $("#layerlist tbody").empty();
-    const selLayerNames = $("#selLayerNames").empty();
+    const layerlist = $id("layerlist").querySelector('tbody');
+    while(layerlist.firstChild)
+      layerlist.removeChild(layerlist.firstChild);
+
+    const selLayerNames = $id("selLayerNames");
+    // empty() ref: http://youmightnotneedjquery.com/#empty
+    while(selLayerNames.firstChild)
+      selLayerNames.removeChild(selLayerNames.firstChild);
     const drawing = this.editor.svgCanvas.getCurrentDrawing();
     const currentLayerName = drawing.getCurrentLayerName();
     let layer = this.editor.svgCanvas.getCurrentDrawing().getNumLayers();
     // we get the layers in the reverse z-order (the layer rendered on top is listed first)
     while (layer--) {
       const name = drawing.getLayerName(layer);
-      const layerTr = $('<tr class="layer">').toggleClass(
-        "layersel",
-        name === currentLayerName
-      );
-      const layerVis = $('<td class="layervis">').toggleClass(
-        "layerinvis",
-        !drawing.getLayerVisibility(name)
-      );
-      const layerName = $('<td class="layername">' + name + "</td>");
-      layerlist.append(layerTr.append(layerVis, layerName));
-      selLayerNames.append(
-        '<option value="' + name + '">' + name + "</option>"
-      );
+      const layerTr = document.createElement("tr");      
+      layerTr.className = (name === currentLayerName) ? 'layer layersel' : 'layer';
+      const layerVis = document.createElement("td");
+      layerVis.className = (!drawing.getLayerVisibility(name)) ? "layerinvis layervis" : 'layervis';
+      const layerName = document.createElement("td");
+      layerName.className = 'layername';
+      layerName.textContent = name;
+      layerTr.appendChild(layerVis);
+      layerTr.appendChild(layerName);
+      layerlist.appendChild(layerTr);
+      // eslint-disable-next-line no-unsanitized/property
+      selLayerNames.innerHTML += '<option value="' + name + '">' + name + '</option>';
     }
     // handle selection of layer
     $("#layerlist td.layername")
@@ -425,7 +430,7 @@ class LayersPanel {
       });
 
     // if there were too few rows, let's add a few to make it not so lonely
-    let num = 5 - $("#layerlist tr.layer").size();
+    let num = 5 - $id('layerlist').querySelectorAll("tr.layer").length;
     while (num-- > 0) {
       // TODO: there must a better way to do this
       layerlist.append('<tr><td style="color:white">_</td><td/></tr>');

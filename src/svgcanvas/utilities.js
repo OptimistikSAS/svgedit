@@ -1305,7 +1305,12 @@ export const snapToGrid = function (value) {
  * @returns {void}
  */
 export const preventClickDefault = function (img) {
-  $(img).click(function (e) { e.preventDefault(); });
+  const elements = document.querySelectorAll("img");
+  Array.from(elements).forEach(function(element) {
+    element.addEventListener('click', function(e) {
+      e.preventDefault();
+    });
+  });
 };
 
 /**
