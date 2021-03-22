@@ -121,10 +121,10 @@ iframe[0].addEventListener('load', function () {
   }
 
   // Add event handlers now that `svgCanvas` is ready
-  $('#load').click(loadSvg);
-  $('#save').click(saveSvg);
-  $('#exportPNG').click(exportPNG);
-  $('#exportPDF').click(exportPDF);
+  $id('load').addEventListener('click', loadSvg);
+  $id('save').addEventListener('click', saveSvg);
+  $id('exportPNG').addEventListener('click', exportPNG);
+  $id('exportPDF').addEventListener('click', exportPDF);
 });
 $('body').append(iframe);
 const frame = document.getElementById('svgedit');

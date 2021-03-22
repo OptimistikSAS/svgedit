@@ -376,7 +376,7 @@ class EditorStartup {
       this.rulers.manageScroll();
     });
 
-    $('#url_notice').click(() => {
+    $id('url_notice').addEventListener('click', () => {
       seAlert(this.title);
     });
 
