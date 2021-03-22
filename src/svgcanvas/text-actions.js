@@ -292,9 +292,10 @@ export const textActionsMethod = (function () {
     setSelection(first, last);
 
     // Set tripleclick
-    $(evt.target).click(selectAll);
+    evt.target.addEventListener('click', selectAll);
+
     setTimeout(function () {
-      $(evt.target).unbind('click', selectAll);
+      evt.target.removeEventListener('click', selectAll);
     }, 300);
   }
 

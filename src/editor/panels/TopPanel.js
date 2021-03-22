@@ -349,8 +349,8 @@ class TopPanel {
           if (this.editor.svgCanvas.addedNew) {
             // Timeout needed for IE9
             setTimeout(() => {
-              $id("#text").focus()
-              $id("#text").select();
+              $id("text").focus()
+              $id("text").select();
             }, 100);
           }
           // text

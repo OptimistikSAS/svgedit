@@ -374,6 +374,7 @@ class LayersPanel {
    */
   populateLayers() {
     this.editor.svgCanvas.clearSelection();
+    const self = this;
     const layerlist = $("#layerlist tbody").empty();
     const selLayerNames = $("#selLayerNames").empty();
     const drawing = this.editor.svgCanvas.getCurrentDrawing();
@@ -413,13 +414,15 @@ class LayersPanel {
       .mouseout(() => {
         this.toggleHighlightLayer(this.editor.svgCanvas);
       });
-    $("#layerlist td.layervis").click(evt => {
-      const row = $(evt.currentTarget.parentNode).prevAll().length;
-      const name = $("#layerlist tr.layer:eq(" + row + ") td.layername").text();
-      const vis = $(evt.currentTarget).hasClass("layerinvis");
-      this.editor.svgCanvas.setLayerVisibility(name, vis);
-      $(evt.currentTarget).toggleClass("layerinvis");
-    });
+      const elements = $id('layerlist').querySelectorAll("td.layervis");
+      Array.from(elements).forEach(function(element) {
+        element.addEventListener('click', function(evt) {
+          const name = evt.currentTarget.parentNode.querySelector("td.layername").textContent;
+          const vis = evt.currentTarget.classList.contains("layerinvis");
+          self.editor.svgCanvas.setLayerVisibility(name, vis);
+          evt.currentTarget.classList.toggle("layerinvis");
+        });
+      });
 
     // if there were too few rows, let's add a few to make it not so lonely
     let num = 5 - $("#layerlist tr.layer").size();
