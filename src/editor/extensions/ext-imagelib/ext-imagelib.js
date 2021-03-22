@@ -188,8 +188,10 @@ export default {
           await seConfirm(message);
           transferStopped = true;
         } else {
-          entry = $('<div>').text(message).data('id', curMeta.id);
-          preview.append(entry);
+          entry = document.createElement('div');
+          entry.textContent = message;
+          entry.dataset.id = curMeta.id;
+          preview.appendChild(entry);
           curMeta.entry = entry;
         }
 

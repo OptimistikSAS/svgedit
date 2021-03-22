@@ -1,4 +1,3 @@
-/* globals $ */
 import SvgCanvas from "../../svgcanvas/svgcanvas.js";
 import { isValidUnit, getTypeMap, convertUnit } from "../../common/units.js";
 
@@ -51,7 +50,13 @@ class TopPanel {
     if (changeElem) {
       this.svgCanvas.setStrokeAttr('stroke-' + pre, val);
     }
-    $(opt).addClass('current').siblings().removeClass('current');
+    opt.classList.add('current');
+    const elements = Array.prototype.filter.call(opt.parentNode.children, function(child){
+      return child !== opt;
+    });
+    Array.from(elements).forEach(function(element) {
+      element.classList.remove('current');
+    });
   }
 
   /**
@@ -287,8 +292,11 @@ class TopPanel {
         linkHref = this.editor.svgCanvas.getHref(elem);
         $id("g_panel").style.display = 'block';
       }
-
-      if (elem.parentNode.tagName === "a" && !$(elem).siblings().length) {
+      // siblings 
+      const selements = Array.prototype.filter.call(elem.parentNode.children, function(child){
+        return child !== elem;
+      });
+      if (elem.parentNode.tagName === "a" && !selements.length) {
         $id("a_panel").style.display = 'block';
         linkHref = this.editor.svgCanvas.getHref(elem.parentNode);
       }
