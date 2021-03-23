@@ -825,7 +825,7 @@ class Editor extends EditorStartup {
 
         let panel = $id(tool.panel);
         // create the panel if it doesn't exist
-        if (!panel.length) {
+        if (!panel) {
           panel = document.createElement("div");
           panel.id = tool.panel;
           $id('tools_top').appendChild(panel);
@@ -846,32 +846,46 @@ class Editor extends EditorStartup {
           }
           break;
         } case 'select': {
-          html = '<label' + contId + '>' +
-            '<select id="' + tool.id + '">';
-          $.each(tool.options, function (val, text) {
+          label = document.createElement("label");
+          if (tool.container_id) {
+            label.id = tool.container_id;
+          }
+          html = '<select id="' + tool.id + '">';
+          tool.options.forEach((text, val) => {
             const sel = (val === tool.defval) ? ' selected' : '';
             html += '<option value="' + val + '"' + sel + '>' + text + '</option>';
           });
-          html += '</select></label>';
+          html += '</select>';
+          // eslint-disable-next-line no-unsanitized/property
+          label.innerHTML = html;
           // Creates the tool, hides & adds it, returns the select element
-          const sel = $(html).appendTo(panel).find('select');
+          panel.appendChild(label);
 
-          $.each(tool.events, function (evt, func) {
-            $(sel).bind(evt, func);
+          const sel = label.querySelector('select');
+
+          tool.events.forEach((func, evt) => {
+            sel.addEventListener(evt, func);
           });
           break;
         } case 'button-select': {
-          html = '<div id="' + tool.id + '" class="dropdown toolset" title="' + tool.title + '">' +
-            '<div id="cur_' + tool.id + '" class="icon_label"></div><button></button></div>';
+          const div = document.createElement("div");
+          div.id = tool.id;
+          div.className = "dropdown toolset";
+          div.title = tool.title;
+          // eslint-disable-next-line no-unsanitized/property
+          div.innerHTML = '<div id="cur_' + tool.id + '" class="icon_label"></div><button></button>';
 
-          const list = $('<ul id="' + tool.id + '_opts"></ul>').appendTo('#option_lists');
+          const list = document.createElement("ul");
+          list.id = tool.id;
+
+          if($id('option_lists')) $id('option_lists').appendChild(list);
 
           if (tool.colnum) {
-            list.addClass('optcols' + tool.colnum);
+            list.className = ('optcols' + tool.colnum);
           }
-
+          panel.appendChild(div);
           // Creates the tool, hides & adds it, returns the select element
-          /* const dropdown = */ $(html).appendTo(panel).children();
+          /* const dropdown =  $(html).appendTo(panel).children(); */
 
           btnSelects.push({
             elem: ('#' + tool.id),
@@ -883,25 +897,30 @@ class Editor extends EditorStartup {
 
           break;
         } case 'input': {
-          html = '<label' + contId + '>' +
-            '<span id="' + tool.id + '_label">' +
+          const html = document.createElement("label");
+          if(tool.container_id) { html.id = tool.container_id; }
+          html.innerHTML 
+          
+          // eslint-disable-next-line no-unsanitized/property
+          html.innerHTML = '<span id="' + tool.id + '_label">' +
             tool.label + ':</span>' +
             '<input id="' + tool.id + '" title="' + tool.title +
             '" size="' + (tool.size || '4') +
-            '" value="' + (tool.defval || '') + '" type="text"/></label>';
+            '" value="' + (tool.defval || '') + '" type="text"/>';
 
           // Creates the tool, hides & adds it, returns the select element
 
           // Add to given tool.panel
-          const inp = $(html).appendTo(panel).find('input');
+          panel.appendChild(html);
+          const inp = html.querySelector('input');
 
           if (tool.spindata) {
             inp.SpinButton(tool.spindata);
           }
-
-          if (tool.events) {
-            $.each(tool.events, function (evt, func) {
-              inp.bind(evt, func);
+          if ( tool?.events !== undefined ) {
+            Object.entries(tool.events).forEach((entry) => {
+              const [evt, func] = entry;
+              inp.addEventListener(evt, func);
             });
           }
           break;
