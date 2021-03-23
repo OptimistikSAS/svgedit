@@ -823,21 +823,25 @@ class Editor extends EditorStartup {
         // Add select tool
         const contId = tool.container_id ? (' id="' + tool.container_id + '"') : '';
 
-        let panel = $('#' + tool.panel);
+        let panel = $id(tool.panel);
         // create the panel if it doesn't exist
         if (!panel.length) {
-          panel = $('<div>', {id: tool.panel}).appendTo('#tools_top');
+          panel = document.createElement("div");
+          panel.id = tool.panel;
+          $id('tools_top').appendChild(panel);
         }
 
         let html;
         // TODO: Allow support for other types, or adding to existing tool
         switch (tool.type) {
         case 'tool_button': {
-          html = '<div class="tool_button">' + tool.id + '</div>';
-          const div = $(html).appendTo(panel);
+          html = document.createElement("div");
+          html.className = "tool_button";
+          html.textContent = tool.id
+          panel.appendChild(html);
           if (tool.events) {
-            $.each(tool.events, function (evt, func) {
-              $(div).bind(evt, func);
+            tool.events.forEach((func, evt) => {
+              html.addEventListener(evt, func);
             });
           }
           break;
