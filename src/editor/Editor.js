@@ -319,12 +319,12 @@ class Editor extends EditorStartup {
   setTitles () {
     // Tooltips not directly associated with a single function
     const keyAssocs = {
-      '4/Shift+4': '#tools_rect',
-      '5/Shift+5': '#tools_ellipse'
+      '4/Shift+4': 'tools_rect',
+      '5/Shift+5': 'tools_ellipse'
     };
     Object.entries(keyAssocs).forEach(([keyval, sel]) => {
       console.log("sel =", sel);
-      const parentsElements = getParents($id(sel), $id('main_menu'))
+      const parentsElements = this.getParents($id(sel), $id('main_menu'))
       const menu = (parentsElements.length);
 
       $qa(sel).forEach((element) => {
