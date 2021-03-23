@@ -437,7 +437,9 @@ class LayersPanel {
     let num = 5 - $id('layerlist').querySelectorAll("tr.layer").length;
     while (num-- > 0) {
       // TODO: there must a better way to do this
-      layerlist.append('<tr><td style="color:white">_</td><td/></tr>');
+      const tlayer = document.createElement("tr");
+      tlayer.innerHTML = '<td style="color:white">_</td><td/>';
+      layerlist.append(tlayer);
     }
   }
 }
