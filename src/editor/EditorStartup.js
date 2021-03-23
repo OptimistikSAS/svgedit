@@ -269,7 +269,7 @@ class EditorStartup {
     let lastX = null, lastY = null,
       panning = false, keypan = false;
 
-    $('#svgcanvas').bind('mousemove mouseup', function (evt) {
+    $id('svgcanvas').addEventListener('mouseup', function(evt) {    
       if (panning === false) { return true; }
 
       wArea.scrollLeft -= (evt.clientX - lastX);
@@ -280,7 +280,20 @@ class EditorStartup {
 
       if (evt.type === 'mouseup') { panning = false; }
       return false;
-    }).mousedown(function (evt) {
+    });    
+    $id('svgcanvas').addEventListener('mousemove', function(evt) {    
+      if (panning === false) { return true; }
+
+      wArea.scrollLeft -= (evt.clientX - lastX);
+      wArea.scrollTop -= (evt.clientY - lastY);
+
+      lastX = evt.clientX;
+      lastY = evt.clientY;
+
+      if (evt.type === 'mouseup') { panning = false; }
+      return false;
+    });
+    $id('svgcanvas').addEventListener('mousedown', function(evt) {
       if (evt.button === 1 || keypan === true) {
         panning = true;
         lastX = evt.clientX;
@@ -290,7 +303,7 @@ class EditorStartup {
       return true;
     });
 
-    $(window).mouseup(() => {
+    window.addEventListener('mouseup', function(evt) {
       panning = false;
     });
 
@@ -419,7 +432,7 @@ class EditorStartup {
       this.workarea.style.lineHeight = this.workarea.style.height;
     };
 
-    $(window).bind('load resize', centerCanvas);
+    addListenerMulti(window, 'load resize', centerCanvas);
 
     // Prevent browser from erroneously repopulating fields
     $('input,select').attr('autocomplete', 'off');
@@ -497,7 +510,7 @@ class EditorStartup {
         $id('tool_wireframe').click();
       }
 
-      $('#rulers').toggle(Boolean(this.configObj.curConfig.showRulers));
+      $id('rulers').style.display = (Boolean(this.configObj.curConfig.showRulers)) ?  'block' : 'none';
 
       if (this.configObj.curConfig.showRulers) {
         $editDialog.setAttribute('showrulers', true);

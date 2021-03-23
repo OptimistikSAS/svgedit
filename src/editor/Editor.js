@@ -293,6 +293,26 @@ class Editor extends EditorStartup {
       evt.preventDefault();
     });
   }
+  // parents() https://stackoverflow.com/a/12981248
+  getParents(el, parentSelector /* optional */) {
+
+    // If no parentSelector defined will bubble up all the way to *document*
+    if (parentSelector === undefined) {
+        parentSelector = document;
+    }
+
+    var parents = [];
+    var p = el.parentNode;
+    
+    while (p !== parentSelector) {
+        var o = p;
+        parents.push(o);
+        p = o.parentNode;
+    }
+    parents.push(parentSelector); // Push that parentSelector you wanted to stop at
+    
+    return parents;
+  }
   /**
      * @returns {void}
      */
@@ -303,7 +323,9 @@ class Editor extends EditorStartup {
       '5/Shift+5': '#tools_ellipse'
     };
     Object.entries(keyAssocs).forEach(([keyval, sel]) => {
-      const menu = ($(sel).parents('#main_menu').length);
+      console.log("sel =", sel);
+      const parentsElements = getParents($id(sel), $id('main_menu'))
+      const menu = (parentsElements.length);
 
       $qa(sel).forEach((element) => {
         const t = (menu) ? element.textContent.split(' [')[0] : element.title.split(' [')[0];
