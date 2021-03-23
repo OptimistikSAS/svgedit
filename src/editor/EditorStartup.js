@@ -132,11 +132,11 @@ class EditorStartup {
     this.multiselected = false;
 
     $('#cur_context_panel').delegate('a', 'click', (evt) => {
-      const link = $(evt.currentTarget);
-      if (link.attr('data-root')) {
+      const link = evt.currentTarget;
+      if (link.hasAttribute('data-root')) {
         this.svgCanvas.leaveContext();
       } else {
-        this.svgCanvas.setContext(link.text());
+        this.svgCanvas.setContext(link.textContent);
       }
       this.svgCanvas.clearSelection();
       return false;
@@ -178,7 +178,7 @@ class EditorStartup {
     );
     this.svgCanvas.bind('contextset', this.contextChanged.bind(this));
     this.svgCanvas.bind('extension_added', this.extAdded.bind(this));
-    this.svgCanvas.textActions.setInputElem($('#text')[0]);
+    this.svgCanvas.textActions.setInputElem($id('text'));
 
     this.setBackground(this.configObj.pref('bkgd_color'), this.configObj.pref('bkgd_url'));
 
@@ -195,7 +195,12 @@ class EditorStartup {
     $id('se-img-prop').setAttribute('save', this.configObj.pref('img_save'));
 
     // Lose focus for select elements when changed (Allows keyboard shortcuts to work better)
-    $('select').change((evt) => { evt.currentTarget.blur(); });
+    const selElements = document.querySelectorAll("select");
+    Array.from(selElements).forEach(function(element) {
+      element.addEventListener('change', function(evt) {
+        evt.currentTarget.blur();
+      });
+    });
 
     // fired when user wants to move elements to another layer
     let promptMoveLayerOnce = false;
@@ -233,7 +238,14 @@ class EditorStartup {
       self.svgCanvas.setSegType(evt.currentTarget.value);
     });
 
-    $('#text').bind('keyup input', (evt) => {
+    function addListenerMulti(element, eventNames, listener) {
+      var events = eventNames.split(' ');
+      for (var i=0, iLen=events.length; i<iLen; i++) {
+        element.addEventListener(events[i], listener, false);
+      }
+    }
+
+    addListenerMulti($id('text'), 'keyup input', function(evt){
       this.svgCanvas.setTextContent(evt.currentTarget.value);
     });
     $id('image_url').addEventListener('change', function(evt) {

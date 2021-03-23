@@ -707,9 +707,7 @@ class Editor extends EditorStartup {
   */
   zoomChanged (win, bbox, autoCenter) {
     const scrbar = 15,
-      // res =  this.svgCanvas.getResolution(), // Currently unused
       wArea = this.workarea;
-    // const canvasPos = $('#svgcanvas').position(); // Currently unused
     const zInfo = this.svgCanvas.setBBoxZoom(bbox, parseFloat(getComputedStyle(wArea, null).width.replace("px", "")) - scrbar, parseFloat(getComputedStyle(wArea, null).height.replace("px", "")) - scrbar);
     if (!zInfo) { return; }
     const zoomlevel = zInfo.zoom,
@@ -777,13 +775,18 @@ class Editor extends EditorStartup {
   */
   setIcon (elem, iconId) {
     // eslint-disable-next-line max-len
-    const icon = (typeof iconId === 'string') ? $('<img src="' + this.configObj.curConfig.imgPath + iconId + '">') : iconId.clone();
+    const img = document.createElement("img");
+    img.src = this.configObj.curConfig.imgPath + iconId;
+    const icon = (typeof iconId === 'string') ? img : iconId.cloneNode(true);
     if (!icon) {
       // Todo: Investigate why this still occurs in some cases
       console.log('NOTE: Icon image missing: ' + iconId); 
       return;
     }
-    $(elem).empty().append(icon);
+    // empty()
+    while(elem.firstChild)
+      elem.removeChild(elem.firstChild);
+    elem.appendChild(icon);
   }
 
   /**
@@ -1186,7 +1189,7 @@ class Editor extends EditorStartup {
 
     // const notif = allStrings.notification; // Currently unused
     // $.extend will only replace the given strings
-    const oldLayerName = $('#layerlist tr.layersel td.layername').text();
+    const oldLayerName = ($id('#layerlist')) ? $id('#layerlist').querySelector('tr.layersel td.layername').textContent : "";
     const renameLayer = (oldLayerName === this.uiStrings.common.layer + ' 1');
 
     this.svgCanvas.setUiStrings(allStrings);
@@ -1225,8 +1228,9 @@ class Editor extends EditorStartup {
     }
 
     // Copy alignment titles
-    $('#multiselected_panel div[id^=tool_align]').each(() => {
-      $('#tool_pos' + this.id.substr(10))[0].title = this.title;
+    const selElements = $id('multiselected_panel').querySelectorAll('div[id^=tool_align]');
+    Array.from(selElements).forEach(function(element) {
+      $id('tool_pos' + element.id.substr(10)).title = element.title;
     });
   }
 
