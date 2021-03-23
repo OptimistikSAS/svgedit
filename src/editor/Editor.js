@@ -306,7 +306,7 @@ class Editor extends EditorStartup {
       const menu = ($(sel).parents('#main_menu').length);
 
       $qa(sel).forEach((element) => {
-        const t = (menu) ? $(element).text().split(' [')[0] : element.title.split(' [')[0];
+        const t = (menu) ? element.textContent.split(' [')[0] : element.title.split(' [')[0];
         let keyStr = '';
         // Shift+Up
         keyval.split('/').forEach((key, i) => {
@@ -559,7 +559,7 @@ class Editor extends EditorStartup {
     // if (this.curContext) {
     //   new_title = new_title + this.curContext;
     // }
-    $('title:first').text(newTitle);
+    document.querySelector('title').textContent = newTitle;
   }
 
   // called when we've selected a different element
@@ -819,7 +819,7 @@ class Editor extends EditorStartup {
     };
 
     if (ext.context_tools) {
-      $.each(ext.context_tools, function (i, tool) {
+      ext.context_tools.forEach(function(tool, i){
         // Add select tool
         const contId = tool.container_id ? (' id="' + tool.container_id + '"') : '';
 
@@ -1206,10 +1206,23 @@ class Editor extends EditorStartup {
       '#linejoin_miter': '#cur_linejoin',
       '#linecap_butt': '#cur_linecap'
     };
-
-    $.each(this.elems, function (source, dest) {
-      $(dest).attr('title', $(source)[0].title);
-    });
+    for (const [source, dest] of Object.entries(this.elems)) {
+      if(dest === '#tool_stroke .color_block'){
+        if($id('tool_stroke')) {
+          $id('tool_stroke').querySelector('.color_block').setAttribute('title', $id(source).title);
+        }
+      } else if(dest === '#tool_fill label, #tool_fill .color_block'){
+        if($id('tool_fill') && $id('tool_fill').querySelector('.color_block')) {
+          $id('tool_fill').querySelector('label').setAttribute('title', $id(source).title);
+          console.log($id('tool_fill').querySelector('.color_block'));
+          $id('tool_fill').querySelector('.color_block').setAttribute('title', $id(source).title);
+        }
+      } else {
+        if ($id(dest)) {
+          $id(dest).setAttribute('title', $id(source).title);
+        }
+      }
+    }
 
     // Copy alignment titles
     $('#multiselected_panel div[id^=tool_align]').each(() => {
