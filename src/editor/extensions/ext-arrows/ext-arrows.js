@@ -241,17 +241,17 @@ export default {
 
           newMarker = addMarker(dir, type, arrowprefix + dir + allMarkers.length);
 
-          $(newMarker).children().attr('fill', color);
+          newMarker.children.setAttribute('fill', color);
         }
 
-        $(elem).attr('marker-' + type, 'url(#' + newMarker.id + ')');
+        elem.setAttribute('marker-' + type, 'url(#' + newMarker.id + ')');
 
         // Check if last marker can be removed
         let remove = true;
         $(S.svgcontent).find('line, polyline, path, polygon').each(function () {
           const element = this;
           $.each(mtypes, function (j, mtype) {
-            if ($(element).attr('marker-' + mtype) === 'url(#' + marker.id + ')') {
+            if (element.getAttribute('marker-' + mtype) === 'url(#' + marker.id + ')') {
               remove = false;
               return remove;
             }
@@ -263,7 +263,7 @@ export default {
 
         // Not found, so can safely remove
         if (remove) {
-          $(marker).remove();
+          marker.remove();
         }
       });
     }

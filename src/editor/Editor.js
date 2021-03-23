@@ -323,7 +323,6 @@ class Editor extends EditorStartup {
       '5/Shift+5': 'tools_ellipse'
     };
     Object.entries(keyAssocs).forEach(([keyval, sel]) => {
-      console.log("sel =", sel);
       const parentsElements = this.getParents($id(sel), $id('main_menu'))
       const menu = (parentsElements.length);
 
