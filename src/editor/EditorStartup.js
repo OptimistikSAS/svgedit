@@ -435,7 +435,14 @@ class EditorStartup {
     addListenerMulti(window, 'load resize', centerCanvas);
 
     // Prevent browser from erroneously repopulating fields
-    $('input,select').attr('autocomplete', 'off');
+    const inputEles = document.querySelectorAll('input');
+    Array.from(inputEles).forEach(function(inputEle) {
+      inputEle.setAttribute('autocomplete', 'off');
+    });
+    const selectEles = document.querySelectorAll('select');
+    Array.from(selectEles).forEach(function(inputEle) {
+      inputEle.setAttribute('autocomplete', 'off');
+    });
 
     $id('se-svg-editor-dialog').addEventListener('change', function (e) {
       if (e?.detail?.copy === 'click') {
