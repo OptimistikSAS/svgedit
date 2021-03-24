@@ -467,18 +467,26 @@ export default {
         select.setAttribute('style', `margin-top: 10px;`);
 
         imagelibStrings.imgLibs.forEach(function ({name, url, description}) {
-          $('<li>')
-            .appendTo(libOpts)
-            .text(name)
-            .on('click touchend', function () {
-              frame.attr(
-                'src',
-                url
-              ).show();
-              header.text(name);
-              libOpts.hide();
-              back.show();
-            }).append(`<span>${description}</span>`);
+          const li = document.createElement('li');
+          libOpts.appendChild(li);
+          li.textContent = name;
+          li.addEventListener('click', function () {
+            frame.setAttribute('src', url);
+            frame.style.display = 'block';
+            header.textContent = name;
+            libOpts.style.display = 'none';
+            back.style.display = 'block';
+          });
+          li.addEventListener('touchend', function () {
+            frame.setAttribute('src', url);
+            frame.style.display = 'block';
+            header.textContent = name;
+            libOpts.style.display = 'none';
+            back.style.display = 'block';
+          });
+          var span = document.createElement("span");
+          span.textContent = description;
+          li.appendChild(span);
         });
       } else {
         $id("imgbrowse_holder").style.display = 'block';
