@@ -447,9 +447,9 @@ export const pathActionsMethod = (function () {
               }
 
               const newD = newpath.getAttribute('d');
-              const origD = $(path.elem).attr('d');
-              $(path.elem).attr('d', origD + newD);
-              $(newpath).remove();
+              const origD = path.elem.getAttribute('d');
+              path.elem.setAttribute('d', origD + newD);
+              newpath.parentNode.removeChild(el);
               if (path.matrix) {
                 pathActionsContext_.recalcRotatedPath();
               }
@@ -865,8 +865,9 @@ export const pathActionsMethod = (function () {
       currentPath = null;
       if (drawnPath) {
         const elem = getElem(editorContext_.getId());
-        $(getElem('path_stretch_line')).remove();
-        $(elem).remove();
+        const psl = getElem('path_stretch_line');
+        psl.parentNode.removeChild(psl);
+        elem.parentNode.removeChild(elem);
         $(getElem('pathpointgrip_container')).find('*').attr('display', 'none');
         firstCtrl = null;
         editorContext_.setDrawnPath(null);
@@ -1165,8 +1166,7 @@ export const pathActionsMethod = (function () {
       // TODO: Find right way to select point now
       // path.selectPt(selPt);
       if (window.opera) { // Opera repaints incorrectly
-        const cp = $(path.elem);
-        cp.attr('d', cp.attr('d'));
+        path.elem.setAttribute('d',  path.elem.getAttribute('d'));
       }
       path.endChanges('Delete path node(s)');
     },
