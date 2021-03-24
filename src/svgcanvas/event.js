@@ -363,8 +363,8 @@ export const mouseMoveEvent = function (evt) {
 
     break;
   } case 'circle': {
-    c = $(shape).attr(['cx', 'cy']);
-    ({cx, cy} = c);
+    cx = shape.getAttribute('cx');
+    cy = shape.getAttribute('cy');
     let rad = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy));
     if (eventContext_.getCurConfig().gridSnapping) {
       rad = snapToGrid(rad);
@@ -372,8 +372,8 @@ export const mouseMoveEvent = function (evt) {
     shape.setAttribute('r', rad);
     break;
   } case 'ellipse': {
-    c = $(shape).attr(['cx', 'cy']);
-    ({cx, cy} = c);
+    cx = shape.getAttribute('cx');
+    cy = shape.getAttribute('cy');
     if (eventContext_.getCurConfig().gridSnapping) {
       x = snapToGrid(x);
       cx = snapToGrid(cx);
@@ -672,23 +672,28 @@ export const mouseUpEvent = function (evt) {
     }
     break;
   } case 'line':
-    attrs = $(element).attr(['x1', 'x2', 'y1', 'y2']);
-    keep = (attrs.x1 !== attrs.x2 || attrs.y1 !== attrs.y2);
+    const x1 = element.getAttribute('x1');
+    const y1 = element.getAttribute('y1');
+    const x2 = element.getAttribute('x2');
+    const y2 = element.getAttribute('y2');
+    keep = (x1 !== x2 || y1 !== y2);
     break;
   case 'foreignObject':
   case 'square':
   case 'rect':
   case 'image':
-    attrs = $(element).attr(['width', 'height']);
+    const width = element.getAttribute('width');
+    const height = element.getAttribute('height');
     // Image should be kept regardless of size (use inherit dimensions later)
-    keep = (attrs.width || attrs.height) || eventContext_.getCurrentMode() === 'image';
+    keep = (width || height) || eventContext_.getCurrentMode() === 'image';
     break;
   case 'circle':
     keep = (element.getAttribute('r') !== '0');
     break;
   case 'ellipse':
-    attrs = $(element).attr(['rx', 'ry']);
-    keep = (attrs.rx || attrs.ry);
+    const rx = element.getAttribute('rx');
+    const ry = element.getAttribute('ry');
+    keep = (rx || ry);
     break;
   case 'fhellipse':
     if ((eventContext_.getFreehand('maxx') - eventContext_.getFreehand('minx')) > 0 &&
