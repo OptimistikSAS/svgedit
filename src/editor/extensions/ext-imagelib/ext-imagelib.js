@@ -394,7 +394,7 @@ export default {
         const libOpts = document.createElement('ul');
         libOpts.id = 'imglib_opts';
         browser.append(libOpts);
-        const frame = document.createElement('iframe'); $('<iframe src="javascript:0"/>')
+        const frame = document.createElement('iframe');
         frame.src = "javascript:0";
         browser.prepend(frame);
         frame.style.display = 'none';
@@ -504,81 +504,81 @@ export default {
       svgicons: 'ext-imagelib.xml',
       events,
       callback () {
-        $('<style>').text(
-          '#imgbrowse_holder {' +
-            'position: absolute;' +
-            'top: 0;' +
-            'left: 0;' +
-            'width: 100%;' +
-            'height: 100%;' +
-            'background-color: rgba(0, 0, 0, .5);' +
-            'z-index: 5;' +
-          '}' +
-          '#imgbrowse {' +
-            'position: absolute;' +
-            'top: 25px;' +
-            'left: 25px;' +
-            'right: 25px;' +
-            'bottom: 25px;' +
-            'min-width: 300px;' +
-            'min-height: 200px;' +
-            'background: #B0B0B0;' +
-            'border: 1px outset #777;' +
-          '}' +
-          '#imgbrowse h1 {' +
-            'font-size: 20px;' +
-            'margin: .4em;' +
-            'text-align: center;' +
-          '}' +
-          '#lib_framewrap,' +
-          '#imgbrowse > ul {' +
-            'position: absolute;' +
-            'top: 45px;' +
-            'left: 10px;' +
-            'right: 10px;' +
-            'bottom: 10px;' +
-            'background: white;' +
-            'margin: 0;' +
-            'padding: 0;' +
-          '}' +
-          '#imgbrowse > ul {' +
-            'overflow: auto;' +
-          '}' +
-          '#imgbrowse > div {' +
-            'border: 1px solid #666;' +
-          '}' +
-          '#imglib_preview > div {' +
-            'padding: 5px;' +
-            'font-size: 12px;' +
-          '}' +
-          '#imglib_preview img {' +
-            'display: block;' +
-            'margin: 0 auto;' +
-            'max-height: 100px;' +
-          '}' +
-          '#imgbrowse li {' +
-            'list-style: none;' +
-            'padding: .5em;' +
-            'background: #E8E8E8;' +
-            'border-bottom: 1px solid #B0B0B0;' +
-            'line-height: 1.2em;' +
-            'font-style: sans-serif;' +
-            '}' +
-          '#imgbrowse li > span {' +
-            'color: #666;' +
-            'font-size: 15px;' +
-            'display: block;' +
-            '}' +
-          '#imgbrowse li:hover {' +
-            'background: #FFC;' +
-            'cursor: pointer;' +
-            '}' +
-          '#imgbrowse iframe {' +
-            'width: 100%;' +
-            'height: 100%;' +
-            'border: 0;' +
-          '}'
-        ).appendTo('head');
+        const style = document.createElement('style');
+        style.textContent = '#imgbrowse_holder {' +
+        'position: absolute;' +
+        'top: 0;' +
+        'left: 0;' +
+        'width: 100%;' +
+        'height: 100%;' +
+        'background-color: rgba(0, 0, 0, .5);' +
+        'z-index: 5;' +
+      '}' +
+      '#imgbrowse {' +
+        'position: absolute;' +
+        'top: 25px;' +
+        'left: 25px;' +
+        'right: 25px;' +
+        'bottom: 25px;' +
+        'min-width: 300px;' +
+        'min-height: 200px;' +
+        'background: #B0B0B0;' +
+        'border: 1px outset #777;' +
+      '}' +
+      '#imgbrowse h1 {' +
+        'font-size: 20px;' +
+        'margin: .4em;' +
+        'text-align: center;' +
+      '}' +
+      '#lib_framewrap,' +
+      '#imgbrowse > ul {' +
+        'position: absolute;' +
+        'top: 45px;' +
+        'left: 10px;' +
+        'right: 10px;' +
+        'bottom: 10px;' +
+        'background: white;' +
+        'margin: 0;' +
+        'padding: 0;' +
+      '}' +
+      '#imgbrowse > ul {' +
+        'overflow: auto;' +
+      '}' +
+      '#imgbrowse > div {' +
+        'border: 1px solid #666;' +
+      '}' +
+      '#imglib_preview > div {' +
+        'padding: 5px;' +
+        'font-size: 12px;' +
+      '}' +
+      '#imglib_preview img {' +
+        'display: block;' +
+        'margin: 0 auto;' +
+        'max-height: 100px;' +
+      '}' +
+      '#imgbrowse li {' +
+        'list-style: none;' +
+        'padding: .5em;' +
+        'background: #E8E8E8;' +
+        'border-bottom: 1px solid #B0B0B0;' +
+        'line-height: 1.2em;' +
+        'font-style: sans-serif;' +
+        '}' +
+      '#imgbrowse li > span {' +
+        'color: #666;' +
+        'font-size: 15px;' +
+        'display: block;' +
+        '}' +
+      '#imgbrowse li:hover {' +
+        'background: #FFC;' +
+        'cursor: pointer;' +
+        '}' +
+      '#imgbrowse iframe {' +
+        'width: 100%;' +
+        'height: 100%;' +
+        'border: 0;' +
+      '}';
+        document.head.appendChild(style);
       }
     };
   }
