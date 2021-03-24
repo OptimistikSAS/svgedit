@@ -103,68 +103,6 @@ exports[`use various parts of svg-edit > check tool_text #0`] = `
 </svg>
 `;
 
-exports[`use various parts of svg-edit > check tool_clone #0`] = `
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:svg="http://www.w3.org/2000/svg"
-  width="640"
-  height="480"
-  id="svgcontent"
-  overflow="visible"
-  x="640"
-  y="480"
-  viewBox="0 0 640 480"
->
-  <g class="layer">
-    <title>Layer 1</title>
-    <rect
-      id="rect"
-      fill="#FF0000"
-      height="70"
-      stroke="#000000"
-      stroke-width="5"
-      width="94"
-      x="69.5"
-      y="51.5"
-      fill-opacity="1"
-      stroke-opacity="1"
-    ></rect>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="116"
-      y="87"
-      id="svg_1"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-    >
-      AB
-    </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-    >
-      AB
-    </text>
-  </g>
-</svg>
-`;
-
 exports[`use various parts of svg-edit > check tool_italic #0`] = `
 <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -205,23 +143,6 @@ exports[`use various parts of svg-edit > check tool_italic #0`] = `
       fill-opacity="1"
       stroke-opacity="1"
       font-=""
-    >
-      AB
-    </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
     >
       AB
     </text>
@@ -273,23 +194,6 @@ exports[`use various parts of svg-edit > check tool_bold #0`] = `
     >
       AB
     </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
-    >
-      AB
-    </text>
   </g>
 </svg>
 `;
@@ -335,23 +239,6 @@ exports[`use various parts of svg-edit > check change color #0`] = `
       stroke-opacity="1"
       font-=""
       font-weight="bold"
-    >
-      AB
-    </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
     >
       AB
     </text>
@@ -403,23 +290,6 @@ exports[`use various parts of svg-edit > check tool_text_anchor_start #0`] = `
     >
       AB
     </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
-    >
-      AB
-    </text>
   </g>
 </svg>
 `;
@@ -465,23 +335,6 @@ exports[`use various parts of svg-edit > check tool_text_anchor_middle #0`] = `
       stroke-opacity="1"
       font-=""
       font-weight="bold"
-    >
-      AB
-    </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
     >
       AB
     </text>
@@ -533,23 +386,6 @@ exports[`use various parts of svg-edit > check tool_text_anchor_end #0`] = `
     >
       AB
     </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
-    >
-      AB
-    </text>
   </g>
 </svg>
 `;
@@ -598,27 +434,10 @@ exports[`use various parts of svg-edit > check tool_star #0`] = `
     >
       AB
     </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
-    >
-      AB
-    </text>
     <polygon
       cx="670"
       cy="202"
-      id="svg_3"
+      id="svg_2"
       shape="star"
       point="5"
       r="13.333333333333334"
@@ -688,27 +507,10 @@ exports[`use various parts of svg-edit > check tool_polygon #0`] = `
     >
       AB
     </text>
-    <text
-      fill="#000000"
-      stroke="#000000"
-      stroke-width="0"
-      x="136"
-      y="107"
-      font-size="24"
-      font-family="Serif"
-      text-anchor="middle"
-      xml:space="preserve"
-      fill-opacity="1"
-      stroke-opacity="1"
-      id="svg_2"
-      transform="matrix(1 0 0 1 0 0)"
-    >
-      AB
-    </text>
     <polygon
       cx="670"
       cy="202"
-      id="svg_3"
+      id="svg_2"
       shape="star"
       point="5"
       r="13.333333333333334"
@@ -727,7 +529,7 @@ exports[`use various parts of svg-edit > check tool_polygon #0`] = `
     <polygon
       cx="720"
       cy="252"
-      id="svg_4"
+      id="svg_3"
       shape="regularPoly"
       sides="5"
       orient="x"
