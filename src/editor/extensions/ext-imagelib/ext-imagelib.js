@@ -1,3 +1,4 @@
+/* eslint-disable no-unsanitized/property */
 /* globals seConfirm */
 /**
  * @file ext-imagelib.js
@@ -400,24 +401,26 @@ export default {
         
         $(frame).wrap('<div id=lib_framewrap>');
 
-        const header = $('<h1>').prependTo(browser).text(allLibs).css({
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%'
-        });
-        // eslint-disable-next-line max-len
-        $('<button><img class="svg_icon" src="./images/cancel.svg" alt="icon" width="16" height="16" />' + uiStrings.common.cancel + '</button>')
-          .appendTo(browser)
-          .on('click touchend', function () {
-            $id("imgbrowse_holder").style.display = 'none';
-          }).css({
-            position: 'absolute',
-            top: 5,
-            right: -10
-          });
+        const header = document.createElement('h1');
+        browser.prepend(header);
+        header.textContent = allLibs;
+        header.setAttribute('style', `position: absolute;top: 0;left: 0;width: 100%;`);
 
-        const leftBlock = $('<span>').css({position: 'absolute', top: 5, left: 10}).appendTo(browser);
+        const button = document.createElement('button');
+        // eslint-disable-next-line max-len
+        button.innerHTML = '<img class="svg_icon" src="./images/cancel.svg" alt="icon" width="16" height="16" />' + uiStrings.common.cancel ;
+        browser.appendChild(button);
+        button.addEventListener('click', function () {
+          $id("imgbrowse_holder").style.display = 'none';
+        });
+        button.addEventListener('touchend', function () {
+          $id("imgbrowse_holder").style.display = 'none';
+        });
+        button.setAttribute('style', `position: absolute;top: 5;right: -10;`);
+        
+        const leftBlock = document.createElement('span');
+        leftBlock.setAttribute('style', `position: absolute;top: 5;left: 10;`);
+        browser.appendChild(leftBlock);
         // eslint-disable-next-line max-len
         const back = $('<button hidden><img class="svg_icon" src="./images/library.svg" alt="icon" width="16" height="16" />' + imagelibStrings.show_list + '</button>')
           .appendTo(leftBlock)
