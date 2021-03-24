@@ -834,13 +834,13 @@ t.id !== 'svgcanvas' && t.id !== 'svgroot'
     const curShape = eventContext_.getCanvas().getStyle();
     const opacAni = eventContext_.getOpacAni();
     if (opacAni.beginElement && Number.parseFloat(element.getAttribute('opacity')) !== curShape.opacity) {
-      cAni = $(opacAni).clone().attr({
-        to: curShape.opacity,
-        dur: aniDur
-      }).appendTo(element);
+      cAni = opacAni.cloneNode(true);
+      cAni.setAttribute('to', curShape.opacity);
+      cAni.setAttribute('dur', aniDur);
+      element.appendChild(cAni);
       try {
         // Fails in FF4 on foreignObject
-        cAni[0].beginElement();
+        cAni.beginElement();
       } catch (e) {/* empty fn */}
     } else {
       aniDur = 0;

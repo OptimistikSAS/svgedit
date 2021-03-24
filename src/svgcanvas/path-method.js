@@ -429,8 +429,8 @@ export class Segment {
    * @returns {void}
    */
   selectCtrls (y) {
-    $('#ctrlpointgrip_' + this.index + 'c1, #ctrlpointgrip_' + this.index + 'c2')
-      .attr('fill', y ? '#0FF' : '#EEE');
+    $id('ctrlpointgrip_' + this.index + 'c1').setAttribute('fill', y ? '#0FF' : '#EEE');
+    $id('ctrlpointgrip_' + this.index + 'c2').setAttribute('fill', y ? '#0FF' : '#EEE')
   }
 
   /**
