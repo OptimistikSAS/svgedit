@@ -421,17 +421,28 @@ export default {
         const leftBlock = document.createElement('span');
         leftBlock.setAttribute('style', `position: absolute;top: 5;left: 10;`);
         browser.appendChild(leftBlock);
+        
+        const back = document.createElement('button');
+        back.style.visibility = "hidden";
         // eslint-disable-next-line max-len
-        const back = $('<button hidden><img class="svg_icon" src="./images/library.svg" alt="icon" width="16" height="16" />' + imagelibStrings.show_list + '</button>')
-          .appendTo(leftBlock)
-          .on('click touchend', function () {
-            frame.attr('src', 'about:blank').hide();
-            libOpts.show();
-            header.text(allLibs);
-            back.hide();
-          }).css({
-            'margin-right': 5
-          }).hide();
+        back.innerHTML = '<img class="svg_icon" src="./images/library.svg" alt="icon" width="16" height="16" />' + imagelibStrings.show_list;
+        leftBlock.appendChild(back);
+        back.addEventListener('click', function () {
+          frame.setAttribute('src', 'about:blank');
+          frame.style.display = 'none';
+          libOpts.style.display = 'block';
+          header.textContent = allLibs;
+          back.style.display = 'none';
+        });
+        back.addEventListener('touchend', function () {
+          frame.setAttribute('src', 'about:blank');
+          frame.style.display = 'none';
+          libOpts.style.display = 'block';
+          header.textContent = allLibs;
+          back.style.display = 'none';
+        });
+        back.setAttribute('style', `margin-right: 5px;`);
+        back.style.display = 'none';
 
         /* const type = */ $('<select><option value=s>' +
           imagelibStrings.import_single + '</option><option value=m>' +
