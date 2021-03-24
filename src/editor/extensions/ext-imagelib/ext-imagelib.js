@@ -261,26 +261,25 @@ export default {
             title = $(xml).children('title').first().text() || '(SVG #' + response.length + ')';
           }
           if (curMeta) {
-            $(preview).children().each(function () {
-              if ($(this).data('id') === id) {
+            Array.from(preview.children).forEach(function(element) {
+              if (element.dataset.id === id) {
                 if (curMeta.preview_url) {
-                  $(this).html(
-                    $('<span>').append(
-                      $('<img>').attr('src', curMeta.preview_url),
-                      title
-                    )
-                  );
+                  const img = document.createElement("img");
+                  img.src = curMeta.preview_url;
+                  const span = document.createElement("span");
+                  span.appendChild(img);
+                  element.append(span);
                 } else {
-                  $(this).text(title);
+                  element.textContent = title;
                 }
-                submit.removeAttr('disabled');
+                submit.removeAttribute('disabled');
               }
             });
           } else {
-            preview.append(
-              $('<div>').text(title)
-            );
-            submit.removeAttr('disabled');
+            const div = document.createElement("div");
+            div.textContent = title;
+            preview.appendChild(div);
+            submit.removeAttribute('disabled');
           }
         } else {
           if (curMeta && curMeta.preview_url) {

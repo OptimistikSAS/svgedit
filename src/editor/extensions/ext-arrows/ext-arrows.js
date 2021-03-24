@@ -219,16 +219,17 @@ export default {
         const marker = getLinked(elem, 'marker-' + type);
         if (!marker) { return; }
 
-        const curColor = $(marker).children().attr('fill');
-        const curD = $(marker).children().attr('d');
+        const curColor = marker.children.getAttribute('fill');        
+        const curD = marker.children.getAttribute('d');
         if (curColor === color) { return; }
 
         const allMarkers = $(defs).find('marker');
         let newMarker = null;
         // Different color, check if already made
         allMarkers.each(function () {
-          const attrs = $(this).children().attr(['fill', 'd']);
-          if (attrs.fill === color && attrs.d === curD) {
+          const attrsFill = this.children.getAttribute('fill');
+          const attrsD = this.children.getAttribute('d');
+          if (attrsFill === color && attrsD === curD) {
             // Found another marker with this color and this path
             newMarker = this;
           }
