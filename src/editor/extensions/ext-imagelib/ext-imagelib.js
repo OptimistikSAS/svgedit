@@ -284,24 +284,28 @@ export default {
         } else {
           if (curMeta && curMeta.preview_url) {
             title = curMeta.name || '';
-            entry = $('<span>').append(
-              $('<img>').attr('src', curMeta.preview_url),
-              title
-            );
+            entry = document.createElement('span');
+            const img = document.createElement("img");
+            img.src = curMeta.preview_url;
+            entry.appendChild(img);
+            entry.appendChild(document.createTextNode(title))
           } else {
-            entry = $('<img>').attr('src', response);
+            entry = document.createElement("img");
+            entry.src = response;
           }
 
           if (curMeta) {
-            preview.children().each(function () {
-              if ($(this).data('id') === id) {
-                $(this).html(entry);
-                submit.removeAttr('disabled');
+            Array.from(preview.children).forEach(function(element) {
+              if (element.dataset.id === id) {
+                element.appendChild(entry);
+                submit.removeAttribute('disabled');
               }
             });
           } else {
-            preview.append($('<div>').append(entry));
-            submit.removeAttr('disabled');
+            const div = document.createElement("div");
+            div.appendChild(entry);
+            preview.appendChild(div);
+            submit.removeAttribute('disabled');
           }
         }
         break;
