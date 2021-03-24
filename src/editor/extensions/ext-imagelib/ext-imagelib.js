@@ -382,14 +382,23 @@ export default {
     function showBrowser () {
       let browser = $id('imgbrowse');
       if (!browser) {
-        $('<div id=imgbrowse_holder><div id=imgbrowse class=toolbar_button>' +
-        '</div></div>').insertAfter('#svg_editor');
-        browser = $('#imgbrowse');
+        const div = document.createElement('div');
+        div.id = 'imgbrowse_holder';
+        div.innerHTML = '<div id=imgbrowse class=toolbar_button></div>';
+        insertAfter($id('svg_editor'), div);
+        browser = $id('imgbrowse');
 
         const allLibs = imagelibStrings.select_lib;
 
-        const libOpts = $('<ul id=imglib_opts>').appendTo(browser);
-        const frame = $('<iframe src="javascript:0"/>').prependTo(browser).hide().wrap('<div id=lib_framewrap>');
+        const libOpts = document.createElement('ul');
+        libOpts.id = 'imglib_opts';
+        browser.append(libOpts);
+        const frame = document.createElement('iframe'); $('<iframe src="javascript:0"/>')
+        frame.src = "javascript:0";
+        browser.prepend(frame);
+        frame.style.display = 'none';
+        
+        $(frame).wrap('<div id=lib_framewrap>');
 
         const header = $('<h1>').prependTo(browser).text(allLibs).css({
           position: 'absolute',
