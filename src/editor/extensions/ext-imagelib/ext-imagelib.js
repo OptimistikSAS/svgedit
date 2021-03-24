@@ -444,11 +444,14 @@ export default {
         back.setAttribute('style', `margin-right: 5px;`);
         back.style.display = 'none';
 
-        /* const type = */ $('<select><option value=s>' +
-          imagelibStrings.import_single + '</option><option value=m>' +
-          imagelibStrings.import_multi + '</option><option value=o>' +
-          imagelibStrings.open + '</option></select>').appendTo(leftBlock).change(function () {
-          mode = $(this).val();
+        const select = document.createElement('select');
+        select.innerHTML = '<select><option value=s>' +
+        imagelibStrings.import_single + '</option><option value=m>' +
+        imagelibStrings.import_multi + '</option><option value=o>' +
+        imagelibStrings.open + '</option>';
+        leftBlock.appendChild(select);
+        select.addEventListener('change', function () {
+          mode = this.value;
           switch (mode) {
           case 's':
           case 'o':
@@ -460,9 +463,8 @@ export default {
             toggleMulti(true);
             break;
           }
-        }).css({
-          'margin-top': 10
         });
+        select.setAttribute('style', `margin-top: 10px;`);
 
         imagelibStrings.imgLibs.forEach(function ({name, url, description}) {
           $('<li>')
