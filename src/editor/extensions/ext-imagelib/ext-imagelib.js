@@ -330,6 +330,23 @@ export default {
       referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
     }
 
+    function toggleMultiLoop() {
+      $.each(multiArr, function (i) {
+        const type = this[0];
+        const data = this[1];
+        if (type === 'svg') {
+          svgCanvas.importSvgString(data);
+        } else {
+          importImage(data);
+        }
+        svgCanvas.moveSelectedElements(i * 20, i * 20, false);
+      });
+      while(preview.firstChild)
+          preview.removeChild(preview.firstChild);
+      multiArr = [];
+      $id("imgbrowse_holder").style.display = 'none';
+    }
+
     /**
     * @param {boolean} show
     * @returns {void}
@@ -344,56 +361,18 @@ export default {
         preview.setAttribute('style', `position: absolute;top: 45px;right: 10px;width: 180px;bottom: 45px;background: #fff;overflow: auto;`);
         insertAfter($id('lib_framewrap'), preview);
         
-        /* submit = document.createElement('button');
+        submit = document.createElement('button');
         submit.setAttribute('content', 'Import selected');
         submit.setAttribute('disabled', true);  
         submit.textContent = 'Import selected';
         submit.setAttribute('style', `position: absolute;bottom: 10px;right: -10px;`);  
         $id('imgbrowse').appendChild(submit);
-        submit.addEventListener('click', function () {
-          $.each(multiArr, function (i) {
-            const type = this[0];
-            const data = this[1];
-            if (type === 'svg') {
-              svgCanvas.importSvgString(data);
-            } else {
-              importImage(data);
-            }
-            svgCanvas.moveSelectedElements(i * 20, i * 20, false);
-          });
-          $(preview).empty();
-          multiArr = [];
-          $id("imgbrowse_holder").style.display = 'none';
-        }) 
-        submit.style.display = (show) ? 'block' : 'none';
-        */
-
-
-         submit = $('<button disabled>Import selected</button>')
-          .appendTo('#imgbrowse')
-          .on('click touchend', function () {
-            $.each(multiArr, function (i) {
-              const type = this[0];
-              const data = this[1];
-              if (type === 'svg') {
-                svgCanvas.importSvgString(data);
-              } else {
-                importImage(data);
-              }
-              svgCanvas.moveSelectedElements(i * 20, i * 20, false);
-            });
-            $(preview).empty();
-            multiArr = [];
-            $id("imgbrowse_holder").style.display = 'none';
-          }).css({
-            position: 'absolute',
-            bottom: 10,
-            right: -10
-          });
+        submit.addEventListener('click', toggleMultiLoop);
+        submit.addEventListener('touchend', toggleMultiLoop);
       }
-
+      submit.style.display = (show) ? 'block' : 'none'; 
       preview.style.display = (show) ? 'block' : 'none';
-      submit.toggle(show);
+     
     }
 
     /**
@@ -401,8 +380,8 @@ export default {
     * @returns {void}
     */
     function showBrowser () {
-      let browser = $('#imgbrowse');
-      if (!browser.length) {
+      let browser = $id('imgbrowse');
+      if (!browser) {
         $('<div id=imgbrowse_holder><div id=imgbrowse class=toolbar_button>' +
         '</div></div>').insertAfter('#svg_editor');
         browser = $('#imgbrowse');
