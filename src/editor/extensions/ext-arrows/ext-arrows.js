@@ -223,18 +223,18 @@ export default {
         const curD = marker.children.getAttribute('d');
         if (curColor === color) { return; }
 
-        const allMarkers = $(defs).find('marker');
+        const allMarkers = defs.querySelectorAll('marker');
         let newMarker = null;
         // Different color, check if already made
-        allMarkers.each(function () {
-          const attrsFill = this.children.getAttribute('fill');
-          const attrsD = this.children.getAttribute('d');
+        Array.from(allMarkers).forEach(function(marker) {
+          const attrsFill = marker.children.getAttribute('fill');
+          const attrsD = marker.children.getAttribute('d');
           if (attrsFill === color && attrsD === curD) {
             // Found another marker with this color and this path
-            newMarker = this;
+            newMarker = marker;
           }
         });
-
+        
         if (!newMarker) {
           // Create a new marker with this color
           const lastId = marker.id;
