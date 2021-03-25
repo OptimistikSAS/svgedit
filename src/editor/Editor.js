@@ -805,9 +805,9 @@ class Editor extends EditorStartup {
       return;
     }
     // empty()
-    while(elem.firstChild)
-      elem.removeChild(elem.firstChild);
-    elem.appendChild(icon);
+    while($id(elem).firstChild)
+      $id(elem).removeChild($id(elem).firstChild);
+    $id(elem).appendChild(icon);
   }
 
   /**

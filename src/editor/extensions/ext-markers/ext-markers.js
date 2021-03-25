@@ -121,9 +121,17 @@ export default {
      */
     function setIcon (pos, id) {
       if (id.substr(0, 1) !== '\\') { id = '\\textmarker'; }
-      const ci = '#' + idPrefix + pos + '_' + id.substr(1);
-      svgEditor.setIcon('#cur_' + pos + '_marker_list', $(ci).children());
-      $(ci).addClass('current').siblings().removeClass('current');
+      const ci = idPrefix + pos + '_' + id.substr(1);
+      console.log(ci)
+      console.log('cur_' + pos + '_marker_list')
+      svgEditor.setIcon('cur_' + pos + '_marker_list', $id(ci).children);
+      $id(ci).classList.add('current');
+      const siblings = Array.prototype.filter.call($id(ci).parentNode.children, function(child){
+        return child !== $id(ci);
+      });
+      Array.from(siblings).forEach(function(sibling) {
+        sibling.classList.remove('current');
+      });
     }
 
     let selElems;

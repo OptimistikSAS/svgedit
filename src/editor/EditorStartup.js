@@ -246,7 +246,7 @@ class EditorStartup {
     }
 
     addListenerMulti($id('text'), 'keyup input', function(evt){
-      this.svgCanvas.setTextContent(evt.currentTarget.value);
+      self.svgCanvas.setTextContent(evt.currentTarget.value);
     });
     $id('image_url').addEventListener('change', function(evt) {
       self.setImageURL(evt.currentTarget.value);
