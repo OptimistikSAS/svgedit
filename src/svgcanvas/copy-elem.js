@@ -12,10 +12,8 @@ import {preventClickDefault} from './utilities.js';
 export const copyElem = function (el, getNextId) {
   // manually create a copy of the element
   const newEl = document.createElementNS(el.namespaceURI, el.nodeName);
-  el.attributes.forEach(function(attr, i){
-    if (attr.localName !== '-moz-math-font-style') {
+  Object.values(el.attributes).forEach((attr) => {
       newEl.setAttributeNS(attr.namespaceURI, attr.nodeName, attr.value);
-    }
   });
   // set the copied element's new id
   newEl.removeAttribute('id');
