@@ -1127,11 +1127,13 @@ export const getStrokedBBox = function (elems, addSVGElementFromJson, pathAction
 */
 export const getVisibleElements = function (parentElement) {
   if (!parentElement) {
-    parentElement = $(editorContext_.getSVGContent()).children(); // Prevent layers from being included
+    const svgcontent = editorContext_.getSVGContent();
+    parentElement = svgcontent.children; // Prevent layers from being included
   }
 
   const contentElems = [];
-  $(parentElement).children().each(function (i, elem) {
+  const childrens = parentElement.children
+  Array.prototype.forEach.call(childrens, function(elem, i){
     if (elem.getBBox) {
       contentElems.push(elem);
     }
