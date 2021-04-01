@@ -157,7 +157,7 @@ mouseTarget.id !== 'svgcanvas'
     return selectionContext_.getSVGRoot();
   }
 
-  const $target = $(mouseTarget);
+  const $target = mouseTarget;
 
   // If it's a selection grip, return the grip parent
   if ($target.closest('#selectorParentGroup').length) {
@@ -237,10 +237,12 @@ export const runExtensionsMethod = function (action, vars, returnArray, nameFilt
 */
 export const getVisibleElementsAndBBoxes = function (parent) {
   if (!parent) {
-    parent = $(selectionContext_.getSVGContent()).children(); // Prevent layers from being included
+    const svgcontent = selectionContext_.getSVGContent();
+    parent = svgcontent.children; // Prevent layers from being included
   }
   const contentElems = [];
-  $(parent).children().each(function (i, elem) {
+  const elements = parent.children;
+  Array.prototype.forEach.call(elements, function(elem, i){
     if (elem.getBBox) {
       contentElems.push({elem, bbox: getStrokedBBoxDefaultVisible([elem])});
     }
@@ -323,7 +325,9 @@ export const getIntersectionListMethod = function (rect) {
 export const groupSvgElem = function (elem) {
   const g = document.createElementNS(NS.SVG, 'g');
   elem.replaceWith(g);
-  $(g).append(elem).data('gsvg', elem)[0].id = selectionContext_.getCanvas().getNextId();
+  g.appendChild(elem);
+  $(g).data('gsvg', elem);
+  g.id = selectionContext_.getCanvas().getNextId();
 };
 
 /**
@@ -342,12 +346,6 @@ export const prepareSvg = function (newDoc) {
     selectionContext_.getCanvas().pathActions.fixEnd(path);
   });
 };
-// `this.each` is deprecated, if any extension used this it can be recreated by doing this:
-// * @example $(canvas.getRootElem()).children().each(...)
-// * @function module:svgcanvas.SvgCanvas#each
-// this.each = function (cb) {
-//  $(svgroot).children().each(cb);
-// };
 
 /**
 * Removes any old rotations if present, prepends a new rotation at the
