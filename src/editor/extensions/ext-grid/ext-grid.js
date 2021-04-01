@@ -25,15 +25,17 @@ export default {
     const svgEditor = this;
     const strings = await loadExtensionTranslation(svgEditor.configObj.pref('lang'));
     const {svgCanvas} = svgEditor;
+    const {$id} = svgCanvas;
     const svgdoc = document.getElementById('svgcanvas').ownerDocument,
       {assignAttributes} = svgCanvas,
       hcanvas = document.createElement('canvas'),
-      canvBG = $('#canvasBackground'),
+      canvBG = $id('canvasBackground'),
       units = getTypeMap(), // Assumes prior `init()` call on `units.js` module
       intervals = [0.01, 0.1, 1, 10, 100, 1000];
     let showGrid = svgEditor.configObj.curConfig.showGrid || false;
 
-    $(hcanvas).hide().appendTo('body');
+    hcanvas.style.display = 'none';
+    document.body.appendChild(hcanvas);
 
     const canvasGrid = svgdoc.createElementNS(NS.SVG, 'svg');
     assignAttributes(canvasGrid, {
@@ -45,7 +47,7 @@ export default {
       overflow: 'visible',
       display: 'none'
     });
-    canvBG.append(canvasGrid);
+    canvBG.appendChild(canvasGrid);
     const gridDefs = svgdoc.createElementNS(NS.SVG, 'defs');
     // grid-pattern
     const gridPattern = svgdoc.createElementNS(NS.SVG, 'pattern');
@@ -67,7 +69,7 @@ export default {
     });
     gridPattern.append(gridimg);
     gridDefs.append(gridPattern);
-    $('#canvasGrid').append(gridDefs);
+    $id('canvasGrid').appendChild(gridDefs);
 
     // grid-box
     const gridBox = svgdoc.createElementNS(NS.SVG, 'rect');
@@ -81,7 +83,7 @@ export default {
       fill: 'url(#gridpattern)',
       style: 'pointer-events: none; display:visible;'
     });
-    $('#canvasGrid').append(gridBox);
+    $id('canvasGrid').appendChild(gridBox);
 
     /**
      *
@@ -145,7 +147,7 @@ export default {
       if (showGrid) {
         updateGrid(svgCanvas.getZoom());
       }
-      $('#canvasGrid').toggle(showGrid);
+      $id('canvasGrid').style.display = (showGrid) ? 'block' : 'none';
       document.getElementById('view_grid').pressed = showGrid;
     }
     return {
