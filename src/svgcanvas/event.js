@@ -921,6 +921,8 @@ export const mouseDownEvent = function (evt) {
   const selectedElements = eventContext_.getSelectedElements();
   const currentZoom = eventContext_.getCurrentZoom();
   const curShape = eventContext_.getCanvas().getStyle();
+  const svgCanvas = eventContext_.getCanvas();
+  const {$id} = svgCanvas;
   if (eventContext_.getCanvas().spaceKey || evt.button === 1) { return; }
 
   const rightClick = evt.button === 2;
@@ -929,7 +931,7 @@ export const mouseDownEvent = function (evt) {
     eventContext_.getCanvas().cloneSelectedElements(0, 0);
   }
 
-  eventContext_.setRootSctm($('#svgcontent g')[0].getScreenCTM().inverse());
+  eventContext_.setRootSctm($id('svgcontent').querySelector('g').getScreenCTM().inverse());
 
   const pt = transformPoint(evt.pageX, evt.pageY, eventContext_.getrootSctm()),
     mouseX = pt.x * currentZoom,
@@ -1066,7 +1068,7 @@ export const mouseDownEvent = function (evt) {
 
     // Getting the BBox from the selection box, since we know we
     // want to orient around it
-    eventContext_.setInitBbox(utilsGetBBox($('#selectedBox0')[0]));
+    eventContext_.setInitBbox(utilsGetBBox($id('selectedBox0')));
     const bb = {};
     $.each(eventContext_.getInitBbox(), function (key, val) {
       bb[key] = val / currentZoom;
@@ -1312,12 +1314,14 @@ export const mouseDownEvent = function (evt) {
  */
 export const DOMMouseScrollEvent = function (e) {
   const currentZoom = eventContext_.getCurrentZoom();
+  const svgCanvas = eventContext_.getCanvas();
+  const {$id} = svgCanvas;
   if (!e.shiftKey) { return; }
 
   e.preventDefault();
   const evt = e.originalEvent;
 
-  eventContext_.setRootSctm($('#svgcontent g')[0].getScreenCTM().inverse());
+  eventContext_.setRootSctm($id('svgcontent').querySelector('g').getScreenCTM().inverse());
 
   const workarea = document.getElementById('workarea');
   const scrbar = 15;
