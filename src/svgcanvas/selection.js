@@ -160,7 +160,7 @@ mouseTarget.id !== 'svgcanvas'
   const $target = mouseTarget;
 
   // If it's a selection grip, return the grip parent
-  if ($target.closest('#selectorParentGroup').length) {
+  if ($target.closest('#selectorParentGroup')) {
     // While we could instead have just returned mouseTarget,
     // this makes it easier to indentify as being a selector grip
     return selectionContext_.getCanvas().selectorManager.selectorParentGroup;

@@ -60,7 +60,8 @@ export const svgCanvasToString = function () {
   svgContext_.getCanvas().pathActions.clear(true);
 
   // Keep SVG-Edit comment on top
-  $.each(svgContext_.getSVGContent().childNodes, function (i, node) {
+  const childNodesElems = svgContext_.getSVGContent().childNodes;
+  childNodesElems.forEach(function(node, i){
     if (i && node.nodeType === 8 && node.data.includes('Created with')) {
       svgContext_.getSVGContent().firstChild.before(node);
     }
@@ -75,8 +76,9 @@ export const svgCanvasToString = function () {
   const nakedSvgs = [];
 
   // Unwrap gsvg if it has no special attributes (only id and style)
-  $(svgContext_.getSVGContent()).find('g[data-gsvg]').each(function () {
-    const attrs = this.attributes;
+  const gsvgElems = svgContext_.getSVGContent().querySelectAll('g[data-gsvg]');
+  Array.prototype.forEach.call(gsvgElems, function(element, i){
+    const attrs = element.attributes;
     let len = attrs.length;
     for (let i = 0; i < len; i++) {
       if (attrs[i].nodeName === 'id' || attrs[i].nodeName === 'style') {
@@ -85,9 +87,9 @@ export const svgCanvasToString = function () {
     }
     // No significant attributes, so ungroup
     if (len <= 0) {
-      const svg = this.firstChild;
+      const svg = element.firstChild;
       nakedSvgs.push(svg);
-      $(this).replaceWith(svg);
+      element.replaceWith(svg);
     }
   });
   const output = this.svgToString(svgContext_.getSVGContent(), 0);
