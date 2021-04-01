@@ -736,11 +736,12 @@ export const getPathDFromElement = function (elem) {
   switch (elem.tagName) {
   case 'ellipse':
   case 'circle': {
-    a = $(elem).attr(['rx', 'ry', 'cx', 'cy']);
-    const {cx, cy} = a;
-    ({rx, ry} = a);
+    const rx = elem.getAttribute('rx');
+    const ry = elem.getAttribute('ry');
+    const cx = elem.getAttribute('cx');
+    const cy = elem.getAttribute('cy');
     if (elem.tagName === 'circle') {
-      ry = $(elem).attr('r');
+      ry = elem.getAttribute('r');
       rx = ry;
     }
 
@@ -757,8 +758,12 @@ export const getPathDFromElement = function (elem) {
     d = elem.getAttribute('d');
     break;
   case 'line':
-    a = $(elem).attr(['x1', 'y1', 'x2', 'y2']);
-    d = 'M' + a.x1 + ',' + a.y1 + 'L' + a.x2 + ',' + a.y2;
+    const x1 = elem.getAttribute('x1');
+    const y1 = elem.getAttribute('y1');
+    const x2 = elem.getAttribute('x2');
+    const y2 = elem.getAttribute('y2');
+    // a = $(elem).attr(['x1', 'y1', 'x2', 'y2']);
+    d = 'M' + x1 + ',' + y1 + 'L' + x2 + ',' + y2;
     break;
   case 'polyline':
     d = 'M' + elem.getAttribute('points');
@@ -767,8 +772,8 @@ export const getPathDFromElement = function (elem) {
     d = 'M' + elem.getAttribute('points') + ' Z';
     break;
   case 'rect': {
-    const r = $(elem).attr(['rx', 'ry']);
-    ({rx, ry} = r);
+    const rx = elem.getAttribute('rx');
+    const ry = elem.getAttribute('ry');
     const b = elem.getBBox();
     const {x, y} = b,
       w = b.width,
