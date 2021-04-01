@@ -217,10 +217,10 @@ export default {
       },
       mouseUp () {
         if (svgCanvas.getMode() === 'star') {
-          const attrs = $(newFO).attr(['r']);
+          const r = newFO.getAttribute('r');
           // svgCanvas.addToSelection([newFO], true);
           return {
-            keep: (attrs.r !== '0'),
+            keep: (r !== '0'),
             element: newFO
           };
         }

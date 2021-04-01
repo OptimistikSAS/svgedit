@@ -96,8 +96,8 @@ export const svgCanvasToString = function () {
 
   // Rewrap gsvg
   if (nakedSvgs.length) {
-    $(nakedSvgs).each(function () {
-      svgContext_.getCanvas().groupSvgElem(this);
+    Array.prototype.forEach.call(nakedSvgs, function(el, i){
+      svgContext_.getCanvas().groupSvgElem(el);
     });
   }
 

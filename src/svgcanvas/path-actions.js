@@ -434,7 +434,7 @@ export const pathActionsMethod = (function () {
               keep = false;
               return keep;
             }
-            $(stretchy).remove();
+            stretchy.remove();
 
             // This will signal to commit the path
             // const element = newpath; // Other event handlers define own `element`, so this was probably not meant to interact with them or one which shares state (as there were none); I therefore adding a missing `var` to avoid a global
