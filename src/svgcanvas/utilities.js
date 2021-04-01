@@ -138,7 +138,10 @@ export const toXml = function (str) {
 * @returns {string} The converted string
 */
 export function fromXml (str) {
-  return $('<p/>').html(str).text();
+  const p = document.createElement('p');
+  // eslint-disable-next-line no-unsanitized/property
+  p.innerHTML = str;
+  return p.textContent;
 }
 
 // This code was written by Tyler Akins and has been placed in the

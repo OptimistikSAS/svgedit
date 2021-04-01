@@ -158,12 +158,18 @@ export default {
           return undefined;
         }
         if (svgCanvas.getMode() === 'star') {
-          const c = $(newFO).attr(['cx', 'cy', 'point', 'orient', 'fill', 'strokecolor', 'strokeWidth', 'radialshift']);
+          const cx = newFO.getAttribute('cx');
+          const cy = newFO.getAttribute('cy');
+          const point = newFO.getAttribute('point');
+          const orient = newFO.getAttribute('orient');
+          const fill = newFO.getAttribute('fill');
+          const strokecolor = newFO.getAttribute('strokecolor');
+          const strokeWidth = newFO.getAttribute('strokeWidth');
+          const radialshift = newFO.getAttribute('radialshift');
 
           let x = opts.mouse_x;
           let y = opts.mouse_y;
-          const {cx, cy, fill, strokecolor, strokeWidth, radialshift, point, orient} = c,
-            circumradius = (Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy))) / 1.5,
+          const circumradius = (Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy))) / 1.5,
             inradius = circumradius / document.getElementById('starRadiusMulitplier').value;
           newFO.setAttribute('r', circumradius);
           newFO.setAttribute('r2', inradius);
