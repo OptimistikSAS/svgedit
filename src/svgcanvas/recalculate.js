@@ -776,8 +776,8 @@ export const recalculateDimensions = function (selected) {
           const child = children.item(c);
           if (child.tagName === 'tspan') {
             const tspanChanges = {
-              x: $(child).attr('x') || 0,
-              y: $(child).attr('y') || 0
+              x: child.getAttribute('x') || 0,
+              y: child.getAttribute('y') || 0
             };
             remapElement(child, tspanChanges, m);
           }
