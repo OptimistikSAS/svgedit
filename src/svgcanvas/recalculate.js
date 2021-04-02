@@ -233,8 +233,8 @@ export const recalculateDimensions = function (selected) {
   } else if (gsvg) {
     // GSVG exception
     changes = {
-      x: $(gsvg).attr('x') || 0,
-      y: $(gsvg).attr('y') || 0
+      x: gsvg.getAttribute('x') || 0,
+      y: gsvg.getAttribute('y') || 0
     };
   }
 
