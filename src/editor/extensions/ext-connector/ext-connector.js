@@ -231,7 +231,7 @@ export default {
           $(cElem).parents().each(add);
 
           if (!cElem || !cElem.parentNode) {
-            $(this).remove();
+            this.remove();
             continue;
           }
           if (elems.includes(cElem) || addThis) {
@@ -506,7 +506,7 @@ export default {
           return false;
         });
         if (dupe.length) {
-          $(curLine).remove();
+          curLine.remove();
           return {
             keep: false,
             element: null,

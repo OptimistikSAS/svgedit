@@ -117,33 +117,45 @@ export default {
         // TODO: Needs to be done after orig icon loads
         setTimeout(function () {
           // Create source save/cancel buttons
-          /* const save = */ $('#tool_source_save').clone().hide().attr(
-            'id', 'polygon_save'
-          ).unbind().appendTo(
-            '#tool_source_back'
-          ).click(function () {
-            if (!editingitex) {
-              return;
-            }
-            // Todo: Uncomment the setItexString() function above and handle ajaxEndpoint?
-            /*
-            if (!setItexString($('#svg_source_textarea').val())) {
-              const ok = seConfirm('Errors found. Revert to original?', function (ok) {
-              if (!ok) {
-                return false;
-              }
-              endChanges();
-            } else { */
-            endChanges();
-            // }
-            // setSelectMode();
-          });
 
-          /* const cancel = */ $('#tool_source_cancel').clone().hide().attr(
-            'id', 'polygon_cancel'
-          ).unbind().appendTo('#tool_source_back').click(function () {
-            endChanges();
-          });
+          const old_tool_source_save = $id('tool_source_save');
+          if(old_tool_source_save){
+            const toolSourceSaveClone = old_tool_source_save.cloneNode(true);
+            toolSourceSaveClone.style.display = 'none';
+            toolSourceSaveClone.setAttribute('id', 'polygon_save');
+            old_tool_source_save.parentNode.replaceChild(toolSourceSaveClone, old_tool_source_save);
+            $id('tool_source_back').appendChild(old_tool_source_save);
+            old_tool_source_save.addEventListener('click', () => {
+              if (!editingitex) {
+                return;
+              }
+              // Todo: Uncomment the setItexString() function above and handle ajaxEndpoint?
+              /*
+              if (!setItexString($('#svg_source_textarea').val())) {
+                const ok = seConfirm('Errors found. Revert to original?', function (ok) {
+                if (!ok) {
+                  return false;
+                }
+                endChanges();
+              } else { */
+              endChanges();
+              // }
+              // setSelectMode();
+            });
+          }
+
+
+          const old_element = $id('tool_source_cancel');
+          if(old_element){
+            const toolSourceCancelClone = old_element.cloneNode(true);
+            toolSourceCancelClone.style.display = 'none';
+            toolSourceCancelClone.setAttribute('id', 'polygon_cancel');
+            old_element.parentNode.replaceChild(toolSourceCancelClone, old_element);
+            $id('tool_source_back').appendChild(toolSourceCancelClone);
+            toolSourceCancelClone.addEventListener('click', () => {
+              endChanges();
+            });
+          }
         }, 3000);
       },
       mouseDown (opts) {
@@ -184,7 +196,15 @@ export default {
           return undefined;
         }
         // const e = opts.event;
-        const c = $(newFO).attr(['cx', 'cy', 'sides', 'orient', 'fill', 'strokecolor', 'strokeWidth']);
+        const c = {
+          cx: newFO.getAttribute('cx'),
+          cy: newFO.getAttribute('cy'),
+          sides: newFO.getAttribute('sides'),
+          orient: newFO.getAttribute('orient'),
+          fill: newFO.getAttribute('fill'),
+          strokecolor: newFO.getAttribute('strokecolor'),
+          strokeWidth: newFO.getAttribute('strokeWidth'),
+        };
         let x = opts.mouse_x;
         let y = opts.mouse_y;
         const {cx, cy, fill, strokecolor, strokeWidth, sides} = c, // {orient} = c,
@@ -220,8 +240,8 @@ export default {
         if (svgCanvas.getMode() !== 'polygon') {
           return undefined;
         }
-        const attrs = $(newFO).attr('edge');
-        const keep = (attrs.edge !== '0');
+        const edge = newFO.getAttribute('edge');
+        const keep = (edge !== '0');
         // svgCanvas.addToSelection([newFO], true);
         return {
           keep,

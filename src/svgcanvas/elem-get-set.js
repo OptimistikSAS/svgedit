@@ -103,7 +103,7 @@ export const setGroupTitleMethod = function (val) {
     // Add title element
     title = elemContext_.getDOMDocument().createElementNS(NS.SVG, 'title');
     title.textContent = val;
-    $(elem).prepend(title);
+    elem.insertBefore(title, elem.firstChild);
     batchCmd.addSubCommand(new InsertElementCommand(title));
   }
 
@@ -392,7 +392,7 @@ export const setGradientMethod = function (type) {
 */
 export const findDuplicateGradient = function (grad) {
   const defs = findDefs();
-  const existingGrads = $(defs).find('linearGradient, radialGradient');
+  const existingGrads = defs.querySelectorAll('linearGradient, radialGradient');
   let i = existingGrads.length;
   const radAttrs = ['r', 'cx', 'cy', 'fx', 'fy'];
   while (i--) {
@@ -406,11 +406,23 @@ export const findDuplicateGradient = function (grad) {
         continue;
       }
     } else {
-      const gradAttrs = $(grad).attr(radAttrs);
-      const ogAttrs = $(og).attr(radAttrs);
+      const gradAttrs = {
+        r: grad.getAttribute('r'),
+        cx: grad.getAttribute('cx'),
+        cy: grad.getAttribute('cy'),
+        fx: grad.getAttribute('fx'),
+        fy: grad.getAttribute('fy')
+      };
+      const ogAttrs = {
+        r: og.getAttribute('r'),
+        cx: og.getAttribute('cx'),
+        cy: og.getAttribute('cy'),
+        fx: og.getAttribute('fx'),
+        fy: og.getAttribute('fy')
+      };
 
       let diff = false;
-      $.each(radAttrs, function (j, attr) {
+      radAttrs.forEach(function(attr, j){
         if (gradAttrs[attr] !== ogAttrs[attr]) { diff = true; }
       });
 

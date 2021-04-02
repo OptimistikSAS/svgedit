@@ -174,7 +174,7 @@ export const addPointGripMethod = function (index, x, y) {
     assignAttributes(pointGrip, atts);
     pointGripContainer.append(pointGrip);
 
-    const grip = $id('pathpointgrip_' + index);
+    const grip = document.getElementById('pathpointgrip_' + index);
     grip.addEventListener("dblclick", (e) => {
       const path = pathMethodsContext_.getPathObj();
       if (path) {
@@ -429,8 +429,8 @@ export class Segment {
    * @returns {void}
    */
   selectCtrls (y) {
-    $id('ctrlpointgrip_' + this.index + 'c1').setAttribute('fill', y ? '#0FF' : '#EEE');
-    $id('ctrlpointgrip_' + this.index + 'c2').setAttribute('fill', y ? '#0FF' : '#EEE')
+    document.getElementById('ctrlpointgrip_' + this.index + 'c1').setAttribute('fill', y ? '#0FF' : '#EEE');
+    document.getElementById('ctrlpointgrip_' + this.index + 'c2').setAttribute('fill', y ? '#0FF' : '#EEE')
   }
 
   /**
