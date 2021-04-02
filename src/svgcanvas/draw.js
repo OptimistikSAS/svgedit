@@ -158,7 +158,7 @@ export class Drawing {
       return this.svgElem_.querySelector('#' + id);
     }
     // jQuery lookup: twice as slow as xpath in FF
-    return $(this.svgElem_).find('[id=' + id + ']')[0];
+    return this.svgElem_.querySelector('[id=' + id + ']');
   }
 
   /**
