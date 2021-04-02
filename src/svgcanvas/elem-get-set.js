@@ -873,7 +873,7 @@ export const setSegTypeMethod = function (newType) {
 */
 export const setBackgroundMethod = function (color, url) {
   const bg = getElem('canvasBackground');
-  const border = $(bg).find('rect')[0];
+  const border = bg.querySelector('rect');
   let bgImg = getElem('background_image');
   let bgPattern = getElem('background_pattern');
   border.setAttribute('fill', color === 'chessboard' ? '#fff' : color);
