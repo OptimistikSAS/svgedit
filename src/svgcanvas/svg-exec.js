@@ -76,7 +76,7 @@ export const svgCanvasToString = function () {
   const nakedSvgs = [];
 
   // Unwrap gsvg if it has no special attributes (only id and style)
-  const gsvgElems = svgContext_.getSVGContent().querySelectAll('g[data-gsvg]');
+  const gsvgElems = svgContext_.getSVGContent().querySelectorAll('g[data-gsvg]');
   Array.prototype.forEach.call(gsvgElems, function(element, i){
     const attrs = element.attributes;
     let len = attrs.length;
