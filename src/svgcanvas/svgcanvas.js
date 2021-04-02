@@ -735,12 +735,11 @@ class SvgCanvas {
 
     // Animation element to change the opacity of any newly created element
     const opacAni = document.createElementNS(NS.SVG, 'animate');
-    $(opacAni).attr({
-      attributeName: 'opacity',
-      begin: 'indefinite',
-      dur: 1,
-      fill: 'freeze'
-    }).appendTo(svgroot);
+    opacAni.setAttribute('attributeName', 'opacity');
+    opacAni.setAttribute('begin', 'indefinite');
+    opacAni.setAttribute('dur', 1);
+    opacAni.setAttribute('fill', 'freeze');
+    svgroot.appendChild(opacAni);
 
     // (function () {
     // TODO For Issue 208: this is a start on a thumbnail
@@ -1314,7 +1313,9 @@ class SvgCanvas {
       // $(window).mouseup(mouseUp);
 
       // TODO(rafaelcastrocouto): User preference for shift key and zoom factor
-      $(container).bind('mousewheel DOMMouseScroll', DOMMouseScrollEvent);
+      container.addEventListener('mousewheel', DOMMouseScrollEvent);
+      container.addEventListener('DOMMouseScroll', DOMMouseScrollEvent);
+
     }());
 
     textActionsInit(
@@ -1829,7 +1830,7 @@ class SvgCanvas {
 * position in the editor's canvas.
 */
     this.getOffset = function () {
-      return $(svgcontent).attr(['x', 'y']);
+      return {x: svgcontent.getAttribute('x'), y: svgcontent.getAttribute('y')};
     };
 
     /**

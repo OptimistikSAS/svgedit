@@ -419,8 +419,8 @@ export const textActionsMethod = (function () {
       textActionsContext_.setCurrentMode('select');
       clearInterval(blinker);
       blinker = null;
-      if (selblock) { $(selblock).attr('display', 'none'); }
-      if (cursor) { $(cursor).attr('visibility', 'hidden'); }
+      if (selblock) { selblock.setAttribute('display', 'none'); }
+      if (cursor) { cursor.setAttribute('visibility', 'hidden'); }
       curtext.style.cursor = 'move';
 
       if (selectElem) {
@@ -491,7 +491,8 @@ export const textActionsMethod = (function () {
       chardata.length = len;
       textinput.focus();
 
-      $(curtext).unbind('dblclick', selectWord).dblclick(selectWord);
+      curtext.removeEventListener("dblclick", selectWord);
+      curtext.addEventListener("dblclick", selectWord);
 
       if (!len) {
         end = {x: textbb.x + (textbb.width / 2), width: 0};
