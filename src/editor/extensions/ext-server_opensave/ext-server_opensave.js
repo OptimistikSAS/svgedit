@@ -86,10 +86,13 @@ export default {
 
     //  Hiding by size instead of display to avoid FF console errors
     //    with `getBBox` in browser.js `supportsPathBBox_`)
-    $(
-      `<iframe name="output_frame" title="${strings.hiddenframe}"
-          style="width: 0; height: 0;" src="data:text/html;base64,PGh0bWw+"/>`
-    ).appendTo('body');
+    const iframe = document.createElement('IFRAME');
+    iframe.src="data:text/html;base64,PGh0bWw+";
+    document.body.append(iframe);
+    iframe.name = "output_frame";
+    iframe.contentWindow.document.title = strings.hiddenframe;
+    iframe.style.cssText = "width:0;height:0;";
+
     svgEditor.setCustomHandlers({
       save (win, data) {
         const svg = '<?xml version="1.0" encoding="UTF-8"?>\n' + data, // Firefox doesn't seem to know it is UTF-8 (no matter whether we use or skip the clientDownload code) despite the Content-Disposition header containing UTF-8, but adding the encoding works
@@ -99,15 +102,16 @@ export default {
           return;
         }
 
-        $('<form>').attr({
-          method: 'post',
-          action: saveSvgAction,
-          target: 'output_frame'
-        }).append(`
-          <input type="hidden" name="output_svg" value="${xhtmlEscape(svg)}">
-          <input type="hidden" name="filename" value="${xhtmlEscape(filename)}">
-        `).appendTo('body')
-          .submit().remove();
+        const form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', saveSvgAction);
+        form.setAttribute('target', 'output_frame');
+        // eslint-disable-next-line no-unsanitized/property
+        form.innerHTML = `<input type="hidden" name="output_svg" value="${xhtmlEscape(svg)}">
+        <input type="hidden" name="filename" value="${xhtmlEscape(filename)}">`;
+        document.body.append(form);
+        form.submit();
+        form.remove();
       },
       exportPDF (win, data) {
         const filename = getFileNameFromTitle(),
@@ -115,16 +119,17 @@ export default {
         if (clientDownloadSupport(filename, '.pdf', datauri)) {
           return;
         }
-        $('<form>').attr({
-          method: 'post',
-          action: saveImgAction,
-          target: 'output_frame'
-        }).append(`
-          <input type="hidden" name="output_img" value="${datauri}">
-          <input type="hidden" name="mime" value="application/pdf">
-          <input type="hidden" name="filename" value="${xhtmlEscape(filename)}">
-        `).appendTo('body')
-          .submit().remove();
+        const form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', saveImgAction);
+        form.setAttribute('target', 'output_frame');
+        // eslint-disable-next-line no-unsanitized/property
+        form.innerHTML = `<input type="hidden" name="output_img" value="${datauri}">
+        <input type="hidden" name="mime" value="application/pdf">
+        <input type="hidden" name="filename" value="${xhtmlEscape(filename)}">`;
+        document.body.append(form);
+        form.submit();
+        form.remove();  
       },
       // Todo: Integrate this extension with a new built-in exportWindowType, "download"
       async exportImage (win, data) {
@@ -160,16 +165,17 @@ export default {
           return;
         }
 
-        $('<form>').attr({
-          method: 'post',
-          action: saveImgAction,
-          target: 'output_frame'
-        }).append(`
-          <input type="hidden" name="output_img" value="${datauri}">
-          <input type="hidden" name="mime" value="${mimeType}">
-          <input type="hidden" name="filename" value="${xhtmlEscape(filename)}">
-        `).appendTo('body')
-          .submit().remove();
+        const form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', saveImgAction);
+        form.setAttribute('target', 'output_frame');
+        // eslint-disable-next-line no-unsanitized/property
+        form.innerHTML = `<input type="hidden" name="output_img" value="${datauri}">
+        <input type="hidden" name="mime" value="${mimeType}">
+        <input type="hidden" name="filename" value="${xhtmlEscape(filename)}">`;
+        document.body.append(form);
+        form.submit();
+        form.remove();
       }
     });
 
