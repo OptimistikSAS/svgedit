@@ -1223,7 +1223,7 @@ export const getElem = (supportsSelectors())
     }
     : function (id) {
       // jQuery lookup: twice as slow as xpath in FF
-      return $(svgroot_).find(`[id=${id}]`)[0];
+      return svgroot_.querySelector('[id=${id}]');
     };
 
 /**

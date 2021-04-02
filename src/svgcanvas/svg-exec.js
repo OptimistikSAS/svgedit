@@ -326,7 +326,7 @@ export const setSvgString = function (xmlString, preventUndo) {
     }
 
     svgContext_.getSVGRoot().append(svgContext_.getSVGContent());
-    const content = $(svgContext_.getSVGContent());
+    const content = svgContext_.getSVGContent();
 
     svgContext_.getCanvas().current_drawing_ = new draw.Drawing(svgContext_.getSVGContent(), svgContext_.getIdPrefix());
 
@@ -339,8 +339,8 @@ export const setSvgString = function (xmlString, preventUndo) {
     }
 
     // change image href vals if possible
-    content.find('image').each(function () {
-      const image = this;
+    const elements = content.querySelectorAll('image');
+    Array.prototype.forEach.call(elements, function(image, i){
       preventClickDefault(image);
       const val = svgContext_.getCanvas().getHref(this);
       if (val) {
@@ -351,9 +351,11 @@ export const setSvgString = function (xmlString, preventUndo) {
           if (m) {
             const url = decodeURIComponent(m[1]);
             // const url = decodeURIComponent(m.groups.url);
-            $(new Image()).load(function () {
+            const iimg = new Image();
+            iimg.addEventListener("load", (e) => {
               image.setAttributeNS(NS.XLINK, 'xlink:href', url);
-            }).attr('src', url);
+            });
+            iimg.src = url;
           }
         }
         // Add to encodableImages if it loads
@@ -362,19 +364,20 @@ export const setSvgString = function (xmlString, preventUndo) {
     });
 
     // Wrap child SVGs in group elements
-    content.find('svg').each(function () {
+    const svgElements = content.querySelectorAll('svg');
+    Array.prototype.forEach.call(svgElements, function(element, i){
       // Skip if it's in a <defs>
-      if ($(this).closest('defs').length) { return; }
+      if (element.closest('defs')) { return; }
 
-      svgContext_.getCanvas().uniquifyElems(this);
+      svgContext_.getCanvas().uniquifyElems(element);
 
       // Check if it already has a gsvg group
-      const pa = this.parentNode;
+      const pa = element.parentNode;
       if (pa.childNodes.length === 1 && pa.nodeName === 'g') {
-        $(pa).data('gsvg', this);
+        $(pa).data('gsvg', element);
         pa.id = pa.id || svgContext_.getCanvas().getNextId();
       } else {
-        svgContext_.getCanvas().groupSvgElem(this);
+        svgContext_.getCanvas().groupSvgElem(element);
       }
     });
 
@@ -388,7 +391,7 @@ export const setSvgString = function (xmlString, preventUndo) {
     // TODO: This should also be done if the object is re-added through "redo"
     svgContext_.getCanvas().setUseData(content);
 
-    svgContext_.getCanvas().convertGradients(content[0]);
+    svgContext_.getCanvas().convertGradients(content);
 
     const attrs = {
       id: 'svgcontent',
@@ -398,16 +401,16 @@ export const setSvgString = function (xmlString, preventUndo) {
     let percs = false;
 
     // determine proper size
-    if (content.attr('viewBox')) {
-      const vb = content.attr('viewBox').split(' ');
+    if (content.getAttribute('viewBox')) {
+      const viBox = content.getAttribute('viewBox');
+      const vb = viBox.split(' ');
       attrs.width = vb[2];
       attrs.height = vb[3];
       // handle content that doesn't have a viewBox
     } else {
-      $.each(['width', 'height'], function (i, dim) {
+      ['width', 'height'].forEach(function(dim, i){
         // Set to 100 if not given
-        const val = content.attr(dim) || '100%';
-
+        const val = content.getAttribute(dim) || '100%';
         if (String(val).substr(-1) === '%') {
           // Use user units if percentage given
           percs = true;
@@ -421,8 +424,12 @@ export const setSvgString = function (xmlString, preventUndo) {
     draw.identifyLayers();
 
     // Give ID for any visible layer children missing one
-    content.children().find(svgContext_.getVisElems()).each(function () {
-      if (!this.id) { this.id = svgContext_.getCanvas().getNextId(); }
+    const chiElems = content.children;
+    Array.prototype.forEach.call(chiElems, function(chiElem, i){
+      const visElems = chiElem.querySelectorAll(svgContext_.getVisElems());
+      Array.prototype.forEach.call(visElems, function(elem, i){
+        if (!elem.id) { elem.id = svgContext_.getCanvas().getNextId(); }
+      });
     });
 
     // Percentage width/height, so let's base it on visible elements
@@ -437,13 +444,16 @@ export const setSvgString = function (xmlString, preventUndo) {
     if (attrs.width <= 0) { attrs.width = 100; }
     if (attrs.height <= 0) { attrs.height = 100; }
 
-    content.attr(attrs);
+    content.setAttribute('width', attrs.width);
+    content.setAttribute('height', attrs.height);
     this.contentW = attrs.width;
     this.contentH = attrs.height;
 
     batchCmd.addSubCommand(new InsertElementCommand(svgContext_.getSVGContent()));
     // update root to the correct size
-    const changes = content.attr(['width', 'height']);
+    const width = content.getAttribute('width');
+    const height = content.getAttribute('height');
+    const changes = {width: width, height: height};
     batchCmd.addSubCommand(new ChangeElementCommand(svgContext_.getSVGRoot(), changes));
 
     // reset zoom
