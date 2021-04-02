@@ -405,7 +405,7 @@ export default {
     */
     function triggerTextEntry (pos, val) {
       $id(pos + '_marker').value = val;
-      $('#' + pos + '_marker').change();
+      $id(pos + '_marker').change();
       // const txtbox = $('#'+pos+'_marker');
       // if (val.substr(0,1)=='\\') {txtbox.hide();}
       // else {txtbox.show();}

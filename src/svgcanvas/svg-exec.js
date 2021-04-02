@@ -444,8 +444,9 @@ export const setSvgString = function (xmlString, preventUndo) {
     if (attrs.width <= 0) { attrs.width = 100; }
     if (attrs.height <= 0) { attrs.height = 100; }
 
-    content.setAttribute('width', attrs.width);
-    content.setAttribute('height', attrs.height);
+    for (const [key, value] of Object.entries(attrs)) {
+      content.setAttribute(key, value);
+    }
     this.contentW = attrs.width;
     this.contentH = attrs.height;
 

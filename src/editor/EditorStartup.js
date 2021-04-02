@@ -131,16 +131,21 @@ class EditorStartup {
     this.selectedElement = null;
     this.multiselected = false;
 
-    $('#cur_context_panel').delegate('a', 'click', (evt) => {
-      const link = evt.currentTarget;
-      if (link.hasAttribute('data-root')) {
-        this.svgCanvas.leaveContext();
-      } else {
-        this.svgCanvas.setContext(link.textContent);
-      }
-      this.svgCanvas.clearSelection();
-      return false;
-    });
+    const aLinks = $id('cur_context_panel').querySelectorAll('a')
+
+    for (const aLink of aLinks) {
+      aLink.addEventListener('click', (evt) => {
+        const link = evt.currentTarget;
+        if (link.hasAttribute('data-root')) {
+          this.svgCanvas.leaveContext();
+        } else {
+          this.svgCanvas.setContext(link.textContent);
+        }
+        this.svgCanvas.clearSelection();
+        return false;
+      });
+    }
+
     // bind the selected event to our function that handles updates to the UI
     this.svgCanvas.bind('selected', this.selectedChanged.bind(this));
     this.svgCanvas.bind('transition', this.elementTransition.bind(this));
@@ -351,17 +356,21 @@ class EditorStartup {
       inp.blur();
     };
 
-    $('#svg_editor').find('button, select, input:not(#text)').focus(() => {
-      inp = this;
-      this.uiContext = 'toolbars';
-      this.workarea.addEventListener('mousedown', unfocus);
-    }).blur(() => {
-      this.uiContext = 'canvas';
-      this.workarea.removeEventListener('mousedown', unfocus);
-      // Go back to selecting text if in textedit mode
-      if (this.svgCanvas.getMode() === 'textedit') {
-        $id('text').focus();
-      }
+    const liElems = document.getElementById('svg_editor').querySelectorAll('button, select, input:not(#text)');
+    Array.prototype.forEach.call(liElems, function(el, i){
+      el.addEventListener("focus", (e) => {
+        inp = e.currentTarget;
+        this.uiContext = 'toolbars';
+        this.workarea.addEventListener('mousedown', unfocus);       
+      });
+      el.addEventListener("blur", () => {
+        this.uiContext = 'canvas';
+        this.workarea.removeEventListener('mousedown', unfocus);
+        // Go back to selecting text if in textedit mode
+        if (this.svgCanvas.getMode() === 'textedit') {
+          $id('text').focus();
+        }
+      });
     });
     // ref: https://stackoverflow.com/a/1038781
     function getWidth() {

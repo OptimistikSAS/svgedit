@@ -249,9 +249,9 @@ export default {
 
         // Check if last marker can be removed
         let remove = true;
-        $(S.svgcontent).find('line, polyline, path, polygon').each(function () {
-          const element = this;
-          $.each(mtypes, function (j, mtype) {
+        const sElements = S.svgcontent.querySelectorAll('line, polyline, path, polygon');
+        Array.prototype.forEach.call(sElements, function(element, i){
+          mtypes.forEach(function(mtype, j){
             if (element.getAttribute('marker-' + mtype) === 'url(#' + marker.id + ')') {
               remove = false;
               return remove;
