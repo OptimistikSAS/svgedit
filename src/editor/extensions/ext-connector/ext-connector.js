@@ -88,7 +88,6 @@ export default {
     */
     function getOffset (side, line) {
       const giveOffset = line.getAttribute('marker-' + side);
-      // const giveOffset = $(line).data(side+'_off');
 
       // TODO: Make this number (5) be based on marker width/height
       const size = line.getAttribute('stroke-width') * 5;
@@ -176,7 +175,7 @@ export default {
         const srcY = bb2.y + bb2.height / 2;
 
         // Set point of element being moved
-        const pt = getBBintersect(srcX, srcY, bb, getOffset(pre, line)); // $(line).data(pre+'_off')?sw:0
+        const pt = getBBintersect(srcX, srcY, bb, getOffset(pre, line));
         setPoint(line, conn.is_start ? 0 : 'end', pt.x, pt.y, true);
 
         // Set point of connected element

@@ -148,7 +148,7 @@ export default {
       // NOTE: Safari didn't like a negative value in viewBox
       // so we use a standardized 0 0 100 100
       // with 50 50 being mapped to the marker position
-      const scale = 2;// parseFloat($('#marker_size').val());
+      const scale = 2;
       const strokeWidth = 10;
       let refX = 50;
       const refY = 50;
