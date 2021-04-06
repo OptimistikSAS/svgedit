@@ -107,7 +107,7 @@ export default {
 
       const str = svgCanvas.svgToString(elt, 0);
       $id('svg_source_textarea').value = str;
-      $('#svg_source_editor').fadeIn();
+      $id('#svg_source_editor').style.display = 'block';
       properlySourceSizeTextArea();
       $id('svg_source_textarea').focus();
     }
@@ -203,8 +203,8 @@ export default {
           toolSourceSave.style.display = 'none';
           toolSourceSave.id = 'foreign_save';
           // unbind()
-          var oldElement = $id('tool_source_save');
-          oldElement.parentNode.replaceChild(toolSourceSave, oldElement);
+          // const oldElement = $id('tool_source_save');
+          // oldElement.parentNode.replaceChild(toolSourceSave, oldElement);
           $id('tool_source_back').append(toolSourceSave);
           toolSourceSave.addEventListener('click', (e) => function () {
             if (!editingforeign) { return; }
@@ -219,11 +219,18 @@ export default {
             // setSelectMode();
           });
 
-          /* const cancel = */ $('#tool_source_cancel').clone()
-            .hide().attr('id', 'foreign_cancel').unbind()
-            .appendTo('#tool_source_back').click(function () {
-              endChanges();
-            });
+          var oldToolSourceCancel = $id('tool_source_cancel');
+          const toolSourceCancel = oldToolSourceCancel.cloneNode(true);
+          toolSourceCancel.style.display = 'none';
+          toolSourceCancel.id = 'foreign_cancel';
+          $id('tool_source_back').append(toolSourceCancel);
+          toolSourceCancel.addEventListener('click', (e) => function () {
+            endChanges();
+          });
+          // unbind()
+          // var oldToolSourceCancel = $id('tool_source_cancel');
+          // oldToolSourceCancel.parentNode.replaceChild(toolSourceCancel, oldToolSourceCancel);
+
         }, 3000);
       },
       mouseDown (opts) {
@@ -265,7 +272,10 @@ export default {
         if (svgCanvas.getMode() !== 'foreign' || !started) {
           return undefined;
         }
-        const attrs = $(newFO).attr(['width', 'height']);
+        const attrs = {
+          width: newFO.getAttribute('width'),
+          height: newFO.getAttribute('height'),
+        }
         const keep = (attrs.width !== '0' || attrs.height !== '0');
         svgCanvas.addToSelection([newFO], true);
 
