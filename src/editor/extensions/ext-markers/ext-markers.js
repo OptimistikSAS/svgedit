@@ -310,7 +310,8 @@ export default {
       batchCmd.addSubCommand(new S.RemoveElementCommand(elem, elem.parentNode));
       batchCmd.addSubCommand(new S.InsertElementCommand(pline));
 
-      $(elem).after(pline).remove();
+      elem.insertAdjacentElement('afterend', pline);
+      elem.remove();
       svgCanvas.clearSelection();
       pline.id = id;
       svgCanvas.addToSelection([pline]);
@@ -328,7 +329,7 @@ export default {
       const markerName = 'marker-' + pos;
       const el = selElems[0];
       const marker = getLinked(el, markerName);
-      if (marker) { $(marker).remove(); }
+      if (marker) { marker.remove(); }
       el.removeAttribute(markerName);
       let val = this.value;
       if (val === '') { val = '\\nomarker'; }
@@ -406,9 +407,6 @@ export default {
     function triggerTextEntry (pos, val) {
       $id(pos + '_marker').value = val;
       $id(pos + '_marker').change();
-      // const txtbox = $('#'+pos+'_marker');
-      // if (val.substr(0,1)=='\\') {txtbox.hide();}
-      // else {txtbox.show();}
     }
 
     /**
