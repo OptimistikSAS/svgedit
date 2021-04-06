@@ -528,7 +528,10 @@ class SvgCanvas {
 
     const restoreRefElems = function (elem) {
       // Look for missing reference elements, restore any found
-      const attrs = $(elem).attr(refAttrs);
+      let attrs = {};
+      refAttrs.forEach(function(item, _){
+        attrs[item] = elem.getAttribute(item);
+      });
       Object.values(attrs).forEach((val) => {
         if (val && val.startsWith('url(')) {
           const id = getUrlFromAttr(val).substr(1);
@@ -1139,7 +1142,11 @@ class SvgCanvas {
       const currentLayer = getCurrentDrawing().getCurrentLayer();
       if (currentLayer) {
         currentMode = 'select';
-        selectOnly($(currentGroup || currentLayer).children());
+        if(currentGroup){
+          selectOnly(currentGroup.children);
+        } else {
+          selectOnly(currentLayer.children);
+        }
       }
     };
 
