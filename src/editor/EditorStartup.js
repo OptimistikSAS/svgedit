@@ -399,7 +399,7 @@ class EditorStartup {
 
     window.addEventListener('resize', (evt) => {
       Object.entries(winWh).forEach(([type, val]) => {
-        const curval = $(window)[type]();
+        const curval = (type === 'width') ? window.innerWidth - 15 : window.innerHeight;
         this.workarea['scroll' + (type === 'width' ? 'Left' : 'Top')] -= (curval - val) / 2;
         winWh[type] = curval;
       });
@@ -666,8 +666,10 @@ class EditorStartup {
       this.workarea.addEventListener('dragover', this.onDragOver);
       this.workarea.addEventListener('dragleave', this.onDragLeave);
       this.workarea.addEventListener('drop', importImage);
-      const imgImport = $('<input type="file">').change(importImage);
-      $(window).on('importImages', () => imgImport.click());
+      const imgImport = document.createElement('input');
+      imgImport.type="file";
+      imgImport.addEventListener('change', importImage);
+      window.addEventListener('importImages', () => imgImport.click());
     }
 
     this.updateCanvas(true);
