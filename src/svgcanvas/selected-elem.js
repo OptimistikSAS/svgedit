@@ -519,7 +519,10 @@ export const pushGroupProperty = function (g, undoable) {
 
   const gangle = getRotationAngle(g);
 
-  const gattrs = $(g).attr(['filter', 'opacity']);
+  const gattrs = {
+    filter: g.getAttribute('filter'),
+    opacity: g.getAttribute('opacity'),
+  };
   let gfilter, gblur, changes;
   const drawing = elementContext_.getDrawing();
 
@@ -699,7 +702,10 @@ export const convertToGroup = function (elem) {
   if ($elem.data('gsvg')) {
     // Use the gsvg as the new group
     const svg = elem.firstChild;
-    const pt = $(svg).attr(['x', 'y']);
+    const pt = {
+      x: svg.getAttribute('x'),
+      y: svg.getAttribute('y'),
+    };
 
     $(elem.firstChild.firstChild).unwrap();
     $(elem).removeData('gsvg');

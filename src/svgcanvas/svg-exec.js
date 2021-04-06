@@ -731,12 +731,15 @@ export const rasterExport = async function (imgType, quality, exportWindowName, 
   const {issues, issueCodes} = getIssues();
   const svg = this.svgCanvasToString();
 
-  if (!$('#export_canvas').length) {
-    $('<canvas>', {id: 'export_canvas'}).hide().appendTo('body');
+  if (!$id('export_canvas')) {
+    const canvasEx = document.createElement('CANVAS');
+    canvasEx.id = 'export_canvas';
+    canvasEx.style.display = 'none';
+    document.body.appendChild(canvasEx);
   }
-  const c = $('#export_canvas')[0];
-  c.width = svgContext_.getCanvas().contentW;
-  c.height = svgContext_.getCanvas().contentH;
+  const c = $id('export_canvas');
+  c.style.width = svgContext_.getCanvas().contentW + "px";;
+  c.style.height = svgContext_.getCanvas().contentH + "px";;
   const canvg = svgContext_.getcanvg();
   const ctx = c.getContext('2d');
   const v = canvg.fromString(ctx, svg);
