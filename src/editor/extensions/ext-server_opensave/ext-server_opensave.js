@@ -136,12 +136,15 @@ export default {
         const {issues, mimeType, quality} = data;
 
         if (!$id('export_canvas')) {
-          $('<canvas>', {id: 'export_canvas'}).hide().appendTo('body');
+          const canvasx = document.createElement("CANVAS");
+          canvasx.id = 'export_canvas';
+          canvasx.style.display = 'none';
+          document.body.appendChild(canvasx);
         }
-        const c = $('#export_canvas')[0];
+        const c = $id('export_canvas');
 
-        c.width = svgCanvas.contentW;
-        c.height = svgCanvas.contentH;
+        c.style.width = svgCanvas.contentW;
+        c.style.height = svgCanvas.contentH;
         await canvg(c, data.svg);
         const datauri = quality ? c.toDataURL(mimeType, quality) : c.toDataURL(mimeType);
         // {uiStrings} = svgEditor;
@@ -243,7 +246,10 @@ export default {
      */
     function rebuildInput (form) {
       form.empty();
-      const inp = $('<input type="file" name="svg_file">').appendTo(form);
+      const inp = document.createElement('input');
+      inp.type = 'file';
+      inp.name = 'svg_file';
+      form.appendChild(inp);
 
       /**
        * Submit the form, empty its contents for reuse and show
