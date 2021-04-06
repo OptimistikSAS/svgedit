@@ -79,7 +79,8 @@ export default {
       const elt = selElems[0]; // The parent `Element` to append to
       try {
         // convert string into XML document
-        const newDoc = text2xml('<svg xmlns="' + NS.SVG + '" xmlns:xlink="' + NS.XLINK + '">' + xmlString + '</svg>');
+        const oi = (xmlString.indexOf('xmlns:oi') !== -1) ? ' xmlns:oi="' + NS.OI + '"' : '';
+        const newDoc = text2xml('<svg xmlns="' + NS.SVG + '" xmlns:xlink="' + NS.XLINK + '" '+ oi +'>' + xmlString + '</svg>');
         // run it through our sanitizer to remove anything we do not support
         svgCanvas.sanitizeSvg(newDoc.documentElement);
         elt.replaceWith(svgdoc.importNode(newDoc.documentElement.firstChild, true));
