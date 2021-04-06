@@ -232,56 +232,57 @@ export default {
         return undefined;
       },
       callback () {
-        $('<style>').text(
-          '#mathjax fieldset{' +
-            'padding: 5px;' +
-            'margin: 5px;' +
-            'border: 1px solid #DDD;' +
-          '}' +
-          '#mathjax label{' +
-            'display: block;' +
-            'margin: .5em;' +
-          '}' +
-          '#mathjax legend {' +
-            'max-width:195px;' +
-          '}' +
-          '#mathjax_overlay {' +
-            'position: absolute;' +
-            'top: 0;' +
-            'left: 0;' +
-            'right: 0;' +
-            'bottom: 0;' +
-            'background-color: black;' +
-            'opacity: 0.6;' +
-            'z-index: 20000;' +
-          '}' +
-          '#mathjax_container {' +
-            'position: absolute;' +
-            'top: 50px;' +
-            'padding: 10px;' +
-            'background-color: #B0B0B0;' +
-            'border: 1px outset #777;' +
-            'opacity: 1.0;' +
-            'font-family: Verdana, Helvetica, sans-serif;' +
-            'font-size: .8em;' +
-            'z-index: 20001;' +
-          '}' +
-          '#tool_mathjax_back {' +
-            'margin-left: 1em;' +
-            'overflow: auto;' +
-          '}' +
-          '#mathjax_legend{' +
-            'font-weight: bold;' +
-            'font-size:1.1em;' +
-          '}' +
-          '#mathjax_code_textarea {\\n' +
-            'margin: 5px .7em;' +
-            'overflow: hidden;' +
-            'width: 416px;' +
-            'display: block;' +
-            'height: 100px;' +
-          '}'
-        ).appendTo('head');
+        const head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
+        style.textContent = '#mathjax fieldset{' +
+          'padding: 5px;' +
+          'margin: 5px;' +
+          'border: 1px solid #DDD;' +
+        '}' +
+        '#mathjax label{' +
+          'display: block;' +
+          'margin: .5em;' +
+        '}' +
+        '#mathjax legend {' +
+          'max-width:195px;' +
+        '}' +
+        '#mathjax_overlay {' +
+          'position: absolute;' +
+          'top: 0;' +
+          'left: 0;' +
+          'right: 0;' +
+          'bottom: 0;' +
+          'background-color: black;' +
+          'opacity: 0.6;' +
+          'z-index: 20000;' +
+        '}' +
+        '#mathjax_container {' +
+          'position: absolute;' +
+          'top: 50px;' +
+          'padding: 10px;' +
+          'background-color: #B0B0B0;' +
+          'border: 1px outset #777;' +
+          'opacity: 1.0;' +
+          'font-family: Verdana, Helvetica, sans-serif;' +
+          'font-size: .8em;' +
+          'z-index: 20001;' +
+        '}' +
+        '#tool_mathjax_back {' +
+          'margin-left: 1em;' +
+          'overflow: auto;' +
+        '}' +
+        '#mathjax_legend{' +
+          'font-weight: bold;' +
+          'font-size:1.1em;' +
+        '}' +
+        '#mathjax_code_textarea {\\n' +
+          'margin: 5px .7em;' +
+          'overflow: hidden;' +
+          'width: 416px;' +
+          'display: block;' +
+          'height: 100px;' +
+        '}';
+      head.appendChild(style);
       }
     };
   }
