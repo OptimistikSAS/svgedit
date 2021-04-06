@@ -123,24 +123,13 @@ export default {
             const toolSourceSaveClone = old_tool_source_save.cloneNode(true);
             toolSourceSaveClone.style.display = 'none';
             toolSourceSaveClone.setAttribute('id', 'polygon_save');
-            old_tool_source_save.parentNode.replaceChild(toolSourceSaveClone, old_tool_source_save);
+            // old_tool_source_save.parentNode.replaceChild(toolSourceSaveClone, old_tool_source_save);
             $id('tool_source_back').appendChild(old_tool_source_save);
             old_tool_source_save.addEventListener('click', () => {
               if (!editingitex) {
                 return;
               }
-              // Todo: Uncomment the setItexString() function above and handle ajaxEndpoint?
-              /*
-              if (!setItexString($('#svg_source_textarea').val())) {
-                const ok = seConfirm('Errors found. Revert to original?', function (ok) {
-                if (!ok) {
-                  return false;
-                }
-                endChanges();
-              } else { */
               endChanges();
-              // }
-              // setSelectMode();
             });
           }
 
@@ -150,7 +139,7 @@ export default {
             const toolSourceCancelClone = old_element.cloneNode(true);
             toolSourceCancelClone.style.display = 'none';
             toolSourceCancelClone.setAttribute('id', 'polygon_cancel');
-            old_element.parentNode.replaceChild(toolSourceCancelClone, old_element);
+            // old_element.parentNode.replaceChild(toolSourceCancelClone, old_element);
             $id('tool_source_back').appendChild(toolSourceCancelClone);
             toolSourceCancelClone.addEventListener('click', () => {
               endChanges();
