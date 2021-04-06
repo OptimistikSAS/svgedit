@@ -762,7 +762,6 @@ export const getPathDFromElement = function (elem) {
     const y1 = elem.getAttribute('y1');
     const x2 = elem.getAttribute('x2');
     const y2 = elem.getAttribute('y2');
-    // a = $(elem).attr(['x1', 'y1', 'x2', 'y2']);
     d = 'M' + x1 + ',' + y1 + 'L' + x2 + ',' + y2;
     break;
   case 'polyline':

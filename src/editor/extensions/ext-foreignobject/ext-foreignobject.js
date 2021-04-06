@@ -199,20 +199,25 @@ export default {
         // TODO: Needs to be done after orig icon loads
         setTimeout(function () {
           // Create source save/cancel buttons
-          /* const save = */ $('#tool_source_save').clone()
-            .hide().attr('id', 'foreign_save').unbind()
-            .appendTo('#tool_source_back').click(function () {
-              if (!editingforeign) { return; }
+          const toolSourceSave = $id('tool_source_save').cloneNode(true);
+          toolSourceSave.style.display = 'none';
+          toolSourceSave.id = 'foreign_save';
+          // unbind()
+          var oldElement = $id('tool_source_save');
+          oldElement.parentNode.replaceChild(toolSourceSave, oldElement);
+          $id('tool_source_back').append(toolSourceSave);
+          toolSourceSave.addEventListener('click', (e) => function () {
+            if (!editingforeign) { return; }
 
-              if (!setForeignString($('#svg_source_textarea').val())) {
-                const ok = seConfirm('Errors found. Revert to original?');
-                if (!ok) { return; }
-                endChanges();
-              } else {
-                endChanges();
-              }
-              // setSelectMode();
-            });
+            if (!setForeignString($id('svg_source_textarea').value)) {
+              const ok = seConfirm('Errors found. Revert to original?');
+              if (!ok) { return; }
+              endChanges();
+            } else {
+              endChanges();
+            }
+            // setSelectMode();
+          });
 
           /* const cancel = */ $('#tool_source_cancel').clone()
             .hide().attr('id', 'foreign_cancel').unbind()
