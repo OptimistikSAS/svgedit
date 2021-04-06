@@ -226,8 +226,10 @@ export const recalculateDimensions = function (selected) {
   } // switch on element type to get initial values
 
   if (attrs.length) {
-    changes = $(selected).attr(attrs);
-    $.each(changes, function (attr, val) {
+    Array.prototype.forEach.call(attrs, function(attr, i){
+      changes[attr] = selected.getAttribute(attr);
+    });
+    changes.forEach(function(val, attr){
       changes[attr] = convertToNum(attr, val);
     });
   } else if (gsvg) {
@@ -242,7 +244,7 @@ export const recalculateDimensions = function (selected) {
   // make a copy of initial values and include the transform
   if (isNullish(initial)) {
     initial = $.extend(true, {}, changes);
-    $.each(initial, function (attr, val) {
+    initial.forEach(function(val, attr){
       initial[attr] = convertToNum(attr, val);
     });
   }
@@ -701,7 +703,12 @@ export const recalculateDimensions = function (selected) {
       m = transformListToTransform(tlist).matrix;
       switch (selected.tagName) {
       case 'line':
-        changes = $(selected).attr(['x1', 'y1', 'x2', 'y2']);
+        changes = {
+          x1: selected.getAttribute('x1'),
+          y1: selected.getAttribute('y1'),
+          x2: selected.getAttribute('x2'),
+          y2: selected.getAttribute('y2'),
+        }
         // Fallthrough
       case 'polyline':
       case 'polygon':
