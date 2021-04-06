@@ -1070,26 +1070,6 @@ export const convertGradientsMethod = function (elem) {
         });
         grad.removeAttribute('gradientUnits');
       }
-      // else {
-      //   Note: radialGradient elements cannot be easily converted
-      //   because userSpaceOnUse will keep circular gradients, while
-      //   objectBoundingBox will x/y scale the gradient according to
-      //   its bbox.
-      //
-      //   For now we'll do nothing, though we should probably have
-      //   the gradient be updated as the element is moved, as
-      //   inkscape/illustrator do.
-      //
-      //   const gCoords = $(grad).attr(['cx', 'cy', 'r']);
-      //
-      //   $(grad).attr({
-      //     cx: (gCoords.cx - bb.x) / bb.width,
-      //     cy: (gCoords.cy - bb.y) / bb.height,
-      //     r: gCoords.r
-      //   });
-      //
-      //   grad.removeAttribute('gradientUnits');
-      // }
     }
   });
 };

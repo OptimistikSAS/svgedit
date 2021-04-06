@@ -909,7 +909,6 @@ class Editor extends EditorStartup {
           }
           panel.appendChild(div);
           // Creates the tool, hides & adds it, returns the select element
-          /* const dropdown =  $(html).appendTo(panel).children(); */
 
           btnSelects.push({
             elem: ('#' + tool.id),

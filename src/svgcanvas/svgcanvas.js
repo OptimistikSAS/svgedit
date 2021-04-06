@@ -1309,9 +1309,6 @@ class SvgCanvas {
       container.addEventListener('dblclick', dblClick);
       container.addEventListener('mouseup', mouseUp);
 
-      // $(container).mousedown(mouseDown).mousemove(mouseMove).click(handleLinkInCanvas).dblclick(dblClick).mouseup(mouseUp);
-      // $(window).mouseup(mouseUp);
-
       // TODO(rafaelcastrocouto): User preference for shift key and zoom factor
       container.addEventListener('mousewheel', DOMMouseScrollEvent);
       container.addEventListener('DOMMouseScroll', DOMMouseScrollEvent);

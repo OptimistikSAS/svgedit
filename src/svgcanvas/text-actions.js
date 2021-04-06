@@ -449,7 +449,6 @@ export const textActionsMethod = (function () {
 */
     setInputElem (elem) {
       textinput = elem;
-      // $(textinput).blur(hideCursor);
     },
     /**
 * @returns {void}
