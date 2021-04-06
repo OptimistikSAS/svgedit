@@ -638,8 +638,10 @@ export class Path {
     // Hide all grips, etc
 
     // fixed, needed to work on all found elements, not just first
-    $(getGripContainerMethod()).find('*').each(function () {
-      $(this).attr('display', 'none');
+    const pointGripContainer = getGripContainerMethod();
+    const elements = pointGripContainer.querySelectorAll('*');
+    Array.prototype.forEach.call(elements, function(el, i){
+      el.style.display = 'none';
     });
 
     const segList = this.elem.pathSegList;

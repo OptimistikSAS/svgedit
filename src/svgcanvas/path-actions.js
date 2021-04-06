@@ -868,7 +868,11 @@ export const pathActionsMethod = (function () {
         const psl = getElem('path_stretch_line');
         psl.parentNode.removeChild(psl);
         elem.parentNode.removeChild(elem);
-        $(getElem('pathpointgrip_container')).find('*').attr('display', 'none');
+        const pathpointgripContainer = getElem('pathpointgrip_container');
+        const elements = pathpointgripContainer.querySelectorAll('*');
+        Array.prototype.forEach.call(elements, function(el, i){
+          el.style.display = 'none';
+        });
         firstCtrl = null;
         editorContext_.setDrawnPath(null);
         editorContext_.setStarted(false);

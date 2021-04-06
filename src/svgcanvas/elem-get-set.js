@@ -740,7 +740,10 @@ export const setImageURLMethod = function (val) {
   const elem = selectedElements[0];
   if (!elem) { return; }
 
-  const attrs = $(elem).attr(['width', 'height']);
+  const attrs = { 
+    width: elem.getAttribute('width'),
+    height: elem.getAttribute('height'),
+  };
   const setsize = (!attrs.width || !attrs.height);
 
   const curHref = getHref(elem);
@@ -756,21 +759,22 @@ export const setImageURLMethod = function (val) {
   batchCmd.addSubCommand(new ChangeElementCommand(elem, {
     '#href': curHref
   }));
-
-  $(new Image()).load(function () {
-    const changes = $(elem).attr(['width', 'height']);
-
-    $(elem).attr({
-      width: this.width,
-      height: this.height
-    });
+  const img = new Image();
+  img.onload = function() {
+    const changes = { 
+      width: elem.getAttribute('width'),
+      height: elem.getAttribute('height'),
+    };
+    elem.setAttribute('width', this.width);
+    elem.setAttribute('height', this.height);
 
     elemContext_.getCanvas().selectorManager.requestSelector(elem).resize();
 
     batchCmd.addSubCommand(new ChangeElementCommand(elem, changes));
     elemContext_.addCommandToHistory(batchCmd);
     elemContext_.call('changed', [elem]);
-  }).attr('src', val);
+  };
+  img.src = val;
 };
 
 /**
