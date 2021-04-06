@@ -1032,7 +1032,7 @@ export const convertGradientsMethod = function (elem) {
 
   elems.each(function () {
     const grad = this;
-    if ($(grad).attr('gradientUnits') === 'userSpaceOnUse') {
+    if (grad.getAttribute('gradientUnits') === 'userSpaceOnUse') {
       const svgcontent = svgContext_.getSVGContent();
       // TODO: Support more than one element with this ref by duplicating parent grad
       const fillStrokeElems = $(svgcontent).find('[fill="url(#' + grad.id + ')"],[stroke="url(#' + grad.id + ')"]');
@@ -1046,7 +1046,12 @@ export const convertGradientsMethod = function (elem) {
       if (!bb) { return; }
 
       if (grad.tagName === 'linearGradient') {
-        const gCoords = $(grad).attr(['x1', 'y1', 'x2', 'y2']);
+        const gCoords = {
+          x1: grad.getAttribute('x1'),
+          y1: grad.getAttribute('y1'),
+          x2: grad.getAttribute('x2'),
+          y2: grad.getAttribute('y2'),
+        };
 
         // If has transform, convert
         const tlist = grad.gradientTransform.baseVal;
@@ -1061,13 +1066,10 @@ export const convertGradientsMethod = function (elem) {
           gCoords.y2 = pt2.y;
           grad.removeAttribute('gradientTransform');
         }
-
-        $(grad).attr({
-          x1: (gCoords.x1 - bb.x) / bb.width,
-          y1: (gCoords.y1 - bb.y) / bb.height,
-          x2: (gCoords.x2 - bb.x) / bb.width,
-          y2: (gCoords.y2 - bb.y) / bb.height
-        });
+        grad.setAttribute('x1', (gCoords.x1 - bb.x) / bb.width);
+        grad.setAttribute('y1', (gCoords.y1 - bb.y) / bb.height);
+        grad.setAttribute('x2', (gCoords.x2 - bb.x) / bb.width);
+        grad.setAttribute('y2', (gCoords.y2 - bb.y) / bb.height);
         grad.removeAttribute('gradientUnits');
       }
     }
