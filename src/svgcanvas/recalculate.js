@@ -229,9 +229,9 @@ export const recalculateDimensions = function (selected) {
     Array.prototype.forEach.call(attrs, function(attr, i){
       changes[attr] = selected.getAttribute(attr);
     });
-    changes.forEach(function(val, attr){
+    for (const [attr, val] of Object.entries(changes)) {
       changes[attr] = convertToNum(attr, val);
-    });
+    }
   } else if (gsvg) {
     // GSVG exception
     changes = {
