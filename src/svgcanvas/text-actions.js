@@ -268,7 +268,7 @@ export const textActionsMethod = (function () {
 */
   function selectAll (evt) {
     setSelection(0, curtext.textContent.length);
-    $(this).unbind(evt);
+    evt.target.removeEventListener('click', selectAll);
   }
 
   /**
