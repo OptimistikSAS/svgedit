@@ -330,17 +330,18 @@ export default {
     */
     function init () {
       // Make sure all connectors have data set
-      $(svgcontent).find('*').each(function () {
-        const conn = this.getAttributeNS(seNs, 'connector');
+      const elements = svgcontent.querySelectorAll('*');
+      elements.forEach(function (curthis) {
+        const conn = curthis.getAttributeNS(seNs, 'connector');
         if (conn) {
-          this.setAttribute('class', 'se_connector');
+          curthis.setAttribute('class', 'se_connector');
           const connData = conn.split(' ');
           const sbb = svgCanvas.getStrokedBBox([getElem(connData[0])]);
           const ebb = svgCanvas.getStrokedBBox([getElem(connData[1])]);
-          dataStorage.put(this, 'c_start', connData[0]);
-          dataStorage.put(this, 'c_end', connData[1]);
-          dataStorage.put(this, 'start_bb', sbb);
-          dataStorage.put(this, 'end_bb', ebb);
+          dataStorage.put(curthis, 'c_start', connData[0]);
+          dataStorage.put(curthis, 'c_end', connData[1]);
+          dataStorage.put(curthis, 'start_bb', sbb);
+          dataStorage.put(curthis, 'end_bb', ebb);
           /* $(this).data('c_start', connData[0])
             .data('c_end', connData[1])
             .data('start_bb', sbb)
