@@ -796,11 +796,11 @@ class Editor extends EditorStartup {
     if (context) {
       let str = '';
       linkStr = '<a href="#" data-root="y">' + this.svgCanvas.getCurrentDrawing().getCurrentLayerName() + '</a>';
-
-      $(context).parentsUntil('#svgcontent > g').andSelf().each(() => {
-        if (this.id) {
-          str += ' > ' + this.id;
-          linkStr += (this !== context) ? ` > <a href="#">${this.id}</a>` : ` > ${this.id}`;
+      const parentsUntil = getParentsUntil(context, '#svgcontent > g');
+      parentsUntil.forEach(function (parent) {
+        if (parent.id) {
+          str += ' > ' + parent.id;
+          linkStr += (parent !== context) ? ` > <a href="#">${parent.id}</a>` : ` > ${parent.id}`;
         }
       });
 

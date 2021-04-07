@@ -20,6 +20,7 @@ import {
 import {
   BatchCommand, RemoveElementCommand, MoveElementCommand, ChangeElementCommand
 } from './history.js';
+import {getParentsUntil} from '../editor/components/jgraduate/Util.js';
 
 const $ = jQuery;
 
@@ -1024,15 +1025,25 @@ export const setContext = function (elem) {
   canvas_.setCurrentGroup(elem);
 
   // Disable other elements
-  $(elem).parentsUntil('#svgcontent').andSelf().siblings().each(function () {
-    const opac = this.getAttribute('opacity') || 1;
-    // Store the original's opacity
-    canvas_.elData(this, 'orig_opac', opac);
-    this.setAttribute('opacity', opac * 0.33);
-    this.setAttribute('style', 'pointer-events: none');
-    disabledElems.push(this);
+  const parentsUntil = getParentsUntil(elem, '#svgcontent');
+  let siblings = [];
+  parentsUntil.forEach(function (parent) {
+    const elements = Array.prototype.filter.call(parent.parentNode.children, function(child){
+      return child !== parent;
+    });
+    elements.forEach(function (element) {
+      siblings.push(element);
+    });
   });
 
+  siblings.forEach(function (curthis) {
+    const opac = curthis.getAttribute('opacity') || 1;
+    // Store the original's opacity
+    canvas_.elData(curthis, 'orig_opac', opac);
+    curthis.setAttribute('opacity', opac * 0.33);
+    curthis.setAttribute('style', 'pointer-events: none');
+    disabledElems.push(curthis);
+  });
   canvas_.clearSelection();
   canvas_.call('contextset', canvas_.getCurrentGroup());
 };
