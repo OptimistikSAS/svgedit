@@ -497,7 +497,7 @@ class EditorStartup {
         this.moveUpDownSelected('Down');
         break;
       case 'move_back':
-        this.svgCanvas.moveToBottomSelected();
+        this.svgCanvas.moveToBottomSelectedElement();
         break;
       default:
         if (hasCustomHandler(action)) {
