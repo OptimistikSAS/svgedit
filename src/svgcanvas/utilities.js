@@ -574,7 +574,8 @@ function groupBBFix (selected) {
   if (supportsHVLineContainerBBox()) {
     try { return selected.getBBox(); } catch (e) {/* empty */}
   }
-  const ref = $.data(selected, 'ref');
+  // const ref = $.data(selected, 'ref');
+  const ref = dataStorage.get(selected, 'ref');
   let matched = null;
   let ret, copy;
 

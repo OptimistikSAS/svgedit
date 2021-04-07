@@ -695,11 +695,11 @@ export const convertToGroup = function (elem) {
   if (!elem) {
     elem = selectedElements[0];
   }
-  const $elem = $(elem);
+  const $elem = elem;
   const batchCmd = new BatchCommand();
   let ts;
-
-  if ($elem.data('gsvg')) {
+  // $elem.data('gsvg')
+  if (dataStorage.has($elem, 'gsvg')) {
     // Use the gsvg as the new group
     const svg = elem.firstChild;
     const pt = {
@@ -716,8 +716,9 @@ export const convertToGroup = function (elem) {
     tlist.appendItem(xform);
     recalculateDimensions(elem);
     elementContext_.call('selected', [elem]);
-  } else if ($elem.data('symbol')) {
-    elem = $elem.data('symbol');
+  } else if (dataStorage.has($elem, 'symbol')) { // $elem.data('symbol')
+    // elem = $elem.data('symbol');
+    elem = dataStorage.get($elem, 'symbol')
 
     ts = $elem.attr('transform');
     const pos = $elem.attr(['x', 'y']);
@@ -833,7 +834,7 @@ export const ungroupSelectedElement = function () {
   if (!g) {
     return;
   }
-  if ($(g).data('gsvg') || $(g).data('symbol')) {
+  if (dataStorage.has(g, 'gsvg') || dataStorage.has(g, 'symbol')) {
     // Is svg, so actually convert to group
     convertToGroup(g);
     return;
@@ -841,7 +842,9 @@ export const ungroupSelectedElement = function () {
   if (g.tagName === 'use') {
     // Somehow doesn't have data set, so retrieve
     const symbol = getElem(getHref(g).substr(1));
-    $(g).data('symbol', symbol).data('ref', symbol);
+    // $(g).data('symbol', symbol).data('ref', symbol);
+    dataStorage.put(g, 'symbol', symbol);
+    dataStorage.put(g, 'ref', symbol);
     convertToGroup(g);
     return;
   }

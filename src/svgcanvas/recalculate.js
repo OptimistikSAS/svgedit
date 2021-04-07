@@ -177,7 +177,8 @@ export const recalculateDimensions = function (selected) {
   }
 
   // Grouped SVG element
-  const gsvg = $(selected).data('gsvg');
+  // const gsvg = $(selected).data('gsvg');
+  const gsvg = dataStorage.get(selected, 'gsvg');
 
   // we know we have some transforms, so set up return variable
   const batchCmd = new BatchCommand('Transform');

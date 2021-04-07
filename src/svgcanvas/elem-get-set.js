@@ -62,7 +62,12 @@ export const getTitleMethod = function (elem) {
   const selectedElements = elemContext_.getSelectedElements();
   elem = elem || selectedElements[0];
   if (!elem) { return undefined; }
-  elem = $(elem).data('gsvg') || $(elem).data('symbol') || elem;
+  // elem = $(elem).data('gsvg') || $(elem).data('symbol') || elem;
+  if(dataStorage.has(elem, 'gsvg')){
+    elem = dataStorage.get(elem, 'gsvg');
+  } else if(dataStorage.has(elem, 'symbol')) {
+    elem = dataStorage.get(elem, 'symbol');
+  }
   const childs = elem.childNodes;
   for (const child of childs) {
     if (child.nodeName === 'title') {
@@ -82,7 +87,10 @@ export const getTitleMethod = function (elem) {
 export const setGroupTitleMethod = function (val) {
   const selectedElements = elemContext_.getSelectedElements();
   let elem = selectedElements[0];
-  elem = $(elem).data('gsvg') || elem;
+  // elem = $(elem).data('gsvg') || elem;
+  if(dataStorage.has(elem, 'gsvg')){
+    elem = dataStorage.get(elem, 'gsvg');
+  }
 
   const ts = $(elem).children('title');
 

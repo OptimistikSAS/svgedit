@@ -374,7 +374,8 @@ export const setSvgString = function (xmlString, preventUndo) {
       // Check if it already has a gsvg group
       const pa = element.parentNode;
       if (pa.childNodes.length === 1 && pa.nodeName === 'g') {
-        $(pa).data('gsvg', element);
+        // $(pa).data('gsvg', element);
+        dataStorage.put(pa, 'gsvg', element);
         pa.id = pa.id || svgContext_.getCanvas().getNextId();
       } else {
         svgContext_.getCanvas().groupSvgElem(element);
@@ -580,7 +581,9 @@ export const importSvgString = function (xmlString) {
 
     useEl.setAttribute('transform', ts);
     recalculateDimensions(useEl);
-    $(useEl).data('symbol', symbol).data('ref', symbol);
+    dataStorage.put(useEl, 'symbol', symbol);
+    dataStorage.put(useEl, 'ref', symbol);
+    // $(useEl).data('symbol', symbol).data('ref', symbol);
     svgContext_.getCanvas().addToSelection([useEl]);
 
     // TODO: Find way to add this in a recalculateDimensions-parsable way
@@ -949,19 +952,23 @@ export const uniquifyElemsMethod = function (g) {
 * @returns {void}
 */
 export const setUseDataMethod = function (parent) {
-  let elems = $(parent);
+  let elems = parent;
 
   if (parent.tagName !== 'use') {
-    elems = elems.find('use');
+    // elems = elems.find('use');
+    elems = elems.querySelectorAll('use');
   }
 
-  elems.each(function () {
-    const id = svgContext_.getCanvas().getHref(this).substr(1);
+  Array.prototype.forEach.call(elems, function(el, _){
+    const id = svgContext_.getCanvas().getHref(el).substr(1);
     const refElem = svgContext_.getCanvas().getElem(id);
     if (!refElem) { return; }
-    $(this).data('ref', refElem);
+    // $(this).data('ref', refElem);
+    dataStorage.put(el, 'ref', refElem);
     if (refElem.tagName === 'symbol' || refElem.tagName === 'svg') {
-      $(this).data('symbol', refElem).data('ref', refElem);
+      // $(this).data('symbol', refElem).data('ref', refElem);
+      dataStorage.put(el, 'symbol', refElem);
+      dataStorage.put(el, 'ref', refElem);
     }
   });
 };

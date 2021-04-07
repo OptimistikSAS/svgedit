@@ -176,7 +176,8 @@ export const remapElement = function (selected, changes, m) {
     finishUp();
     break;
   } case 'g': {
-    const gsvg = $(selected).data('gsvg');
+    // const gsvg = $(selected).data('gsvg');
+    const gsvg = dataStorage.get(selected, 'gsvg');
     if (gsvg) {
       assignAttributes(gsvg, changes, 1000, true);
     }

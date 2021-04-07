@@ -139,7 +139,8 @@ export class Selector {
     }
     // TODO: getBBox (previous line) already knows to call getStrokedBBox when tagName === 'g'. Remove this?
     // TODO: getBBox doesn't exclude 'gsvg' and calls getStrokedBBox for any 'g'. Should getBBox be updated?
-    if (tagName === 'g' && !$.data(selected, 'gsvg')) {
+    // $.data(selected, 'gsvg')
+    if (tagName === 'g' && !dataStorage.has(selected, 'gsvg')) {
       // The bbox for a group does not include stroke vals, so we
       // get the bbox based on its children.
       const strokedBbox = getStrokedBBox([selected.childNodes]);
@@ -339,8 +340,10 @@ export class SelectorManager {
         }
       });
 
-      $.data(grip, 'dir', dir);
-      $.data(grip, 'type', 'resize');
+      dataStorage.put(grip, 'dir', dir);
+      dataStorage.put(grip, 'type', 'resize');
+      // $.data(grip, 'dir', dir);
+      // $.data(grip, 'type', 'resize');
       this.selectorGrips[dir] = grip;
       this.selectorGripsGroup.append(grip);
     });
@@ -370,7 +373,8 @@ export class SelectorManager {
         }
       });
     this.selectorGripsGroup.append(this.rotateGrip);
-    $.data(this.rotateGrip, 'type', 'rotate');
+    // $.data(this.rotateGrip, 'type', 'rotate');
+    dataStorage.put(this.rotateGrip, 'type', 'rotate');
 
     if (document.getElementById('canvasBackground')) { return; }
 

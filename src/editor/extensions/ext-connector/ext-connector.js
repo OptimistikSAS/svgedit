@@ -337,10 +337,14 @@ export default {
           const connData = conn.split(' ');
           const sbb = svgCanvas.getStrokedBBox([getElem(connData[0])]);
           const ebb = svgCanvas.getStrokedBBox([getElem(connData[1])]);
-          $(this).data('c_start', connData[0])
+          dataStorage.put(this, 'c_start', connData[0]);
+          dataStorage.put(this, 'c_end', connData[1]);
+          dataStorage.put(this, 'start_bb', sbb);
+          dataStorage.put(this, 'end_bb', ebb);
+          /* $(this).data('c_start', connData[0])
             .data('c_end', connData[1])
             .data('start_bb', sbb)
-            .data('end_bb', ebb);
+            .data('end_bb', ebb); */
           svgCanvas.getEditorNS(true);
         }
       });
@@ -517,10 +521,13 @@ export default {
 
         const pt = getBBintersect(startX, startY, bb, getOffset('start', curLine));
         setPoint(curLine, 'end', pt.x, pt.y, true);
-        $(curLine)
+        dataStorage.put(curLine, 'c_start', startId);
+        dataStorage.put(curLine, 'c_end', endId);
+        dataStorage.put(curLine, 'end_bb', bb);
+        /* $(curLine)
           .data('c_start', startId)
           .data('c_end', endId)
-          .data('end_bb', bb);
+          .data('end_bb', bb); */
         seNs = svgCanvas.getEditorNS(true);
         curLine.setAttributeNS(seNs, 'se:connector', connStr);
         curLine.setAttribute('class', 'se_connector');
@@ -537,7 +544,7 @@ export default {
       },
       selectedChanged (opts) {
         // TODO: Find better way to skip operations if no connectors are in use
-        if (!$(svgcontent).find('.se_connector').length) { return; }
+        if (!svgcontent.querySelectorAll('.se_connector').length) { return; }
 
         if (svgCanvas.getMode() === 'connector') {
           svgCanvas.setMode('select');
@@ -582,9 +589,11 @@ export default {
           const mid = elem.getAttribute('marker-mid');
           const end = elem.getAttribute('marker-end');
           curLine = elem;
-          $(elem)
+          /* $(elem)
             .data('start_off', Boolean(start))
-            .data('end_off', Boolean(end));
+            .data('end_off', Boolean(end)); */
+          dataStorage.put(elem, 'start_off', Boolean(start));
+          dataStorage.put(elem, 'end_off', Boolean(end));
 
           if (elem.tagName === 'line' && mid) {
             // Convert to polyline to accept mid-arrow
