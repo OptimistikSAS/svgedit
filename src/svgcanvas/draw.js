@@ -49,10 +49,10 @@ function historyRecordingService (hrService) {
  * @returns {string} The layer name or empty string.
  */
 function findLayerNameInGroup (group) {
-  return $('title', group).text() ||
+  return group.querySelector('title').textContent ||
     (isOpera() && group.querySelectorAll
       // Hack for Opera 10.60
-      ? $(group.querySelectorAll('title')).text()
+      ? group.querySelector('title').textContent 
       : '');
 }
 
