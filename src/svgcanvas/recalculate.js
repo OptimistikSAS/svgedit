@@ -178,8 +178,7 @@ export const recalculateDimensions = function (selected) {
 
   // Grouped SVG element
   // const gsvg = $(selected).data('gsvg');
-  const gsvg = dataStorage.get(selected, 'gsvg');
-
+  const gsvg = (dataStorage.has(selected, 'gsvg')) ? dataStorage.get(selected, 'gsvg') : undefined;
   // we know we have some transforms, so set up return variable
   const batchCmd = new BatchCommand('Transform');
 
@@ -245,9 +244,9 @@ export const recalculateDimensions = function (selected) {
   // make a copy of initial values and include the transform
   if (isNullish(initial)) {
     initial = $.extend(true, {}, changes);
-    initial.forEach(function(val, attr){
+    for (const [attr, val] of Object.entries(initial)) {
       initial[attr] = convertToNum(attr, val);
-    });
+    }    
   }
   // save the start transform value too
   initial.transform = context_.getStartTransform() || '';
