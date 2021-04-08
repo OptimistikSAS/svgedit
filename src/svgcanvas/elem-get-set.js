@@ -17,6 +17,7 @@ import {
 import {
   convertToNum
 } from '../common/units.js';
+import {getParents} from '../editor/components/jgraduate/Util.js';
 
 const $ = jQueryPluginSVG(jQuery);
 
@@ -795,7 +796,7 @@ export const setLinkURLMethod = function (val) {
   if (!elem) { return; }
   if (elem.tagName !== 'a') {
     // See if parent is an anchor
-    const parentsA = $(elem).parents('a');
+    const parentsA = getParents(elem, 'a');
     if (parentsA.length) {
       elem = parentsA[0];
     } else {
