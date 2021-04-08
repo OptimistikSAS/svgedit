@@ -734,8 +734,6 @@ class SvgCanvas {
     // Interface strings, usually for title elements
     const uiStrings = {};
 
-    const elData = $.data;
-
     // Animation element to change the opacity of any newly created element
     const opacAni = document.createElementNS(NS.SVG, 'animate');
     opacAni.setAttribute('attributeName', 'opacity');
@@ -1257,7 +1255,6 @@ class SvgCanvas {
           getSVGRoot,
           getSVGContent,
           call,
-          elData,
           getIntersectionList
         }
       );
@@ -1631,7 +1628,6 @@ class SvgCanvas {
         getSelectedElements,
         getSVGContent,
         undoMgr,
-        elData,
         getCurrentDrawing,
         clearSelection,
         call,

@@ -698,7 +698,6 @@ export const convertToGroup = function (elem) {
   const $elem = elem;
   const batchCmd = new BatchCommand();
   let ts;
-  // $elem.data('gsvg')
   if (dataStorage.has($elem, 'gsvg')) {
     // Use the gsvg as the new group
     const svg = elem.firstChild;
@@ -716,8 +715,7 @@ export const convertToGroup = function (elem) {
     tlist.appendItem(xform);
     recalculateDimensions(elem);
     elementContext_.call('selected', [elem]);
-  } else if (dataStorage.has($elem, 'symbol')) { // $elem.data('symbol')
-    // elem = $elem.data('symbol');
+  } else if (dataStorage.has($elem, 'symbol')) {
     elem = dataStorage.get($elem, 'symbol')
 
     ts = $elem.attr('transform');
@@ -842,7 +840,6 @@ export const ungroupSelectedElement = function () {
   if (g.tagName === 'use') {
     // Somehow doesn't have data set, so retrieve
     const symbol = getElem(getHref(g).substr(1));
-    // $(g).data('symbol', symbol).data('ref', symbol);
     dataStorage.put(g, 'symbol', symbol);
     dataStorage.put(g, 'ref', symbol);
     convertToGroup(g);

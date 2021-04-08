@@ -711,7 +711,6 @@ export const randomizeIds = function (enableRandomization, currentDrawing) {
 /**
  * @interface module:draw.DrawCanvasInit
  * @property {module:path.pathActions} pathActions
- * @property {external:jQuery.data} elData
  * @property {module:history.UndoManager} undoMgr
  */
 /**
@@ -993,7 +992,7 @@ export const leaveContext = function () {
   if (len) {
     for (let i = 0; i < len; i++) {
       const elem = disabledElems[i];
-      const orig = canvas_.elData(elem, 'orig_opac');
+      const orig = dataStorage.get(elem, 'orig_opac');
       if (orig !== 1) {
         elem.setAttribute('opacity', orig);
       } else {
@@ -1039,7 +1038,7 @@ export const setContext = function (elem) {
   siblings.forEach(function (curthis) {
     const opac = curthis.getAttribute('opacity') || 1;
     // Store the original's opacity
-    canvas_.elData(curthis, 'orig_opac', opac);
+    dataStorage.put(curthis, 'orig_opac', opac);
     curthis.setAttribute('opacity', opac * 0.33);
     curthis.setAttribute('style', 'pointer-events: none');
     disabledElems.push(curthis);

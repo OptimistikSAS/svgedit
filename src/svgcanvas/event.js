@@ -977,14 +977,14 @@ export const mouseDownEvent = function (evt) {
 
   if (mouseTarget === eventContext_.getCanvas().selectorManager.selectorParentGroup && !isNullish(selectedElements[0])) {
     const grip = evt.target;
-    const griptype = eventContext_.elData(grip, 'type');
+    const griptype = dataStorage.get(grip, 'type');
     // rotating
     if (griptype === 'rotate') {
       eventContext_.setCurrentMode('rotate');
       // resizing
     } else if (griptype === 'resize') {
       eventContext_.setCurrentMode('resize');
-      eventContext_.setCurrentResizeMode(eventContext_.elData(grip, 'dir'));
+      eventContext_.setCurrentResizeMode(dataStorage.get(grip, 'dir'));
     }
     mouseTarget = selectedElements[0];
   }

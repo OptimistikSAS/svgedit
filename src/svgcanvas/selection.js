@@ -326,7 +326,6 @@ export const groupSvgElem = function (elem) {
   const g = document.createElementNS(NS.SVG, 'g');
   elem.replaceWith(g);
   g.appendChild(elem);
-  // $(g).data('gsvg', elem);
   dataStorage.put(g, 'gsvg', elem);
   g.id = selectionContext_.getCanvas().getNextId();
 };
