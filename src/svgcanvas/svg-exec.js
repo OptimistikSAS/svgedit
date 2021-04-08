@@ -1036,20 +1036,19 @@ export const removeUnusedDefElemsMethod = function () {
 * @returns {void}
 */
 export const convertGradientsMethod = function (elem) {
-  let elems = $(elem).find('linearGradient, radialGradient');
+  let elems = elem.querySelectorAll('linearGradient, radialGradient');
   if (!elems.length && isWebkit()) {
     // Bug in webkit prevents regular *Gradient selector search
-    elems = $(elem).find('*').filter(function () {
-      return (this.tagName.includes('Gradient'));
+    elems = Array.prototype.filter.call(elem.querySelectorAll('*'), function (curThis, i) {
+      return (curThis.tagName.includes('Gradient'));
     });
   }
 
-  elems.each(function () {
-    const grad = this;
+  Array.prototype.forEach.call(elems, function(grad, i){
     if (grad.getAttribute('gradientUnits') === 'userSpaceOnUse') {
       const svgcontent = svgContext_.getSVGContent();
       // TODO: Support more than one element with this ref by duplicating parent grad
-      const fillStrokeElems = $(svgcontent).find('[fill="url(#' + grad.id + ')"],[stroke="url(#' + grad.id + ')"]');
+      const fillStrokeElems = svgcontent.querySelectorAll('[fill="url(#' + grad.id + ')"],[stroke="url(#' + grad.id + ')"]');
       if (!fillStrokeElems.length) { return; }
 
       // get object's bounding box
