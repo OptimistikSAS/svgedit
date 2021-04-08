@@ -26,6 +26,7 @@ import {
 import {
   isGecko
 } from '../common/browser.js'; // , supportsEditableText
+import {getParents} from '../editor/components/jgraduate/Util.js';
 
 const {
   MoveElementCommand, BatchCommand, InsertElementCommand, RemoveElementCommand, ChangeElementCommand
@@ -845,7 +846,7 @@ export const ungroupSelectedElement = function () {
     convertToGroup(g);
     return;
   }
-  const parentsA = $(g).parents('a');
+  const parentsA = getParents(g, 'a');
   if (parentsA.length) {
     g = parentsA[0];
   }

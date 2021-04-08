@@ -29,6 +29,7 @@ import * as draw from './draw.js';
 import {
   recalculateDimensions
 } from './recalculate.js';
+import {getParents} from '../editor/components/jgraduate/Util.js';
 
 const {
   InsertElementCommand, RemoveElementCommand,
