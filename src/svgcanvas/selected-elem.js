@@ -707,7 +707,7 @@ export const convertToGroup = function (elem) {
     };
 
     $(elem.firstChild.firstChild).unwrap();
-    $(elem).removeData('gsvg');
+    dataStorage.remove(elem, 'gsvg');
 
     const tlist = getTransformList(elem);
     const xform = elementContext_.getSVGRoot().createSVGTransform();
