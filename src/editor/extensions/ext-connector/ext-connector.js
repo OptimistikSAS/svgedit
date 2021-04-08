@@ -189,10 +189,12 @@ export default {
     * @returns {void}
     */
     function findConnectors (elems = selElems) {
+      // const connectors = svgcontent.querySelectorAll('.se_connector');
       const connectors = $(svgcontent).find('.se_connector');
       connections = [];
 
       // Loop through connectors to see if one is connected to the element
+      // Array.prototype.forEach.call(connectors, function(ethis, i){
       connectors.each(function () {
         let addThis;
         /**
@@ -380,13 +382,13 @@ export default {
 
           const mouseTarget = e.target;
 
-          const parents = $(mouseTarget).parents();
+          const parents = svgCanvas.getParents(mouseTarget.parentNode);
 
           if ($.inArray(svgcontent, parents) !== -1) {
             // Connectable element
 
             // If child of foreignObject, use parent
-            const fo = $(mouseTarget).closest('foreignObject');
+            const fo = svgCanvas.getClosest(mouseTarget.parentNode, 'foreignObject');
             startElem = fo.length ? fo[0] : mouseTarget;
 
             // Get center of source element
@@ -468,10 +470,10 @@ export default {
         if (svgCanvas.getMode() !== 'connector') {
           return undefined;
         }
-        const fo = $(mouseTarget).closest('foreignObject');
+        const fo = svgCanvas.getClosest(mouseTarget.parentNode, 'foreignObject');
         if (fo.length) { mouseTarget = fo[0]; }
 
-        const parents = $(mouseTarget).parents();
+        const parents = svgCanvas.getParents(mouseTarget.parentNode);        
 
         if (mouseTarget === startElem) {
           // Start line through click

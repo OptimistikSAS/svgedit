@@ -115,6 +115,9 @@ import {
   clearSvgContentElementInit,
   init as clearInit
 } from './clear.js';
+import {
+  getClosest, getParents
+} from '../editor/components/jgraduate/Util.js';
 
 const $ = jQueryPluginSVG(jQuery);
 const {
@@ -193,6 +196,8 @@ class SvgCanvas {
     this.$id = $id;
     this.$qq = $qq;
     this.$qa = $qa;
+    this.getClosest = getClosest;
+    this.getParents = getParents;
 
     this.isLayer = draw.Layer.isLayer;
 
@@ -2760,6 +2765,8 @@ SvgCanvas.decode64 = decode64;
 SvgCanvas.$id = $id;
 SvgCanvas.$qq = $qq;
 SvgCanvas.$qa = $qa;
+SvgCanvas.getClosest = getClosest;
+SvgCanvas.getParents = getParents;
 SvgCanvas.blankPageObjectURL = blankPageObjectURL;
 
 export default SvgCanvas;
