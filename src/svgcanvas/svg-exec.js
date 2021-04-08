@@ -38,6 +38,7 @@ const {
 const $ = jQueryPluginSVG(jQuery);
 
 let svgContext_ = null;
+let $id = null;
 
 /**
 * @function module:svg-exec.init
@@ -46,6 +47,8 @@ let svgContext_ = null;
 */
 export const init = function (svgContext) {
   svgContext_ = svgContext;
+  const svgCanvas = svgContext_.getCanvas();
+  $id = svgCanvas.$id;
 };
 
 /**
@@ -374,7 +377,6 @@ export const setSvgString = function (xmlString, preventUndo) {
       // Check if it already has a gsvg group
       const pa = element.parentNode;
       if (pa.childNodes.length === 1 && pa.nodeName === 'g') {
-        // $(pa).data('gsvg', element);
         dataStorage.put(pa, 'gsvg', element);
         pa.id = pa.id || svgContext_.getCanvas().getNextId();
       } else {
@@ -492,6 +494,7 @@ export const setSvgString = function (xmlString, preventUndo) {
 * was obtained
 */
 export const importSvgString = function (xmlString) {
+  console.log('importSvgString --> ', xmlString);
   let j, ts, useEl;
   try {
     // Get unique ID
@@ -499,8 +502,11 @@ export const importSvgString = function (xmlString) {
 
     let useExisting = false;
     // Look for symbol and make sure symbol exists in image
-    if (svgContext_.getImportIds(uid) && $(svgContext_.getImportIds(uid).symbol).parents('#svgroot').length) {
-      useExisting = true;
+    if (svgContext_.getImportIds(uid) && svgContext_.getImportIds(uid).symbol) {
+      const parents = getParents(svgContext_.getImportIds(uid).symbol, '#svgroot');
+      if(parents.length){
+        useExisting = true;
+      }
     }
 
     const batchCmd = new BatchCommand('Import Image');
@@ -583,7 +589,6 @@ export const importSvgString = function (xmlString) {
     recalculateDimensions(useEl);
     dataStorage.put(useEl, 'symbol', symbol);
     dataStorage.put(useEl, 'ref', symbol);
-    // $(useEl).data('symbol', symbol).data('ref', symbol);
     svgContext_.getCanvas().addToSelection([useEl]);
 
     // TODO: Find way to add this in a recalculateDimensions-parsable way
@@ -686,19 +691,19 @@ function getIssues () {
     foreignObject: uiStrings.exportNoforeignObject,
     '[stroke-dasharray]': uiStrings.exportNoDashArray
   };
-  const content = $(svgContext_.getSVGContent());
+  const content = svgContext_.getSVGContent();
 
   // Add font/text check if Canvas Text API is not implemented
-  if (!('font' in $('<canvas>')[0].getContext('2d'))) {
+  if (!('font' in document.querySelector('CANVAS').getContext('2d'))) {
     issueList.text = uiStrings.exportNoText;
   }
 
-  $.each(issueList, function (sel, descr) {
-    if (content.find(sel).length) {
+  for (const [sel, descr] of Object.entries(issueList)) {
+    if (content.querySelectorAll(sel).length) {
       issueCodes.push(sel);
       issues.push(descr);
     }
-  });
+  }
   return {issues, issueCodes};
 }
 /**
@@ -963,10 +968,8 @@ export const setUseDataMethod = function (parent) {
     const id = svgContext_.getCanvas().getHref(el).substr(1);
     const refElem = svgContext_.getCanvas().getElem(id);
     if (!refElem) { return; }
-    // $(this).data('ref', refElem);
     dataStorage.put(el, 'ref', refElem);
     if (refElem.tagName === 'symbol' || refElem.tagName === 'svg') {
-      // $(this).data('symbol', refElem).data('ref', refElem);
       dataStorage.put(el, 'symbol', refElem);
       dataStorage.put(el, 'ref', refElem);
     }
