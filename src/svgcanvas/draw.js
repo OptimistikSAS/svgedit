@@ -392,7 +392,7 @@ export class Drawing {
   */
   mergeLayer (hrService) {
     const currentGroup = this.current_layer.getGroup();
-    const prevGroup = $(currentGroup).prev()[0];
+    const prevGroup = currentGroup.previousElementSibling;
     if (!prevGroup) { return; }
 
     hrService.startBatchCommand('Merge Layer');

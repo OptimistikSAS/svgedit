@@ -482,9 +482,9 @@ export default {
             started
           };
         }
-        if ($.inArray(svgcontent, parents) === -1) {
+        if (parents.indexOf(svgcontent) === -1) {
           // Not a valid target element, so remove line
-          $(curLine).remove();
+          curLine.remove();
           started = false;
           return {
             keep: false,
