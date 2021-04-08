@@ -16,6 +16,7 @@ import {
   getTransformList
 } from './svgtransformlist.js';
 import * as hstry from './history.js';
+import {getClosest} from '../editor/components/jgraduate/Util.js';
 
 const {BatchCommand} = hstry;
 const $ = jQueryPluginSVG(jQuery);
@@ -160,7 +161,7 @@ mouseTarget.id !== 'svgcanvas'
   const $target = mouseTarget;
 
   // If it's a selection grip, return the grip parent
-  if ($target.closest('#selectorParentGroup')) {
+  if (getClosest($target.parentNode, '#selectorParentGroup')) {
     // While we could instead have just returned mouseTarget,
     // this makes it easier to indentify as being a selector grip
     return selectionContext_.getCanvas().selectorManager.selectorParentGroup;

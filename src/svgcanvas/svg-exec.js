@@ -29,7 +29,7 @@ import * as draw from './draw.js';
 import {
   recalculateDimensions
 } from './recalculate.js';
-import {getParents} from '../editor/components/jgraduate/Util.js';
+import {getParents, getClosest} from '../editor/components/jgraduate/Util.js';
 
 const {
   InsertElementCommand, RemoveElementCommand,
@@ -371,7 +371,7 @@ export const setSvgString = function (xmlString, preventUndo) {
     const svgElements = content.querySelectorAll('svg');
     Array.prototype.forEach.call(svgElements, function(element, i){
       // Skip if it's in a <defs>
-      if (element.closest('defs')) { return; }
+      if (getClosest(element.parentNode, 'defs')) { return; }
 
       svgContext_.getCanvas().uniquifyElems(element);
 

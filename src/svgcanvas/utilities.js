@@ -18,6 +18,7 @@ import {
   isWebkit, supportsHVLineContainerBBox, supportsPathBBox, supportsXpath,
   supportsSelectors
 } from '../common/browser.js';
+import {getClosest} from '../editor/components/jgraduate/Util.js';
 
 // Constants
 const $ = jQueryPluginSVG(jQuery);
@@ -681,7 +682,7 @@ export const getBBox = function (elem) {
         }
       } else {
         // Check if element is child of a foreignObject
-        const fo = $(selected).closest('foreignObject');
+        const fo = getClosest(selected.parentNode, 'foreignObject');
         if (fo.length && fo[0].getBBox) {
           ret = fo[0].getBBox();
         }
