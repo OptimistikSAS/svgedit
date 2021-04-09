@@ -159,16 +159,17 @@ export const svgToString = function (elem, indent) {
       const nsuris = {};
 
       // Check elements for namespaces, add if found
-      $(elem).find('*').andSelf().each(function () {
+      const cElements = elem.querySelectorAll('*');
+      cElements.push(elem);
+      Array.prototype.forEach.call(cElements, function(el, i){
         // const el = this;
         // for some elements have no attribute
-        const uri = this.namespaceURI;
+        const uri = el.namespaceURI;
         if (uri && !nsuris[uri] && nsMap[uri] && nsMap[uri] !== 'xmlns' && nsMap[uri] !== 'xml') {
           nsuris[uri] = true;
           out.push(' xmlns:' + nsMap[uri] + '="' + uri + '"');
         }
-
-        $.each(this.attributes, function (i, attr) {
+        el.attributes.forEach(function(attr, i){
           const u = attr.namespaceURI;
           if (u && !nsuris[u] && nsMap[u] !== 'xmlns' && nsMap[u] !== 'xml') {
             nsuris[u] = true;
@@ -555,7 +556,10 @@ export const importSvgString = function (xmlString) {
         // Move all gradients into root for Firefox, workaround for this bug:
         // https://bugzilla.mozilla.org/show_bug.cgi?id=353575
         // TODO: Make this properly undo-able.
-        $(svg).find('linearGradient, radialGradient, pattern').appendTo(defs);
+        const elements = svg.querySelectorAll('linearGradient, radialGradient, pattern');
+        Array.prototype.forEach.call(elements, function(el, i){
+          defs.appendChild(el);
+        });
       }
 
       while (svg.firstChild) {
@@ -622,17 +626,14 @@ export const embedImage = function (src) {
   // Todo: Remove this Promise in favor of making an async/await `Image.load` utility
   return new Promise(function (resolve, reject) {
     // load in the image and once it's loaded, get the dimensions
-    $(new Image()).load(function (response, status, xhr) {
-      if (status === 'error') {
-        reject(new Error('Error loading image: ' + xhr.status + ' ' + xhr.statusText));
-        return;
-      }
+    const imgI = new Image();
+    imgI.addEventListener("load", (e) => {
       // create a canvas the same size as the raster image
       const cvs = document.createElement('canvas');
-      cvs.width = this.width;
-      cvs.height = this.height;
+      cvs.width = e.currentTarget.width;
+      cvs.height = e.currentTarget.height;
       // load the raster image into the canvas
-      cvs.getContext('2d').drawImage(this, 0, 0);
+      cvs.getContext('2d').drawImage(e.currentTarget, 0, 0);
       // retrieve the data: URL
       try {
         let urldata = ';svgedit_url=' + encodeURIComponent(src);
@@ -643,7 +644,11 @@ export const embedImage = function (src) {
       }
       svgContext_.getCanvas().setGoodImage(src);
       resolve(svgContext_.getEncodableImages(src));
-    }).attr('src', src);
+    });
+    imgI.addEventListener("error", (e) => {
+      reject(new Error('Error loading image: '));
+    });
+    imgI.attr('src', src);
   });
 };
 
@@ -1014,7 +1019,7 @@ export const removeUnusedDefElemsMethod = function () {
     }
   }
 
-  const defelems = $(defs).find('linearGradient, radialGradient, filter, marker, svg, symbol');
+  const defelems = defs.querySelectorAll('linearGradient, radialGradient, filter, marker, svg, symbol');
   i = defelems.length;
   while (i--) {
     const defelem = defelems[i];
