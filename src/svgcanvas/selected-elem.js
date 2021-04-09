@@ -825,8 +825,9 @@ export const convertToGroup = function (elem) {
     });
 
     // Give ID for any visible element missing one
-    $(g).find(elementContext_.getVisElems()).each(function () {
-      if (!this.id) { this.id = elementContext_.getNextId(); }
+    const visElems = g.querySelectorAll(elementContext_.getVisElems());
+    Array.prototype.forEach.call(visElems, function(el, i){
+      if (!el.id) { el.id = elementContext_.getNextId(); }
     });
 
     elementContext_.selectOnly([g]);

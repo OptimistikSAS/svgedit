@@ -580,23 +580,31 @@ function groupBBFix (selected) {
   let ret, copy;
 
   if (ref) {
-    copy = $(ref).children().clone().attr('visibility', 'hidden');
-    $(svgroot_).append(copy);
-    matched = copy.filter('line, path');
+    let elements = [];
+    Array.prototype.forEach.call(ref.children, function(el, i){
+     const elem = el.cloneNode(true);
+     elem.setAttribute('visibility', 'hidden');
+     svgroot_.appendChild(elem);
+     copy.push(elem);
+     if(['line', 'path'].indexOf(elem.tagName) !== -1){
+      elements.push(elem);
+     }
+    });
+    matched = (elements.length) ? elements : null;
   } else {
-    matched = $(selected).find('line, path');
+    matched = selected.querySelectorAll('line, path');
   }
 
   let issue = false;
   if (matched.length) {
-    matched.each(function () {
-      const bb = this.getBBox();
+    Array.prototype.forEach.call(matched, function(match, i){
+      const bb = match.getBBox();
       if (!bb.width || !bb.height) {
         issue = true;
       }
     });
     if (issue) {
-      const elems = ref ? copy : $(selected).children();
+      const elems = ref ? copy : selected.children;
       ret = getStrokedBBox(elems);
     } else {
       ret = selected.getBBox();
