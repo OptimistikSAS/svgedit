@@ -91,7 +91,7 @@ export const setGroupTitleMethod = function (val) {
     elem = dataStorage.get(elem, 'gsvg');
   }
 
-  const ts = $(elem).children('title');
+  const ts = elem.querySelectorAll('title');
 
   const batchCmd = new BatchCommand('Set Label');
 

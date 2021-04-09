@@ -304,7 +304,8 @@ export default {
       const gse = svgCanvas.groupSelectedElements;
 
       svgCanvas.groupSelectedElements = function (...args) {
-        svgCanvas.removeFromSelection($('.se_connector').toArray());
+
+        svgCanvas.removeFromSelection(document.querySelectorAll('.se_connector'));
         return gse.apply(this, args);
       };
 
@@ -495,8 +496,8 @@ export default {
         const connStr = startId + ' ' + endId;
         const altStr = endId + ' ' + startId;
         // Don't create connector if one already exists
-        const dupe = $(svgcontent).find('.se_connector').filter(function () {
-          const conn = this.getAttributeNS(seNs, 'connector');
+        const dupe = Array.prototype.filter.call(svgcontent.querySelectorAll('.se_connector'), function (aThis, i) {
+          const conn = aThis.getAttributeNS(seNs, 'connector');
           if (conn === connStr || conn === altStr) { return true; }
           return false;
         });
@@ -601,7 +602,8 @@ export default {
                 opacity: elem.getAttribute('opacity') || 1
               }
             });
-            $(elem).after(pline).remove();
+            elem.insertAdjacentElement('afterend', pline);
+            elem.remove();
             svgCanvas.clearSelection();
             pline.id = id;
             svgCanvas.addToSelection([pline]);
