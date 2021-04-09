@@ -388,7 +388,11 @@ export const setSvgString = function (xmlString, preventUndo) {
 
     // For Firefox: Put all paint elems in defs
     if (isGecko()) {
-      content.find('linearGradient, radialGradient, pattern').appendTo(findDefs());
+      const svgDefs = findDefs();
+      const findElems = content.querySelectorAll('linearGradient, radialGradient, pattern');
+      Array.prototype.forEach.call(findElems, function(ele, i){
+        svgDefs.appendChild(ele);
+      });
     }
 
     // Set ref element for <use> elements

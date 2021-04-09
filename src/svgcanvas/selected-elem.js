@@ -116,17 +116,17 @@ export const moveUpDownSelected = function (dir) {
   // curBBoxes = [];
   let closest, foundCur;
   // jQuery sorts this list
-  const list = $(elementContext_.getIntersectionList(getStrokedBBoxDefaultVisible([selected]))).toArray();
+  const list = elementContext_.getIntersectionList(getStrokedBBoxDefaultVisible([selected]));
   if (dir === 'Down') { list.reverse(); }
 
-  $.each(list, function () {
+  Array.prototype.forEach.call(list, function(el, i){
     if (!foundCur) {
-      if (this === selected) {
+      if (el === selected) {
         foundCur = true;
       }
       return true;
     }
-    closest = this;
+    closest = el;
     return false;
   });
   if (!closest) { return; }
@@ -134,7 +134,11 @@ export const moveUpDownSelected = function (dir) {
   const t = selected;
   const oldParent = t.parentNode;
   const oldNextSibling = t.nextSibling;
-  $(closest)[dir === 'Down' ? 'before' : 'after'](t);
+  if(dir === 'Down') {
+    closest.insertAdjacentElement('beforebegin', t);
+  } else {
+    closest.insertAdjacentElement('afterend', t);
+  }
   // If the element actually moved position, add the command and fire the changed
   // event handler.
   if (oldNextSibling !== t.nextSibling) {
@@ -232,14 +236,24 @@ export const cloneSelectedElements = function (x, y) {
   const batchCmd = new BatchCommand('Clone Elements');
   // find all the elements selected (stop at first null)
   const len = selectedElements.length;
+
+  function index(el) {
+    if (!el) return -1;
+    var i = 0;
+    do {
+      i++;
+    } while (el = el.previousElementSibling);
+    return i;
+  }
+
   /**
 * Sorts an array numerically and ascending.
 * @param {Element} a
 * @param {Element} b
 * @returns {Integer}
 */
-  function sortfunction (a, b) {
-    return ($(b).index() - $(a).index());
+  function  sortfunction (a, b) {
+    return (index(b) - index(a));
   }
   selectedElements.sort(sortfunction);
   for (i = 0; i < len; ++i) {
@@ -741,7 +755,7 @@ export const convertToGroup = function (elem) {
 
     // See if other elements reference this symbol
     const svgcontent = elementContext_.getSVGContent();
-    const hasMore = $(svgcontent).find('use:data(symbol)').length;
+    const hasMore = svgcontent.querySelectorAll('use:data(symbol)').length;
 
     const g = elementContext_.getDOMDocument().createElementNS(NS.SVG, 'g');
     const childs = elem.childNodes;
@@ -753,8 +767,11 @@ export const convertToGroup = function (elem) {
 
     // Duplicate the gradients for Gecko, since they weren't included in the <symbol>
     if (isGecko()) {
-      const dupeGrads = $(findDefs()).children('linearGradient,radialGradient,pattern').clone();
-      $(g).append(dupeGrads);
+      const svgElement = findDefs();
+      const gradients = svgElement.querySelectorAll('linearGradient,radialGradient,pattern');
+      for (let i = 0, im = gradients.length; im > i; i++) {
+        g.appendChild(gradients[i].cloneNode(true));
+      }
     }
 
     if (ts) {
@@ -767,7 +784,11 @@ export const convertToGroup = function (elem) {
 
     // Put the dupe gradients back into <defs> (after uniquifying them)
     if (isGecko()) {
-      $(findDefs()).append($(g).find('linearGradient,radialGradient,pattern'));
+      const svgElement = findDefs();
+      const elements = g.querySelectorAll('linearGradient,radialGradient,pattern');
+      for (let i = 0, im = elements.length; im > i; i++) {
+        svgElement.appendChild(elements[i]);
+      }
     }
 
     // now give the g itself a new id
