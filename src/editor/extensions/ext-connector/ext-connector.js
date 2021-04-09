@@ -190,55 +190,49 @@ export default {
     */
     function findConnectors (elems = selElems) {
       // const connectors = svgcontent.querySelectorAll('.se_connector');
-      const connectors = $(svgcontent).find('.se_connector');
+      const connectors = svgcontent.querySelectorAll('.se_connector');
       connections = [];
 
       // Loop through connectors to see if one is connected to the element
-      // Array.prototype.forEach.call(connectors, function(ethis, i){
-      connectors.each(function () {
+      Array.prototype.forEach.call(connectors, function(ethis, i){
         let addThis;
-        /**
-        *
-        * @returns {void}
-        */
-        function add () {
-          if (elems.includes(this)) {
-            // Pretend this element is selected
-            addThis = true;
-          }
-        }
-
         // Grab the ends
         const parts = [];
         ['start', 'end'].forEach(function (pos, i) {
           const key = 'c_' + pos;
-          let part = dataStorage.get(this, key);
+          let part = dataStorage.get(ethis, key);
           if (part === null || part === undefined) { // Does this ever return nullish values?
             part = document.getElementById(
-              this.attributes['se:connector'].value.split(' ')[i]
+              ethis.attributes['se:connector'].value.split(' ')[i]
             );
-            dataStorage.put(this, 'c_' + pos, part.id);
-            dataStorage.put(this, pos + '_bb', svgCanvas.getStrokedBBox([part]));
+            dataStorage.put(ethis, 'c_' + pos, part.id);
+            dataStorage.put(ethis, pos + '_bb', svgCanvas.getStrokedBBox([part]));
           } else part = document.getElementById(part);
           parts.push(part);
-        }, this);
+        }, ethis);
 
         for (let i = 0; i < 2; i++) {
           const cElem = parts[i];
 
           addThis = false;
           // The connected element might be part of a selected group
-          $(cElem).parents().each(add);
+          parents = svgCanvas.getParents(cElem.parentNode);
+          Array.prototype.forEach.call(parents, function(el, i){
+            if (elems.includes(el)) {
+              // Pretend this element is selected
+              addThis = true;
+            }
+          });
 
           if (!cElem || !cElem.parentNode) {
-            this.remove();
+            ethis.remove();
             continue;
           }
           if (elems.includes(cElem) || addThis) {
             const bb = svgCanvas.getStrokedBBox([cElem]);
             connections.push({
               elem: cElem,
-              connector: this,
+              connector: ethis,
               is_start: (i === 0),
               start_x: bb.x,
               start_y: bb.y
