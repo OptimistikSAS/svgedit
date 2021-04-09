@@ -259,7 +259,7 @@ export default {
             // Try to find a title
             // `dropXMLInternalSubset` is to help prevent the billion laughs attack
             const xml = new DOMParser().parseFromString(dropXMLInternalSubset(response), 'text/xml').documentElement; // lgtm [js/xml-bomb]
-            title = $(xml).children('title').first().text() || '(SVG #' + response.length + ')';
+            title = xml.querySelector('title').textContent || '(SVG #' + response.length + ')';
           }
           if (curMeta) {
             Array.from(preview.children).forEach(function(element) {
@@ -391,15 +391,17 @@ export default {
 
         const allLibs = imagelibStrings.select_lib;
 
+        const divFrameWrap = document.createElement('div');
+        divFrameWrap.id = 'lib_framewrap';
+
         const libOpts = document.createElement('ul');
         libOpts.id = 'imglib_opts';
         browser.append(libOpts);
         const frame = document.createElement('iframe');
         frame.src = "javascript:0";
-        browser.prepend(frame);
         frame.style.display = 'none';
-        
-        $(frame).wrap('<div id=lib_framewrap>');
+        divFrameWrap.append(frame);
+        browser.prepend(divFrameWrap);
 
         const header = document.createElement('h1');
         browser.prepend(header);
