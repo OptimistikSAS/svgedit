@@ -748,7 +748,6 @@ class TopPanel {
          <div class="tool_sep"></div>
          <se-button id="tool_source" title="Edit Source" shortcut="U" src="./images/source.svg"></se-button>
          <se-button id="tool_wireframe" title="Wireframe Mode" shortcut="F" src="./images/wireframe.svg"></se-button>
-         <se-button id="view_grid" title="Show grid" src="./images/grid.svg"></se-button>
        </div> <!-- editor_panel -->
        <div id="history_panel">
          <div class="tool_sep"></div>

@@ -9,11 +9,6 @@
  *
  */
 
-/* Dependencies:
-1. Also expects jQuery UI for `svgCanvasToString` and
-`convertToGroup` use of `:data()` selector
-*/
-
 import {Canvg as canvg} from 'canvg';
 import 'pathseg';
 

@@ -944,11 +944,6 @@ export const mouseDownEvent = function (evt) {
     eventContext_.setLastClickPoint(pt);
   }
 
-  // This would seem to be unnecessary...
-  // if (!['select', 'resize'].includes(currentMode)) {
-  //   setGradient();
-  // }
-
   let x = mouseX / currentZoom,
     y = mouseY / currentZoom;
   let mouseTarget = eventContext_.getCanvas().getMouseTarget(evt);
@@ -1034,10 +1029,6 @@ export const mouseDownEvent = function (evt) {
       }
       eventContext_.setRStartX(eventContext_.getRStartX() * currentZoom);
       eventContext_.setRStartY(eventContext_.getRStartY() * currentZoom);
-      // console.log('p',[evt.pageX, evt.pageY]);
-      // console.log('c',[evt.clientX, evt.clientY]);
-      // console.log('o',[evt.offsetX, evt.offsetY]);
-      // console.log('s',[startX, startY]);
 
       assignAttributes(eventContext_.getRubberBox(), {
         x: eventContext_.getRStartX(),

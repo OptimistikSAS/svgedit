@@ -26,12 +26,12 @@ export default {
     const strings = await loadExtensionTranslation(svgEditor.configObj.pref('lang'));
     const {svgCanvas} = svgEditor;
     const {$id} = svgCanvas;
-    const svgdoc = document.getElementById('svgcanvas').ownerDocument,
-      {assignAttributes} = svgCanvas,
-      hcanvas = document.createElement('canvas'),
-      canvBG = $id('canvasBackground'),
-      units = getTypeMap(), // Assumes prior `init()` call on `units.js` module
-      intervals = [0.01, 0.1, 1, 10, 100, 1000];
+    const svgdoc = document.getElementById('svgcanvas').ownerDocument;
+    const {assignAttributes} = svgCanvas;
+    const hcanvas = document.createElement('canvas');
+    const canvBG = $id('canvasBackground');
+    const units = getTypeMap(); // Assumes prior `init()` call on `units.js` module
+    const intervals = [0.01, 0.1, 1, 10, 100, 1000];
     let showGrid = svgEditor.configObj.curConfig.showGrid || false;
 
     hcanvas.style.display = 'none';
@@ -90,7 +90,7 @@ export default {
      * @param {Float} zoom
      * @returns {void}
      */
-    function updateGrid (zoom) {
+    const updateGrid = (zoom) => {
       // TODO: Try this with <line> elements, then compare performance difference
       const unit = units[svgEditor.configObj.curConfig.baseUnit]; // 1 = 1px
       const uMulti = unit * zoom;
@@ -143,7 +143,7 @@ export default {
      *
      * @returns {void}
      */
-    function gridUpdate () {
+    const gridUpdate = () => {
       if (showGrid) {
         updateGrid(svgCanvas.getZoom());
       }
@@ -156,14 +156,18 @@ export default {
         if (showGrid) { updateGrid(zoom); }
       },
       callback () {
-        if (showGrid) {
-          gridUpdate();
-        }
-      },
-      events: {
-        id: 'view_grid',
-        click () {
+        // Add the button and its handler(s)
+        const buttonTemplate = document.createElement("template");
+        buttonTemplate.innerHTML = `
+          <se-button id="view_grid" title="Show grid" src="./images/grid.svg"></se-button>
+        `
+        $id('editor_panel').append(buttonTemplate.content.cloneNode(true));
+        $id('view_grid').addEventListener("click", () => {
           svgEditor.configObj.curConfig.showGrid = showGrid = !showGrid;
+          gridUpdate();
+        }); 
+
+        if (showGrid) {
           gridUpdate();
         }
       }
