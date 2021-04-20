@@ -200,7 +200,6 @@ class LeftPanel {
     <div id="tools_left">
      <se-button id="tool_select" title="Select Tool" src="./images/select.svg"></se-button>
      <se-button id="tool_zoom" title="Zoom Tool" src="./images/zoom.svg" shortcut="Z"></se-button>
-     <se-button id="ext-panning" title="Panning" src="./images/panning.svg"></se-button>
      <se-button id="tool_fhpath" title="Pencil Tool" src="./images/pencil.svg" shortcut="Q"></se-button>
      <se-button id="tool_line" title="Line Tool" src="./images/pen.svg" shortcut="L"></se-button>
      <se-button id="tool_path" title="Path Tool" src="./images/path.svg" shortcut="P"></se-button>
