@@ -745,15 +745,14 @@ export const getPathDFromElement = function (elem) {
   switch (elem.tagName) {
     case 'ellipse':
     case 'circle': {
-      const rx = elem.getAttribute('rx');
-      const ry = elem.getAttribute('ry');
+      rx = elem.getAttribute('rx');
+      ry = elem.getAttribute('ry');
       const cx = elem.getAttribute('cx');
       const cy = elem.getAttribute('cy');
-      if (elem.tagName === 'circle') {
+      if (elem.tagName === 'circle' && elem.hasAttribute('r')) {
         ry = elem.getAttribute('r');
         rx = ry;
       }
-
       d = getPathDFromSegments([
         ['M', [(cx - rx), (cy)]],
         ['C', [(cx - rx), (cy - ry / num), (cx - rx / num), (cy - ry), (cx), (cy - ry)]],
@@ -780,8 +779,8 @@ export const getPathDFromElement = function (elem) {
       d = 'M' + elem.getAttribute('points') + ' Z';
       break;
     case 'rect': {
-      const rx = elem.getAttribute('rx');
-      const ry = elem.getAttribute('ry');
+      rx = elem.getAttribute('rx');
+      ry = elem.getAttribute('ry');
       const b = elem.getBBox();
       const { x, y } = b,
         w = b.width,
