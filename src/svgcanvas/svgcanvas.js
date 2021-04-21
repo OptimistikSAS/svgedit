@@ -1653,6 +1653,7 @@ class SvgCanvas {
   */
       {
         pathActions,
+        getDataStorage,
         getCurrentGroup() {
           return currentGroup;
         },

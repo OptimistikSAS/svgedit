@@ -175,7 +175,7 @@ export const recalculateDimensions = function (selected) {
         (tlist.numberOfItems === 2 && tlist.getItem(0).type === 1 && tlist.getItem(0).type === 4)) {
         return null;
       }
-  }  
+  }
   // Grouped SVG element
   const gsvg = (dataStorage.has(selected, 'gsvg')) ? dataStorage.get(selected, 'gsvg') : undefined;
   // we know we have some transforms, so set up return variable
