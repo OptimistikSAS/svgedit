@@ -2392,7 +2392,7 @@ class SvgCanvas {
     this.convertToPath = function (elem, getBBox) {
       if (isNullish(elem)) {
         const elems = selectedElements;
-        $.each(elems, function (i, el) {
+        elems.forEach(function(el, i){
           if (el) { canvas.convertToPath(el); }
         });
         return undefined;

@@ -787,7 +787,7 @@ export const mouseUpEvent = function (evt) {
     mouse_y: mouseY
   }, true);
 
-  $.each(extResult, function (i, r) {
+  extResult.forEach(function(r, i){
     if (r) {
       keep = r.keep || keep;
       ({ element } = r);
@@ -1062,7 +1062,7 @@ export const mouseDownEvent = function (evt) {
       // want to orient around it
       eventContext_.setInitBbox(utilsGetBBox($id('selectedBox0')));
       const bb = {};
-      $.each(eventContext_.getInitBbox(), function (key, val) {
+      eventContext_.getInitBbox().forEach(function(val, key){
         bb[key] = val / currentZoom;
       });
       eventContext_.setInitBbox(bb);
@@ -1292,7 +1292,7 @@ export const mouseDownEvent = function (evt) {
     selectedElements
   }, true);
 
-  $.each(extResult, function (i, r) {
+  extResult.forEach(function(r, i){
     if (r && r.started) {
       eventContext_.setStarted(true);
     }

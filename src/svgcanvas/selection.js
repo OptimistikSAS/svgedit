@@ -210,7 +210,7 @@ export const getMouseTargetMethod = function (evt) {
 */
 export const runExtensionsMethod = function (action, vars, returnArray, nameFilter) {
   let result = returnArray ? [] : false;
-  $.each(selectionContext_.getExtensions(), function (name, ext) {
+  selectionContext_.getExtensions().forEach(function(ext, name){
     if (nameFilter && !nameFilter(name)) {
       return;
     }

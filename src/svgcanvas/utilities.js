@@ -1077,10 +1077,10 @@ export const getStrokedBBox = function (elems, addSVGElementFromJson, pathAction
   if (!elems || !elems.length) { return false; }
 
   let fullBb;
-  $.each(elems, function () {
+  elems.forEach(function(elem, i){
     if (fullBb) { return; }
-    if (!this.parentNode) { return; }
-    fullBb = getBBoxWithTransform(this, addSVGElementFromJson, pathActions);
+    if (!elem.parentNode) { return; }
+    fullBb = getBBoxWithTransform(elem, addSVGElementFromJson, pathActions);
   });
 
   // This shouldn't ever happen...
@@ -1102,7 +1102,7 @@ export const getStrokedBBox = function (elems, addSVGElementFromJson, pathAction
     maxX += offset;
     maxY += offset;
   } else {
-    $.each(elems, function (i, elem) {
+    elems.forEach(function(elem, i){
       const curBb = getBBoxWithTransform(elem, addSVGElementFromJson, pathActions);
       if (curBb) {
         const offset = getStrokeOffsetForBBox(elem);
