@@ -1062,9 +1062,9 @@ export const mouseDownEvent = function (evt) {
       // want to orient around it
       eventContext_.setInitBbox(utilsGetBBox($id('selectedBox0')));
       const bb = {};
-      eventContext_.getInitBbox().forEach(function(val, key){
+      for (const [key, val] of Object.entries(eventContext_.getInitBbox())) {
         bb[key] = val / currentZoom;
-      });
+      };
       eventContext_.setInitBbox(bb);
 
       // append three dummy transforms to the tlist so that

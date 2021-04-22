@@ -827,10 +827,10 @@ export const getExtraAttributesForConvertToPath = function (elem) {
   const attrs = {};
   // TODO: make this list global so that we can properly maintain it
   // TODO: what about @transform, @clip-rule, @fill-rule, etc?
-  $.each(['marker-start', 'marker-end', 'marker-mid', 'filter', 'clip-path'], function () {
-    const a = elem.getAttribute(this);
+  ['marker-start', 'marker-end', 'marker-mid', 'filter', 'clip-path'].forEach(function(item, i){
+    const a = elem.getAttribute(item);
     if (a) {
-      attrs[this] = a;
+      attrs[item] = a;
     }
   });
   return attrs;
