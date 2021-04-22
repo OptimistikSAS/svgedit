@@ -656,7 +656,7 @@ export const embedImage = function (src) {
     imgI.addEventListener("error", (e) => {
       reject(new Error('Error loading image: '));
     });
-    imgI.attr('src', src);
+    imgI.setAttribute('src', src);
   });
 };
 
