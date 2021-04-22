@@ -334,13 +334,9 @@ export default {
     const toggleMultiLoop = () => {
       console.log(multiArr);
       multiArr.forEach(function(item, i){
-      // $.each(multiArr, function (i) {
-        console.log(item);
-        console.log(i);
         const type = item[0];
         const data = item[1];
         if (type === 'svg') {
-          console.log(svgCanvas);
           svgCanvas.importSvgString(data);
         } else {
           importImage(data);
