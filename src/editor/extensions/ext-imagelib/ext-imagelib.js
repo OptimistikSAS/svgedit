@@ -332,7 +332,6 @@ export default {
     }
 
     const toggleMultiLoop = () => {
-      console.log(multiArr);
       multiArr.forEach(function(item, i){
         const type = item[0];
         const data = item[1];
